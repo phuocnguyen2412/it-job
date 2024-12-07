@@ -20,10 +20,15 @@ public class SignUpServlet extends BaseController{
         String name = request.getParameter("name");
 
         if(!AccountBO.checkExistEmail(email)){
-            // add
-            // list top company
-            // add to request
-            // chuyển đến trang welcome
+            int result = AccountBO.handleCreateUser(name, email, password);
+            if(result > 0){
+                // list top company
+                // add to request
+                // chuyển đến trang welcome
+            }
+            else{
+                // không add được
+            }
         }
         else{
             // cút về signUp

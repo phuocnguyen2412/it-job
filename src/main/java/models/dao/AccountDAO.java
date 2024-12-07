@@ -60,15 +60,41 @@ public class AccountDAO {
         return false;
     }
     public static int handleCreateUser(String name, String email, byte[] password){
-        String query = "";
+        String query = "INSERT INTO `user`(Name, Email, Role) VALUES (?, ?, ?)";
+        int userId = 0;
+        int result = 0;
         try (Connection conn = Database.getConnection();
-             Statement stmt = conn.createStatement()) {
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            query = "";
+            stmt.setString(1, name);
+            stmt.setString(2, email);
+            stmt.setString(3, "Employee");
+
+            result = stmt.executeUpdate();
+            if(result > 0){
+                try(ResultSet rs = stmt.getGeneratedKeys()){
+                    if(rs.next()){
+                        userId = rs.getInt(1);
+                    }
+                }
+            }
+            else return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        query = "INSERT INTO `accountuser`(UserId, Password) VALUES (?, ?)";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, userId);
+            stmt.setBytes(2, password);
+
+            result = stmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return 0;
+        return result;
     }
 }

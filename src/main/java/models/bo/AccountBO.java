@@ -5,6 +5,7 @@ import models.dao.AccountDAO;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 public class AccountBO {
     public static boolean checkLogin(Account account) {
