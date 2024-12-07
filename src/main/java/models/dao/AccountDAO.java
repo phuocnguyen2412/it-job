@@ -1,6 +1,6 @@
 package models.dao;
 
-import config.DatabaseMql;
+import config.Database;
 import models.bean.Account;
 
 import java.sql.Connection;
@@ -12,7 +12,7 @@ public class AccountDAO {
     public static boolean checkAccount(Account account) {
         String sql = "SELECT COUNT(*) FROM Admin WHERE username = ? AND password = ?";
 
-        try (Connection conn = DatabaseMql.getConnection();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, account.getUsername());

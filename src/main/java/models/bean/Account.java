@@ -3,6 +3,7 @@ package models.bean;
 public class Account {
     private String username;
     private String password;
+    private NhanVien nhanVien;
 
     public Account() {
     }

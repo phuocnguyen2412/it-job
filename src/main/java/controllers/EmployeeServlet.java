@@ -83,7 +83,7 @@ public class EmployeeServlet extends BaseController {
         boolean loggedIn = req.getSession().getAttribute("loggedin") != null
                 ? (Boolean) req.getSession().getAttribute("loggedin")
                 : false;
-        
+
         switch (action) {
             case "index":
                 List<NhanVien> employees = NhanVienBO.getAllNhanVien();

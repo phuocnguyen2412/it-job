@@ -1,6 +1,6 @@
 package models.dao;
 
-import config.DatabaseMql;
+import config.Database;
 import models.bean.NhanVien;
 
 import java.sql.Connection;
@@ -14,7 +14,7 @@ public class NhanVienDAO {
     public List<NhanVien> findNhanVien(String key, String value) {
         String query = "SELECT * FROM NhanVien WHERE " + key + " LIKE ?";
         List<NhanVien> nhanVienList = new ArrayList<>();
-        try (Connection conn = DatabaseMql.getConnection();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, "%" + value + "%");
             try (ResultSet rs = stmt.executeQuery()) {
@@ -35,7 +35,7 @@ public class NhanVienDAO {
 
     public boolean createNhanVien(NhanVien nhanVien) {
         String query = "INSERT INTO NhanVien (IDNV, HoTen, IDPB, DiaChi) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DatabaseMql.getConnection();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, nhanVien.getIDNV());
             stmt.setString(2, nhanVien.getHoTen());
@@ -49,7 +49,7 @@ public class NhanVienDAO {
 
     public void deleteMultiNhanVien(String[] ids) {
         String query = "DELETE FROM NhanVien WHERE IDNV = ?";
-        try (Connection conn = DatabaseMql.getConnection();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             for (String id : ids) {
                 stmt.setString(1, id);
@@ -62,7 +62,7 @@ public class NhanVienDAO {
 
     public boolean updateNhanVien(NhanVien nhanVien) {
         String query = "UPDATE NhanVien SET HoTen = ?, IDPB = ?, DiaChi = ? WHERE IDNV = ?";
-        try (Connection conn = DatabaseMql.getConnection();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, nhanVien.getHoTen());
             stmt.setString(2, nhanVien.getIDPB());
@@ -77,7 +77,7 @@ public class NhanVienDAO {
     public List<NhanVien> getAllNhanVien() {
         String query = "SELECT * FROM NhanVien";
         List<NhanVien> nhanVienList = new ArrayList<>();
-        try (Connection conn = DatabaseMql.getConnection();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
@@ -98,7 +98,7 @@ public class NhanVienDAO {
     public boolean deleteNhanVien(String id) {
         System.out.println("IDNV: " + id);
         String query = "DELETE FROM NhanVien WHERE IDNV = ?";
-        try (Connection conn = DatabaseMql.getConnection();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, id);
             return stmt.executeUpdate() > 0; // Trả về true nếu xóa thành công
@@ -110,7 +110,7 @@ public class NhanVienDAO {
     public List<NhanVien> getAllNhanVienInPhongBan(String id) {
         String query = "SELECT * FROM NhanVien WHERE IDPB = ?";
         List<NhanVien> nhanVienList = new ArrayList<>();
-        try (Connection conn = DatabaseMql.getConnection();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -132,7 +132,7 @@ public class NhanVienDAO {
 
     public NhanVien getNhanVienById(String id) {
         System.out.println("IDNV: " + id);
-        try (Connection conn = DatabaseMql.getConnection();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement("SELECT * FROM NhanVien WHERE IDNV = ?")) {
             stmt.setString(1, id);
             stmt.executeQuery();

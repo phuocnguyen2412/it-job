@@ -1,6 +1,6 @@
 package models.dao;
 
-import config.DatabaseMql;
+import config.Database;
 import models.bean.PhongBan;
 
 import java.sql.Connection;
@@ -14,7 +14,7 @@ public class PhongBanDAO {
     public static List<PhongBan> getAllPhongBan() {
         String query = "SELECT * FROM PhongBan";
         List<PhongBan> phongBans = new ArrayList<>();
-        try (Connection conn = DatabaseMql.getConnection();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
@@ -31,7 +31,7 @@ public class PhongBanDAO {
     }
 
     public static PhongBan getPhongBanById(String id) {
-        try (Connection conn = DatabaseMql.getConnection();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement("SELECT * FROM PhongBan WHERE IDPB = ?")) {
             stmt.setString(1, id);
             stmt.executeQuery();
@@ -52,7 +52,7 @@ public class PhongBanDAO {
 
     public static void updatePhongBan(PhongBan phongBan) {
         String query = "UPDATE PhongBan SET TenPB = ?, MoTa = ? WHERE IDPB = ?";
-        try (Connection conn = DatabaseMql.getConnection();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, phongBan.getTenPB());
             stmt.setString(2, phongBan.getMoTa());
