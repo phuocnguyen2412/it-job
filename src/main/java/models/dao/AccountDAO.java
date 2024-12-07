@@ -28,4 +28,21 @@ public class AccountDAO {
         }
         return false;
     }
+    public static byte[] getPasswordByEmail(String email){
+        String query = "SELECT Password FROM AccountUser JOIN User ON AccountUser.UserId = User.Id WHERE Email = ?";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, email);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getBytes("Password");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }
