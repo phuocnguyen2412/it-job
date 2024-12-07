@@ -3,10 +3,7 @@ package models.dao;
 import config.Database;
 import models.bean.Account;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class AccountDAO {
     public static boolean checkAccount(Account account) {
@@ -44,5 +41,34 @@ public class AccountDAO {
             throw new RuntimeException(e);
         }
         return null;
+    }
+    public static boolean checkExistEmail(String email){
+        String query = "SELECT COUNT(*) FROM User WHERE Email = ?";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, email);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+    public static int handleCreateUser(String name, String email, byte[] password){
+        String query = "";
+        try (Connection conn = Database.getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            query = "";
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
     }
 }

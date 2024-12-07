@@ -28,4 +28,10 @@ public class AccountBO {
         }
         return null;
     }
+    public static boolean checkExistEmail(String email){
+        return AccountDAO.checkExistEmail(email);
+    }
+    public static int handleCreateUser(String name, String email, String password){
+        return AccountDAO.handleCreateUser(name, email, fromPasswordToHashCode(password));
+    }
 }

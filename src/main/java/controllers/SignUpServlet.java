@@ -1,33 +1,32 @@
 package controllers;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.bo.AccountBO;
 
 import java.io.IOException;
 
-@WebServlet(name = "SignInServlet", urlPatterns = "account/login")
-public class SignInServlet extends BaseController{
+public class SignUpServlet extends BaseController{
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException{
-        // chuyển đến form đăng nhập
+            throws ServletException, IOException {
+        // chuyển đến form đăng ký
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException{
+            throws ServletException, IOException{
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String name = request.getParameter("name");
 
-        if(AccountBO.checkSignIn(email, password)){
+        if(!AccountBO.checkExistEmail(email)){
+            // add
             // list top company
             // add to request
             // chuyển đến trang welcome
         }
         else{
-            request.setAttribute("errorMessage", "Invalid username or password!");
-            // cút về login
+            // cút về signUp
         }
     }
 }
