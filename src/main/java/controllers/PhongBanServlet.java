@@ -34,7 +34,7 @@ public class PhongBanServlet extends BaseController {
                 break;
             case "edit":
                 if (!loggedIn) {
-                    render(req, resp, "/WEB-INF/pages/404.jsp");
+                    render(req, resp, "/WEB-INF/pages/error.jsp");
                     return;
                 }
                 PhongBan phongBan = PhongBanBO.getPhongBanById(req.getParameter("id"));
@@ -58,7 +58,7 @@ public class PhongBanServlet extends BaseController {
         switch (action) {
             case "edit":
                 if (!loggedIn) {
-                    render(req, resp, "/WEB-INF/pages/404.jsp");
+                    render(req, resp, "/WEB-INF/pages/error.jsp");
                     return;
                 }
 
@@ -71,7 +71,7 @@ public class PhongBanServlet extends BaseController {
                 PhongBanBO.updatePhongBan(phongBan);
                 resp.sendRedirect(req.getContextPath() + "/phongban?action=index");
                 break;
-                
+
             default:
                 render(req, resp, "/WEB-INF/pages/home.jsp");
                 break;

@@ -2,19 +2,15 @@ package controllers;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
 @WebServlet(name = "HomeServlet", urlPatterns = {"/home"})
-public class HomeServlet extends HttpServlet {
+public class HomeServlet extends BaseController {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String contentPage = "/WEB-INF/pages/home.jsp";
-
-        req.setAttribute("contentPage", contentPage);
-        req.getRequestDispatcher("/WEB-INF/layouts/template.jsp").forward(req, resp);
+        render(req, resp, "/home");
     }
 }

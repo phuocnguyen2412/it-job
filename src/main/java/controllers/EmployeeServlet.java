@@ -25,7 +25,7 @@ public class EmployeeServlet extends BaseController {
         switch (action) {
             case "create":
                 if (!loggedIn) {
-                    render(req, resp, "/WEB-INF/pages/404.jsp");
+                    render(req, resp, "/WEB-INF/pages/error.jsp");
                     return;
                 }
 
@@ -44,7 +44,7 @@ public class EmployeeServlet extends BaseController {
                 break;
             case "deleteMulti":
                 if (!loggedIn) {
-                    render(req, resp, "/WEB-INF/pages/404.jsp");
+                    render(req, resp, "/WEB-INF/pages/error.jsp");
                     return;
                 }
 
@@ -55,7 +55,7 @@ public class EmployeeServlet extends BaseController {
 
             case "edit":
                 if (!loggedIn) {
-                    render(req, resp, "/WEB-INF/pages/404.jsp");
+                    render(req, resp, "/WEB-INF/pages/error.jsp");
                     return;
                 }
 
@@ -93,7 +93,7 @@ public class EmployeeServlet extends BaseController {
 
             case "delete":
                 if (!loggedIn) {
-                    render(req, resp, "/WEB-INF/pages/404.jsp");
+                    render(req, resp, "/WEB-INF/pages/error.jsp");
                     return;
                 }
 
@@ -116,7 +116,7 @@ public class EmployeeServlet extends BaseController {
                 break;
             case "create":
                 if (!loggedIn) {
-                    render(req, resp, "/WEB-INF/pages/404.jsp");
+                    render(req, resp, "/WEB-INF/pages/error.jsp");
                     return;
                 }
 
@@ -126,7 +126,7 @@ public class EmployeeServlet extends BaseController {
                 break;
             case "edit":
                 if (!loggedIn) {
-                    render(req, resp, "/WEB-INF/pages/404.jsp");
+                    render(req, resp, "/WEB-INF/pages/error.jsp");
                     return;
                 }
 

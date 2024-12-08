@@ -12,66 +12,12 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>IT Jobs Search</title>
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-    />
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-            rel="stylesheet"
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            background-color: #121212;
-            color: #fff;
-        }
+    <%@ include file="/WEB-INF/layouts/header.jsp" %>
 
-        .navbar {
-            background-color: #1a1a1a;
-        }
-
-        .search-bar {
-            padding: 12px;
-            background-color: #1a1a1a;
-            border: 1px solid #444;
-            color: #fff;
-        }
-
-        .search-bar::placeholder {
-            color: #fff;
-        }
-
-        .suggestions span {
-            background-color: #333;
-            color: #fff;
-            padding: 0.3rem 0.6rem;
-            border-radius: 4px;
-            margin-right: 0.5rem;
-        }
-
-        .suggestions span:hover {
-            background-color: #555;
-        }
-
-        .merry-christmas {
-            position: absolute;
-            bottom: 0;
-            right: 20px;
-        }
-    </style>
 </head>
 <body>
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">itviec</a>
-        <div class="d-flex">
-            <a href="#" class="me-3 text-light">For Employers</a>
-            <a href="#" class="me-3 text-light">Sign in/Sign up</a>
-        </div>
-    </div>
-</nav>
+<%@ include file="/WEB-INF/layouts/nav.jsp" %>
 
 <!-- Main Content -->
 <div class="container my-5">
@@ -307,6 +253,6 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<%@ include file="/WEB-INF/layouts/footer.jsp" %>
 </body>
 </html>
