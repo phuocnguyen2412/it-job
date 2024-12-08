@@ -26,7 +26,7 @@ public class AccountDAO {
         return false;
     }
     public static byte[] getPasswordByEmail(String email){
-        String query = "SELECT Password FROM AccountUser JOIN User ON AccountUser.UserId = User.Id WHERE Email = ?";
+        String query = "SELECT Password FROM Account WHERE Email = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -43,7 +43,7 @@ public class AccountDAO {
         return null;
     }
     public static boolean checkExistEmail(String email){
-        String query = "SELECT COUNT(*) FROM User WHERE Email = ?";
+        String query = "SELECT COUNT(*) FROM Account WHERE Email = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -60,21 +60,19 @@ public class AccountDAO {
         return false;
     }
     public static int handleCreateUser(String name, String email, byte[] password){
-        String query = "INSERT INTO `user`(Name, Email, Role) VALUES (?, ?, ?)";
-        int userId = 0;
+        String query = "INSERT INTO `Role`(Name) VALUES (?)";
+        int roleId = 0;
         int result = 0;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, name);
-            stmt.setString(2, email);
-            stmt.setString(3, "Employee");
+            stmt.setString(1, "Employee");
 
             result = stmt.executeUpdate();
             if(result > 0){
                 try(ResultSet rs = stmt.getGeneratedKeys()){
                     if(rs.next()){
-                        userId = rs.getInt(1);
+                        roleId = rs.getInt(1);
                     }
                 }
             }
@@ -83,15 +81,35 @@ public class AccountDAO {
             throw new RuntimeException(e);
         }
 
-        query = "INSERT INTO `accountuser`(UserId, Password) VALUES (?, ?)";
+        int accountId = 0;
+        query = "INSERT INTO `Account`(Password, Email, RoleId) VALUES (?, ?, ?)";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, userId);
-            stmt.setBytes(2, password);
+            stmt.setBytes(1, password);
+            stmt.setString(2, email);
+            stmt.setInt(3, roleId);
 
             result = stmt.executeUpdate();
+            if(result > 0){
+                try(ResultSet rs = stmt.getGeneratedKeys()){
+                    if(rs.next()){
+                        accountId = rs.getInt(1);
+                    }
+                }
+            }
+            else return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        query = "INSERT INTO `User`(Name, AccountId) VALUES (?, ?)";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
+            stmt.setString(1, name);
+            stmt.setInt(2, accountId);
+
+            result = stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

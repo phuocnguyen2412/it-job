@@ -12,6 +12,8 @@ public class AccountBO {
         boolean check = AccountDAO.checkAccount(account);
         return check;
     }
+
+
     public static Boolean checkSignIn(String email, String password){
         byte[] inputPassword = fromPasswordToHashCode(password);
         byte[] storedPassword = AccountDAO.getPasswordByEmail(email);
@@ -35,4 +37,5 @@ public class AccountBO {
     public static int handleCreateUser(String name, String email, String password){
         return AccountDAO.handleCreateUser(name, email, fromPasswordToHashCode(password));
     }
+
 }
