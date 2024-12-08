@@ -155,4 +155,64 @@ public class AccountDAO {
         }
         return result;
     }
+
+    public static int handleUnlockCompanyAccount(int companyId){
+        String query = "UPDATE Account SET isLooked = '0' WHERE Id = ?";
+        int result = 0;
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, companyId);
+
+            result = stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    public static int handleLockCompanyAccount(int companyId){
+        String query = "UPDATE Account SET isLooked = '1' WHERE Id = ?";
+        int result = 0;
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, companyId);
+
+            result = stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    public static int handleUnlockUserAccount(int userId){
+        String query = "UPDATE Account SET isLooked = '1' WHERE Id = ?";
+        int result = 0;
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, userId);
+
+            result = stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    public static int handleLockUserAccount(int userId){
+        String query = "UPDATE Account SET isLooked = '1' WHERE Id = ?";
+        int result = 0;
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, userId);
+
+            result = stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
 }

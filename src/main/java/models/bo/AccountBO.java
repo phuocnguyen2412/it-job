@@ -2,6 +2,7 @@ package models.bo;
 
 import models.bean.*;
 import models.dao.AccountDAO;
+import models.dao.CompanyDAO;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -37,5 +38,21 @@ public class AccountBO {
     public static int handleCreateCompanyAccount(Company company, Account account, String password){
         account.setPassword(fromPasswordToHashCode(password));
         return AccountDAO.handleCreateCompanyAccount(company, account);
+    }
+
+    public static int unlockCompanyAccount(int companyId){
+        return AccountDAO.handleUnlockCompanyAccount(companyId);
+    }
+
+    public static int lockCompanyAccount(int companyId){
+        return AccountDAO.handleLockCompanyAccount(companyId);
+    }
+
+    public static int unlockUserAccount(int userId){
+        return AccountDAO.handleLockUserAccount(userId);
+    }
+
+    public static int lockUserAccount(int userId){
+        return AccountDAO.handleUnlockUserAccount(userId);
     }
 }
