@@ -59,13 +59,13 @@ public class CompanyDAO {
         return result;
     }
 
-    public static int handleDeleteCompany(int Id){
+    public static int handleDeleteCompany(int companyId){
         String query = "DELETE FROM Company WHERE Id = ?";
         int result = 0;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, Id);
+            stmt.setInt(1, companyId);
 
             result = stmt.executeUpdate();
         } catch (SQLException e) {
@@ -74,13 +74,13 @@ public class CompanyDAO {
         return result;
     }
 
-    public static Company getCompanyById(int Id){
+    public static Company getCompanyById(int companyId){
         String query = "SELECT * FROM Company WHERE Id = ?";
         Company result = new Company();
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, Id);
+            stmt.setInt(1, companyId);
             try(ResultSet rs = stmt.executeQuery()){
                 while (rs.next()){
                     result.setId(rs.getInt("Id"));

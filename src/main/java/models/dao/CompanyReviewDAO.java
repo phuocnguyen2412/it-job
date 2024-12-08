@@ -47,13 +47,13 @@ public class CompanyReviewDAO {
         return result;
     }
 
-    public static int handleDeleteCompanyReview(int Id){
+    public static int handleDeleteCompanyReview(int companyReviewId){
         String query = "DELETE FROM CompanyReview WHERE Id = ?";
         int result = 0;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, Id);
+            stmt.setInt(1, companyReviewId);
 
             result = stmt.executeUpdate();
         } catch (SQLException e) {
@@ -62,13 +62,13 @@ public class CompanyReviewDAO {
         return result;
     }
 
-    public static CompanyReview getCompanyReviewById(int Id){
+    public static CompanyReview getCompanyReviewById(int companyReviewId){
         CompanyReview result = new CompanyReview();
         String query = "SELECT * FROM CompanyReview WHERE Id = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, Id);
+            stmt.setInt(1, companyReviewId);
 
             try(ResultSet rs = stmt.executeQuery()){
                 while (rs.next()){

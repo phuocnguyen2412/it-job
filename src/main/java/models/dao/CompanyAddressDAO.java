@@ -43,13 +43,13 @@ public class CompanyAddressDAO {
         return result;
     }
 
-    public static int handleDeleteCompanyAddress(int Id){
+    public static int handleDeleteCompanyAddress(int companyAddressId){
         String query = "DELETE FROM CompanyAddress WHERE Id = ?";
         int result = 0;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, Id);
+            stmt.setInt(1, companyAddressId);
 
             result = stmt.executeUpdate();
         } catch (SQLException e) {

@@ -14,12 +14,12 @@ public class CompanyReviewBO {
         return CompanyReviewDAO.handleEditCompanyReview(companyReview);
     }
 
-    public static int handleDeleteCompanyReview(int Id){
-        return CompanyReviewDAO.handleDeleteCompanyReview(Id);
+    public static int handleDeleteCompanyReview(int companyReviewId){
+        return CompanyReviewDAO.handleDeleteCompanyReview(companyReviewId);
     }
 
-    public static CompanyReview getCompanyReviewById(int Id){
-        return CompanyReviewDAO.getCompanyReviewById(Id);
+    public static CompanyReview getCompanyReviewById(int companyReviewId){
+        return CompanyReviewDAO.getCompanyReviewById(companyReviewId);
     }
 
     public static ArrayList<CompanyReview> getCompanyReviewList(int companyId){

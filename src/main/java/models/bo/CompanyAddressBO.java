@@ -14,8 +14,8 @@ public class CompanyAddressBO {
         return CompanyAddressDAO.handleEditCompanyAddress(companyAddress);
     }
 
-    public static int handleDeleteCompanyAddress(int Id){
-        return CompanyAddressDAO.handleDeleteCompanyAddress(Id);
+    public static int handleDeleteCompanyAddress(int companyAddressId){
+        return CompanyAddressDAO.handleDeleteCompanyAddress(companyAddressId);
     }
 
     public static ArrayList<CompanyAddress> getCompanyAddress(int companyId) {

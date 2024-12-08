@@ -14,12 +14,12 @@ public class CompanyBO {
         return CompanyDAO.handleEditCompany(company);
     }
 
-    public static int handleDeleteCompany(int Id){
-        return CompanyDAO.handleDeleteCompany(Id);
+    public static int handleDeleteCompany(int companyId){
+        return CompanyDAO.handleDeleteCompany(companyId);
     }
 
-    public static Company getCompanyById(int Id){
-        return CompanyDAO.getCompanyById(Id);
+    public static Company getCompanyById(int companyId){
+        return CompanyDAO.getCompanyById(companyId);
     }
 
     public static ArrayList<Company> getCompanyList(){
