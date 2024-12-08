@@ -42,7 +42,7 @@ public class AccountServlet extends BaseController {
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        boolean check = AccountBO.checkLogin(new Account(email, password));
+        boolean check = AccountBO.checkSignIn(email, password);
         if (check) {
             request.getSession().setAttribute("loggedin", true);
             render(request, response, "/home");

@@ -1,31 +1,53 @@
 package models.bean;
 
 public class Account {
-    private String username;
+    private int id;
+    private int adminId;
+    private String email;
     private String password;
-    private NhanVien nhanVien;
+    private int roleId;
+    private int isLocked;
 
-    public Account() {
-    }
+    public Account() {}
 
-    public Account(String username, String password) {
-        this.username = username;
+    public Account(int id, int adminId, String email, String password, int roleId, int isLocked) {
+        this.id = id;
+        this.adminId = adminId;
+        this.email = email;
         this.password = password;
+        this.roleId = roleId;
+        this.isLocked = isLocked;
     }
 
-    public String getUsername() {
-        return username;
+    public int getId() {
+        return id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getPassword() {
-        return password;
+    public int getAdminId() {
+        return adminId;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
     }
+
+    public String getEmail() { return email;}
+
+    public void setEmail(String email) { this.email = email;}
+
+    public String getPassword() { return password;}
+
+    public void setPassword(String password) { this.password = password;}
+
+    public int getRoleId() {return roleId;}
+
+    public void setRoleId(int roleId) { this.roleId = roleId;}
+
+    public int getIsLooked() {return isLocked;}
+
+    public void getIsLocked(int isLocked) { this.isLocked = isLocked;}
 }
