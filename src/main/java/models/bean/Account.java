@@ -4,13 +4,13 @@ public class Account {
     private int id;
     private int adminId;
     private String email;
-    private String password;
+    private byte[] password;
     private int roleId;
     private int isLocked;
 
     public Account() {}
 
-    public Account(int id, int adminId, String email, String password, int roleId, int isLocked) {
+    public Account(int id, int adminId, String email, byte[] password, int roleId, int isLocked) {
         this.id = id;
         this.adminId = adminId;
         this.email = email;
@@ -39,9 +39,9 @@ public class Account {
 
     public void setEmail(String email) { this.email = email;}
 
-    public String getPassword() { return password;}
+    public byte[] getPassword() { return password;}
 
-    public void setPassword(String password) { this.password = password;}
+    public void setPassword(byte[] password) { this.password = password;}
 
     public int getRoleId() {return roleId;}
 

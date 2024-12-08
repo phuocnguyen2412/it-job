@@ -6,22 +6,28 @@ import models.bean.Account;
 import java.sql.*;
 
 public class AccountDAO {
-    public static byte[] getPasswordByEmail(String email){
-        String query = "SELECT Password FROM Account WHERE Email = ?";
+    public static Account getAccount(String email, byte[] password){
+        String query = "SELECT * FROM Account WHERE Email = ? AND Password = ?";
+        Account result = new Account();
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, email);
+            stmt.setBytes(2, password);
 
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getBytes("Password");
+                while (rs.next()){
+                    result.setId(rs.getInt("Id"));
+                    result.setAdminId(rs.getInt("AdminId"));
+                    result.setEmail(rs.getString("Email"));
+                    result.setPassword(rs.getBytes("Password"));
+                    result.setRoleId(rs.getInt("RoleId"));
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return result;
     }
     public static boolean checkExistEmail(String email){
         String query = "SELECT COUNT(*) FROM Account WHERE Email = ?";

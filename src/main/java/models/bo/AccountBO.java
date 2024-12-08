@@ -8,18 +8,12 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 public class AccountBO {
-    public static boolean checkLogin(Account account) {
-        boolean check = AccountDAO.checkAccount(account);
-        return check;
-    }
-
-
-    public static Boolean checkSignIn(String email, String password){
+    public static Account checkSignIn(String email, String password){
         byte[] inputPassword = fromPasswordToHashCode(password);
-        byte[] storedPassword = AccountDAO.getPasswordByEmail(email);
 
-        return Arrays.equals(inputPassword, storedPassword);
+        return AccountDAO.getAccount(email, inputPassword);
     }
+
     public static byte[] fromPasswordToHashCode(String password){
         try {
             // Tạo đối tượng MessageDigest với thuật toán SHA-256
@@ -31,9 +25,11 @@ public class AccountBO {
         }
         return null;
     }
+
     public static boolean checkExistEmail(String email){
         return AccountDAO.checkExistEmail(email);
     }
+
     public static int handleCreateUser(String name, String email, String password){
         return AccountDAO.handleCreateUser(name, email, fromPasswordToHashCode(password));
     }
