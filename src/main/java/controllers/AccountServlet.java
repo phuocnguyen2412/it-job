@@ -1,5 +1,7 @@
 package controllers;
 
+import java.io.IOException;
+
 import exception.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -7,8 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.bean.Account;
 import models.bo.AccountBO;
-
-import java.io.IOException;
 
 @WebServlet(name = "AccountServlet", urlPatterns = {"/auth/*"})
 public class AccountServlet extends BaseController {
@@ -22,14 +22,9 @@ public class AccountServlet extends BaseController {
 //        }
         String path = request.getPathInfo() == null ? "/" : request.getPathInfo();
         switch (path) {
-            case "/login":
-                render(request, response, "/auth/sign_in");
-                break;
-            case "/register":
-                render(request, response, "/auth/sign_up");
-                break;
-            default:
-                throw new NotFoundException();
+            case "/login" -> render(request, response, "/auth/sign_in");
+            case "/register" -> render(request, response, "/auth/sign_up");
+            default -> throw new NotFoundException();
         }
     }
 
@@ -37,14 +32,9 @@ public class AccountServlet extends BaseController {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getPathInfo() == null ? "/" : request.getPathInfo();
         switch (path) {
-            case "/login":
-                login(request, response);
-                break;
-            case "/register":
-                register(request, response);
-                break;
-            default:
-                throw new NotFoundException();
+            case "/login" -> login(request, response);
+            case "/register" -> register(request, response);
+            default -> throw new NotFoundException();
         }
 
     }
