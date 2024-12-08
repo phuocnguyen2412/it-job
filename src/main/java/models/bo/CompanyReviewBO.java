@@ -22,7 +22,7 @@ public class CompanyReviewBO {
         return CompanyReviewDAO.getCompanyReviewById(Id);
     }
 
-    public static ArrayList<CompanyReview> getCompanyReviewList(){
-        return CompanyReviewDAO.getCompanyReviewList();
+    public static ArrayList<CompanyReview> getCompanyReviewList(int companyId){
+        return CompanyReviewDAO.getCompanyReviewList(companyId);
     }
 }

@@ -86,11 +86,13 @@ public class CompanyReviewDAO {
         return result;
     }
 
-    public static ArrayList<CompanyReview> getCompanyReviewList(){
+    public static ArrayList<CompanyReview> getCompanyReviewList(int companyId){
         ArrayList<CompanyReview> result = new ArrayList<>();
-        String query = "SELECT * FROM CompanyReview ORDER BY Point DESC LIMIT 4 ";
+        String query = "SELECT * FROM CompanyReview WHERE CompanyId = ? ORDER BY Point DESC LIMIT 5";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, companyId);
 
             try(ResultSet rs = stmt.executeQuery()){
                 while (rs.next()){

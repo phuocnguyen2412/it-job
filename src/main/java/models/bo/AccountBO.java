@@ -1,6 +1,6 @@
 package models.bo;
 
-import models.bean.Account;
+import models.bean.*;
 import models.dao.AccountDAO;
 
 import java.security.MessageDigest;
@@ -34,4 +34,8 @@ public class AccountBO {
         return AccountDAO.handleCreateUser(name, email, fromPasswordToHashCode(password));
     }
 
+    public static int handleCreateCompanyAccount(Company company, Account account, String password){
+        account.setPassword(fromPasswordToHashCode(password));
+        return AccountDAO.handleCreateCompanyAccount(company, account);
+    }
 }
