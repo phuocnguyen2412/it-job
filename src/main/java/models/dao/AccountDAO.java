@@ -1,46 +1,33 @@
 package models.dao;
 
 import config.Database;
-import models.bean.Account;
+import models.bean.*;
 
 import java.sql.*;
 
 public class AccountDAO {
-    public static boolean checkAccount(Account account) {
-        String sql = "SELECT COUNT(*) FROM Admin WHERE username = ? AND password = ?";
-
-        try (Connection conn = Database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, account.getUsername());
-            stmt.setString(2, account.getPassword());
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1) > 0;
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return false;
-    }
-    public static byte[] getPasswordByEmail(String email){
-        String query = "SELECT Password FROM Account WHERE Email = ?";
+    public static Account getAccount(String email, byte[] password){
+        String query = "SELECT * FROM Account WHERE Email = ? AND Password = ?";
+        Account result = new Account();
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, email);
+            stmt.setBytes(2, password);
 
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getBytes("Password");
+                while (rs.next()){
+                    result.setId(rs.getInt("Id"));
+                    result.setAdminId(rs.getInt("AdminId"));
+                    result.setEmail(rs.getString("Email"));
+                    result.setPassword(rs.getBytes("Password"));
+                    result.setRoleId(rs.getInt("RoleId"));
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return result;
     }
     public static boolean checkExistEmail(String email){
         String query = "SELECT COUNT(*) FROM Account WHERE Email = ?";
@@ -60,7 +47,7 @@ public class AccountDAO {
         return false;
     }
     public static int handleCreateUser(String name, String email, byte[] password){
-        String query = "INSERT INTO `Role`(Name) VALUES (?)";
+        String query = "INSERT INTO Role (Name) VALUES (?)";
         int roleId = 0;
         int result = 0;
         try (Connection conn = Database.getConnection();
@@ -68,7 +55,7 @@ public class AccountDAO {
 
             stmt.setString(1, "Employee");
 
-            result = stmt.executeUpdate();
+            stmt.executeUpdate();
             if(result > 0){
                 try(ResultSet rs = stmt.getGeneratedKeys()){
                     if(rs.next()){
@@ -82,7 +69,7 @@ public class AccountDAO {
         }
 
         int accountId = 0;
-        query = "INSERT INTO `Account`(Password, Email, RoleId) VALUES (?, ?, ?)";
+        query = "INSERT INTO Account (Password, Email, RoleId) VALUES (?, ?, ?)";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -90,7 +77,7 @@ public class AccountDAO {
             stmt.setString(2, email);
             stmt.setInt(3, roleId);
 
-            result = stmt.executeUpdate();
+            stmt.executeUpdate();
             if(result > 0){
                 try(ResultSet rs = stmt.getGeneratedKeys()){
                     if(rs.next()){
@@ -102,12 +89,125 @@ public class AccountDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        query = "INSERT INTO `User`(Name, AccountId) VALUES (?, ?)";
+
+        query = "INSERT INTO User (Name, AccountId) VALUES (?, ?)";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, name);
             stmt.setInt(2, accountId);
+
+            result = stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    public static int handleCreateCompanyAccount(Company company, Account account){
+        int result = 0;
+        int roleId = 0;
+        String query = "INSERT INTO Role(Name) VALUES (?)";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, "Company");
+            stmt.executeUpdate();
+
+            try(ResultSet rs =stmt.getGeneratedKeys()){
+                if(rs.next()){
+                    roleId = rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        int accountId = 0;
+        query = "INSERT INTO Account (AdminId, Email, Password, RoleId, isLocked) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, account.getAdminId());
+            stmt.setString(2, account.getEmail());
+            stmt.setBytes(3, account.getPassword());
+            stmt.setInt(4, roleId);
+            stmt.setInt(5, 0);
+            stmt.executeUpdate();
+
+            try(ResultSet rs =stmt.getGeneratedKeys()){
+                if(rs.next()){
+                    accountId = rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        query = "UPDATE Company SET AccountId = ? WHERE Id = ?";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, accountId);
+            stmt.setInt(2, company.getId());
+            result = stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    public static int handleUnlockCompanyAccount(int companyId){
+        String query = "UPDATE Account SET isLooked = '0' WHERE Id = ?";
+        int result = 0;
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, companyId);
+
+            result = stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    public static int handleLockCompanyAccount(int companyId){
+        String query = "UPDATE Account SET isLooked = '1' WHERE Id = ?";
+        int result = 0;
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, companyId);
+
+            result = stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    public static int handleUnlockUserAccount(int userId){
+        String query = "UPDATE Account SET isLooked = '1' WHERE Id = ?";
+        int result = 0;
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, userId);
+
+            result = stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    public static int handleLockUserAccount(int userId){
+        String query = "UPDATE Account SET isLooked = '1' WHERE Id = ?";
+        int result = 0;
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, userId);
 
             result = stmt.executeUpdate();
         } catch (SQLException e) {

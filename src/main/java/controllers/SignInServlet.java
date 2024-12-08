@@ -20,7 +20,7 @@ public class SignInServlet extends BaseController{
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        if(AccountBO.checkSignIn(email, password)){
+        if(AccountBO.checkSignIn(email, password) != null){
             // list top company
             // add to request
             // chuyển đến trang welcome

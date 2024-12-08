@@ -1,25 +1,20 @@
 package models.bo;
 
-import models.bean.Account;
+import models.bean.*;
 import models.dao.AccountDAO;
+import models.dao.CompanyDAO;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 public class AccountBO {
-    public static boolean checkLogin(Account account) {
-        boolean check = AccountDAO.checkAccount(account);
-        return check;
-    }
-
-
-    public static Boolean checkSignIn(String email, String password){
+    public static Account checkSignIn(String email, String password){
         byte[] inputPassword = fromPasswordToHashCode(password);
-        byte[] storedPassword = AccountDAO.getPasswordByEmail(email);
 
-        return Arrays.equals(inputPassword, storedPassword);
+        return AccountDAO.getAccount(email, inputPassword);
     }
+
     public static byte[] fromPasswordToHashCode(String password){
         try {
             // Tạo đối tượng MessageDigest với thuật toán SHA-256
@@ -31,11 +26,33 @@ public class AccountBO {
         }
         return null;
     }
+
     public static boolean checkExistEmail(String email){
         return AccountDAO.checkExistEmail(email);
     }
+
     public static int handleCreateUser(String name, String email, String password){
         return AccountDAO.handleCreateUser(name, email, fromPasswordToHashCode(password));
     }
 
+    public static int handleCreateCompanyAccount(Company company, Account account, String password){
+        account.setPassword(fromPasswordToHashCode(password));
+        return AccountDAO.handleCreateCompanyAccount(company, account);
+    }
+
+    public static int unlockCompanyAccount(int companyId){
+        return AccountDAO.handleUnlockCompanyAccount(companyId);
+    }
+
+    public static int lockCompanyAccount(int companyId){
+        return AccountDAO.handleLockCompanyAccount(companyId);
+    }
+
+    public static int unlockUserAccount(int userId){
+        return AccountDAO.handleLockUserAccount(userId);
+    }
+
+    public static int lockUserAccount(int userId){
+        return AccountDAO.handleUnlockUserAccount(userId);
+    }
 }
