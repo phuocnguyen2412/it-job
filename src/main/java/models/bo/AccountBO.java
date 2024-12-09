@@ -41,18 +41,18 @@ public class AccountBO {
     }
 
     public static int unlockCompanyAccount(int companyId){
-        return AccountDAO.handleUnlockCompanyAccount(companyId);
+        return AccountDAO.handleUnlockAccount(companyId);
     }
 
     public static int lockCompanyAccount(int companyId){
-        return AccountDAO.handleLockCompanyAccount(companyId);
+        return AccountDAO.handleLockAccount(companyId);
     }
 
     public static int unlockUserAccount(int userId){
-        return AccountDAO.handleLockUserAccount(userId);
+        return AccountDAO.handleLockAccount(userId);
     }
 
     public static int lockUserAccount(int userId){
-        return AccountDAO.handleUnlockUserAccount(userId);
+        return AccountDAO.handleUnlockAccount(userId);
     }
 }
