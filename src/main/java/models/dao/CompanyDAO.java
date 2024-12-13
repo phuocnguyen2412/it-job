@@ -1,7 +1,7 @@
 package models.dao;
 
 import config.Database;
-import models.bean.*;
+import models.bean.Company;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CompanyDAO {
-    public static int handleCreateCompany(Company company){
+    public static int handleCreateCompany(Company company) {
         String query = "INSERT INTO Company (Name, Introduce, Country, Industry, WorkingDays, Size, Detail, Email, Logo, AccountId) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int result;
@@ -22,7 +22,7 @@ public class CompanyDAO {
             stmt.setString(3, company.getCountry());
             stmt.setString(4, company.getIndustry());
             stmt.setString(5, company.getWorkingDays());
-            stmt.setInt(6, company.getSize());
+            stmt.setString(6, company.getSize());
             stmt.setString(7, company.getDetail());
             stmt.setString(8, company.getEmail());
             stmt.setString(9, company.getLogo());
@@ -35,9 +35,11 @@ public class CompanyDAO {
         return result;
     }
 
-    public static int handleEditCompany(Company company){
-        String query = "UPDATE Company SET Name = ?, Introduce = ?, Country = ?, Industry = ?, WorkingDays = ?, " +
-                "Size = ?, Detail = ?, Email = ?, Logo = ?";
+    public static int handleEditCompany(Company company) {
+        String query = """
+                   UPDATE Company SET Name = ?, Introduce = ?, Country = ?, Industry = ?, WorkingDays = ?, Size = ?, Detail = ?, Email = ?, Logo = ?
+                   WHERE Id = ?
+                """;
         int result;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -47,10 +49,11 @@ public class CompanyDAO {
             stmt.setString(3, company.getCountry());
             stmt.setString(4, company.getIndustry());
             stmt.setString(5, company.getWorkingDays());
-            stmt.setInt(6, company.getSize());
+            stmt.setString(6, company.getSize());
             stmt.setString(7, company.getDetail());
             stmt.setString(8, company.getEmail());
             stmt.setString(9, company.getLogo());
+            stmt.setInt(10, company.getId());
 
             result = stmt.executeUpdate();
         } catch (SQLException e) {
@@ -59,7 +62,7 @@ public class CompanyDAO {
         return result;
     }
 
-    public static int handleDeleteCompany(int companyId){
+    public static int handleDeleteCompany(int companyId) {
         String query = "DELETE FROM Company WHERE Id = ?";
         int result;
         try (Connection conn = Database.getConnection();
@@ -74,15 +77,15 @@ public class CompanyDAO {
         return result;
     }
 
-    public static Company getCompanyById(int companyId){
+    public static Company getCompanyById(int companyId) {
         String query = "SELECT * FROM Company WHERE Id = ?";
         Company result = new Company();
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, companyId);
-            try(ResultSet rs = stmt.executeQuery()){
-                while (rs.next()){
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
                     result = resultSetToCompany(rs);
                 }
             }
@@ -92,14 +95,14 @@ public class CompanyDAO {
         return result;
     }
 
-    public static ArrayList<Company> getCompanyList(){
+    public static ArrayList<Company> getCompanyList() {
         String query = "SELECT * FROM Company ORDER BY Size DESC LIMIT 12";
         ArrayList<Company> result = new ArrayList<>();
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            try(ResultSet rs = stmt.executeQuery()){
-                while (rs.next()){
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
                     Company company = resultSetToCompany(rs);
                     result.add(company);
                 }
@@ -110,10 +113,10 @@ public class CompanyDAO {
         return result;
     }
 
-    public static ArrayList<Company> searchCompany(String city, String searchInput){
+    public static ArrayList<Company> searchCompany(String city, String searchInput) {
         ArrayList<Company> result = new ArrayList<>();
         String query;
-        if(city.equals("All Cities")){
+        if (city.equals("All Cities")) {
             query = "SELECT Name FROM Company WHERE Company.Name LIKE ?";
             try (Connection conn = Database.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -128,8 +131,7 @@ public class CompanyDAO {
                 throw new RuntimeException(e);
             }
 
-        }
-        else{
+        } else {
             query = "SELECT Name FROM Company JOIN CompanyAddress ON Company.Id = CompanyAddress.CompanyId WHERE " +
                     "CompanyAddress.Address = ? AND Company.Name LIKE ?";
             try (Connection conn = Database.getConnection();
@@ -149,12 +151,12 @@ public class CompanyDAO {
         return result;
     }
 
-    public static Company resultSetToCompany(ResultSet rs){
+    public static Company resultSetToCompany(ResultSet rs) {
         Company company = new Company();
-        try{
+        try {
             company.setId(rs.getInt("Id"));
             company.setAccountId(rs.getInt("AccountId"));
-            company.setSize(rs.getInt("Size"));
+            company.setSize(rs.getString("Size"));
             company.setName(rs.getString("Name"));
             company.setIntroduce(rs.getString("Introduce"));
             company.setCountry(rs.getString("Country"));
@@ -163,8 +165,7 @@ public class CompanyDAO {
             company.setDetail(rs.getString("Detail"));
             company.setEmail(rs.getString("Email"));
             company.setLogo(rs.getString("Logo"));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return company;

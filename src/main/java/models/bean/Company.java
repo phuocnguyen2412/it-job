@@ -1,5 +1,7 @@
 package models.bean;
 
+import java.util.List;
+
 public class Company {
     private int id;
     private String name;
@@ -7,15 +9,17 @@ public class Company {
     private String country;
     private String industry;
     private String workingDays;
-    private int size;
+    private String size;
     private String detail;
     private String email;
     private String logo;
     private int accountId;
+    private String Skills;
 
-    public Company() {}
+    public Company() {
+    }
 
-    public Company(int id, String name, String introduce, String country, String industry, String workingDays, int size, String detail, String email, String logo, int accountId) {
+    public Company(int id, String name, String introduce, String country, String industry, String workingDays, String size, String detail, String email, String logo, int accountId) {
         this.id = id;
         this.name = name;
         this.introduce = introduce;
@@ -27,6 +31,14 @@ public class Company {
         this.email = email;
         this.logo = logo;
         this.accountId = accountId;
+    }
+
+    public List<String> getSkills() {
+        return List.of(Skills.split(","));
+    }
+
+    public void setSkills(String Skills) {
+        this.Skills = Skills;
     }
 
     public int getId() {
@@ -77,11 +89,11 @@ public class Company {
         this.workingDays = workingDays;
     }
 
-    public int getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(String size) {
         this.size = size;
     }
 
