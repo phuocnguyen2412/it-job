@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class CompanyAddressDAO {
     public static int handleCreateCompanyAddress(CompanyAddress companyAddress){
         String query = "INSERT INTO CompanyAddress (CompanyId, Address, Detail) VALUES (?, ?, ?)";
-        int result = 0;
+        int result;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -29,7 +29,7 @@ public class CompanyAddressDAO {
 
     public static int handleEditCompanyAddress(CompanyAddress companyAddress){
         String query = "UPDATE CompanyAddress SET Address = ?, Detail = ?";
-        int result = 0;
+        int result;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -45,7 +45,7 @@ public class CompanyAddressDAO {
 
     public static int handleDeleteCompanyAddress(int companyAddressId){
         String query = "DELETE FROM CompanyAddress WHERE Id = ?";
-        int result = 0;
+        int result;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 

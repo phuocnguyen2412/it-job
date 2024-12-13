@@ -49,13 +49,13 @@ public class AccountDAO {
     public static int handleCreateUser(String name, String email, byte[] password){
         String query = "INSERT INTO Role (Name) VALUES (?)";
         int roleId = 0;
-        int result = 0;
+        int result;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, "Employee");
 
-            stmt.executeUpdate();
+            result = stmt.executeUpdate();
             if(result > 0){
                 try(ResultSet rs = stmt.getGeneratedKeys()){
                     if(rs.next()){
@@ -77,7 +77,7 @@ public class AccountDAO {
             stmt.setString(2, email);
             stmt.setInt(3, roleId);
 
-            stmt.executeUpdate();
+            result = stmt.executeUpdate();
             if(result > 0){
                 try(ResultSet rs = stmt.getGeneratedKeys()){
                     if(rs.next()){
@@ -105,7 +105,7 @@ public class AccountDAO {
     }
 
     public static int handleCreateCompanyAccount(Company company, Account account){
-        int result = 0;
+        int result;
         int roleId = 0;
         String query = "INSERT INTO Role(Name) VALUES (?)";
         try (Connection conn = Database.getConnection();
@@ -156,13 +156,13 @@ public class AccountDAO {
         return result;
     }
 
-    public static int handleUnlockCompanyAccount(int companyId){
+    public static int handleUnlockAccount(int Id){
         String query = "UPDATE Account SET isLooked = '0' WHERE Id = ?";
-        int result = 0;
+        int result;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, companyId);
+            stmt.setInt(1, Id);
 
             result = stmt.executeUpdate();
         } catch (SQLException e) {
@@ -171,43 +171,13 @@ public class AccountDAO {
         return result;
     }
 
-    public static int handleLockCompanyAccount(int companyId){
+    public static int handleLockAccount(int Id){
         String query = "UPDATE Account SET isLooked = '1' WHERE Id = ?";
-        int result = 0;
+        int result;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, companyId);
-
-            result = stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return result;
-    }
-
-    public static int handleUnlockUserAccount(int userId){
-        String query = "UPDATE Account SET isLooked = '1' WHERE Id = ?";
-        int result = 0;
-        try (Connection conn = Database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setInt(1, userId);
-
-            result = stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return result;
-    }
-
-    public static int handleLockUserAccount(int userId){
-        String query = "UPDATE Account SET isLooked = '1' WHERE Id = ?";
-        int result = 0;
-        try (Connection conn = Database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setInt(1, userId);
+            stmt.setInt(1, Id);
 
             result = stmt.executeUpdate();
         } catch (SQLException e) {

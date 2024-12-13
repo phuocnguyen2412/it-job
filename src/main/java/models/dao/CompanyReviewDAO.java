@@ -13,7 +13,7 @@ public class CompanyReviewDAO {
     public static int handleCreateCompanyReview(CompanyReview companyReview){
         String query = "INSERT INTO CompanyReview (UserId, Detail, Point, CreatedAt, CompanyId) " +
                        "VALUES(?, ?, ?, ?, ?)";
-        int result = 0;
+        int result;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -32,7 +32,7 @@ public class CompanyReviewDAO {
 
     public static int handleEditCompanyReview(CompanyReview companyReview){
         String query = "UPDATE CompanyReview SET Detail = ?, CompanyId = ? WHERE Id = ?";
-        int result = 0;
+        int result;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -49,7 +49,7 @@ public class CompanyReviewDAO {
 
     public static int handleDeleteCompanyReview(int companyReviewId){
         String query = "DELETE FROM CompanyReview WHERE Id = ?";
-        int result = 0;
+        int result;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 

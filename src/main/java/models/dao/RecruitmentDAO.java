@@ -12,7 +12,7 @@ public class RecruitmentDAO {
     public static int handleCreateRecruitment(Recruitment recruitment){
         String query = "INSERT INTO Recruitment (Position, RangeOfSalaryFrom, RangeOfSalaryTo, CompanyId, CreatedAt, Requirement, Benefit, JobDescription) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-        int result = 0;
+        int result;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -35,7 +35,7 @@ public class RecruitmentDAO {
     public static int handleEditRecruitment(Recruitment recruitment){
         String query = "UPDATE Recruitment SET Position = ?, RangeOfSalaryFrom = ?, RangeOfSalaryTo = ?, " +
                 "Requirement = ?, Benefit = ?, JobDescription = ?";
-        int result = 0;
+        int result;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -55,7 +55,7 @@ public class RecruitmentDAO {
 
     public static int handleDeleteRecruitment(int recruitmentId){
         String query = "DELETE FROM Recruitment WHERE Id = ?";
-        int result = 0;
+        int result;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 

@@ -25,4 +25,8 @@ public class CompanyBO {
     public static ArrayList<Company> getCompanyList(){
         return CompanyDAO.getCompanyList();
     }
+
+    public static ArrayList<Company> searchCompany(String city, String inputSearch){
+        return CompanyDAO.searchCompany(city, inputSearch);
+    }
 }
