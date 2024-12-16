@@ -1,5 +1,7 @@
 package models.bean;
 
+import java.util.List;
+
 public class Recruitment {
     private int id;
     private String position;
@@ -10,8 +12,11 @@ public class Recruitment {
     private String requirement;
     private String benefit;
     private String jobDescription;
+    private List<CompanyAddress> addresses;
+    private String skills;
 
-    public Recruitment() {}
+    public Recruitment() {
+    }
 
     public Recruitment(int id, String position, int rangeOfSalaryFrom, int rangeOfSalaryTo, int companyId, java.sql.Timestamp createdAt, String requirement, String benefit, String jobDescription) {
         this.id = id;
@@ -23,6 +28,26 @@ public class Recruitment {
         this.requirement = requirement;
         this.benefit = benefit;
         this.jobDescription = jobDescription;
+    }
+
+    public List<String> getSkills() {
+        return List.of(skills.split(","));
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
+
+    public String getSalarayRange() {
+        return this.rangeOfSalaryFrom + " - " + this.rangeOfSalaryTo + " USD";
+    }
+
+    public List<CompanyAddress> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<CompanyAddress> addresses) {
+        this.addresses = addresses;
     }
 
     public int getId() {
@@ -87,6 +112,10 @@ public class Recruitment {
 
     public void setBenefit(String benefit) {
         this.benefit = benefit;
+    }
+
+    public List<String> getAllBenefits() {
+        return List.of(benefit.split(","));
     }
 
     public String getJobDescription() {

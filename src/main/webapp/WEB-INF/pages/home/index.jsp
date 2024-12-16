@@ -1,4 +1,6 @@
-<%--
+<%@ page import="models.bean.Company" %>
+<%@ page import="java.util.List" %>
+<%@ page import="models.bean.CompanyAddress" %><%--
   Created by IntelliJ IDEA.
   User: nguyenhuynh
   Date: 7/12/24
@@ -122,136 +124,45 @@
 </div>
 
 <div class="container mx-auto py-10">
-    <h1 class="text-2xl font-bold text-center mb-8">Top Employers</h1>
+    <h1 class="text-2xl font-bold text-center mb-8">Top Companies</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Card 1 -->
+        <% List<Company> companies = (List<Company>) request.getAttribute("companies");
+            for (Company company : companies) { %>
         <div class="bg-white rounded-lg shadow-lg p-6">
             <div class="flex justify-center">
                 <img
-                        src="https://via.placeholder.com/100"
+                        src="<%= company.getLogo() %>"
                         alt="FPT Software Logo"
                         class="w-20 h-20 mb-4"
                 />
             </div>
             <h2 class="text-center font-semibold text-lg">
-                FPT Software
+                <%= company.getName() %>
             </h2>
             <div class="flex flex-wrap justify-center gap-2 mt-4">
-                        <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                        >C++</span
-                        >
-                <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                >English</span
-                >
-                <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                >Java</span
-                >
-                <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                >Android</span
-                >
-                <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                >SQL</span
-                >
-                <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                >.NET</span
-                >
+                <% for (String skill : company.getSkills()) { %>
+                <span class="bg-gray-200 text-sm px-3 py-1 rounded"><%= skill%></span>
+                <% } %>
             </div>
             <p class="text-center text-gray-500 text-sm mt-4">
-                Ho Chi Minh - Ha Noi - Da Nang - Others
+                <% for (CompanyAddress address : company.getAddresses()) { %>
+                <%= address.getAddress() %>
+                <% } %>
             </p>
             <div class="flex justify-between items-center mt-4">
                 <span class="text-green-500 font-semibold">5 Jobs</span>
-                <a href="#" class="text-blue-500 hover:underline"
+                <a href="http://localhost:8080/demo_jsp_war_exploded/company/detail?id=<%= company.getId()%>"
+                   class="text-blue-500 hover:underline"
                 >See more &gt;</a
                 >
             </div>
         </div>
 
-        <!-- Card 2 -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
-            <div class="flex justify-center">
-                <img
-                        src="https://via.placeholder.com/100"
-                        alt="Techcombank Logo"
-                        class="w-20 h-20 mb-4"
-                />
-            </div>
-            <h2 class="text-center font-semibold text-lg">
-                Techcombank
-            </h2>
-            <div class="flex flex-wrap justify-center gap-2 mt-4">
-                        <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                        >Java</span
-                        >
-                <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                >AWS</span
-                >
-                <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                >Agile</span
-                >
-                <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                >DevOps</span
-                >
-                <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                >Manager</span
-                >
-            </div>
-            <p class="text-center text-gray-500 text-sm mt-4">
-                Ha Noi - Ho Chi Minh
-            </p>
-            <div class="flex justify-between items-center mt-4">
-                <span class="text-green-500 font-semibold">7 Jobs</span>
-                <a href="#" class="text-blue-500 hover:underline"
-                >See more &gt;</a
-                >
-            </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
-            <div class="flex justify-center">
-                <img
-                        src="https://via.placeholder.com/100"
-                        alt="NAB Logo"
-                        class="w-20 h-20 mb-4"
-                />
-            </div>
-            <h2 class="text-center font-semibold text-lg">
-                NAB Innovation Centre Vietnam
-            </h2>
-            <div class="flex flex-wrap justify-center gap-2 mt-4">
-                        <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                        >NodeJS</span
-                        >
-                <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                >ReactJS</span
-                >
-                <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                >Java</span
-                >
-                <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                >Agile</span
-                >
-                <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                >DevOps</span
-                >
-                <span class="bg-gray-200 text-sm px-3 py-1 rounded"
-                >Cloud</span
-                >
-            </div>
-            <p class="text-center text-gray-500 text-sm mt-4">
-                Ha Noi - Ho Chi Minh
-            </p>
-            <div class="flex justify-between items-center mt-4">
-                <span class="text-green-500 font-semibold">9 Jobs</span>
-                <a href="#" class="text-blue-500 hover:underline"
-                >See more &gt;</a
-                >
-            </div>
-        </div>
+        <% } %>
     </div>
 </div>
+
 
 <%@ include file="/WEB-INF/layouts/footer.jsp" %>
 </body>

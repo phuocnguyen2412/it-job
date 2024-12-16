@@ -15,8 +15,11 @@ public class Company {
     private String logo;
     private int accountId;
     private String Skills;
+    private List<CompanyAddress> addresses;
+
 
     public Company() {
+
     }
 
     public Company(int id, String name, String introduce, String country, String industry, String workingDays, String size, String detail, String email, String logo, int accountId) {
@@ -31,6 +34,16 @@ public class Company {
         this.email = email;
         this.logo = logo;
         this.accountId = accountId;
+    }
+
+
+    public List<CompanyAddress> getAddresses() {
+        return addresses;
+    }
+
+    public Company setAddresses(List<CompanyAddress> addresses) {
+        this.addresses = addresses;
+        return this;
     }
 
     public List<String> getSkills() {
