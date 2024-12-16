@@ -98,33 +98,6 @@ public class UserDAO {
         return users;
     }
 
-    public List<User> getUsersWithPagination(int offset, int limit) throws SQLException {
-        List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM User LIMIT ? OFFSET ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, limit);
-            stmt.setInt(2, offset);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    users.add(mapResultSetToUser(rs));
-                }
-            }
-        }
-        return users;
-    }
-
-    public int countUsers() throws SQLException {
-        String sql = "SELECT COUNT(*) AS total FROM User";
-        try (PreparedStatement stmt = connection.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-            if (rs.next()) {
-                return rs.getInt("total");
-            }
-        }
-        return 0;
-    }
-
-    // Phương thức hỗ trợ: Chuyển ResultSet thành User
     private User mapResultSetToUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getInt("id"));
