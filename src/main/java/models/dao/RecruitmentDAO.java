@@ -3,10 +3,7 @@ package models.dao;
 import config.Database;
 import models.bean.Recruitment;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class RecruitmentDAO {
@@ -84,15 +81,7 @@ public class RecruitmentDAO {
             stmt.setInt(1, recruitmentId);
 
             try (ResultSet rs = stmt.executeQuery()) {
-                result.setId(rs.getInt("Id"));
-                result.setCompanyId(rs.getInt("CompanyId"));
-                result.setPosition(rs.getString("Position"));
-                result.setCreatedAt(rs.getTimestamp("CreatedAt"));
-                result.setBenefit(rs.getString("Benefit"));
-                result.setJobDescription(rs.getString("JobDescription"));
-                result.setRangeOfSalaryFrom(rs.getInt("RangeOfSalaryFrom"));
-                result.setRangeOfSalaryTo(rs.getInt("RangeOfSalaryTo"));
-                result.setRequirement(rs.getString("Requirement"));
+                result = resultSetToRecruitment(rs);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -100,7 +89,7 @@ public class RecruitmentDAO {
         return result;
     }
 
-    public ArrayList<Recruitment> getRecruitment(String countryInput, String searchBy, String searchInput){
+    public ArrayList<Recruitment> getRecruitmentBySearch(String countryInput, String searchBy, String searchInput){
         ArrayList<Recruitment> result = new ArrayList<Recruitment>();
         String country = "";
         String query = """
@@ -123,16 +112,7 @@ public class RecruitmentDAO {
             stmt.setString(2, "%" + searchInput + "%");
             try (ResultSet rs = stmt.executeQuery()) {
                 while(rs.next()){
-                    Recruitment recruitment = new Recruitment();
-                    recruitment.setId(rs.getInt("Id"));
-                    recruitment.setCompanyId(rs.getInt("CompanyId"));
-                    recruitment.setPosition(rs.getString("Position"));
-                    recruitment.setCreatedAt(rs.getTimestamp("CreatedAt"));
-                    recruitment.setBenefit(rs.getString("Benefit"));
-                    recruitment.setJobDescription(rs.getString("JobDescription"));
-                    recruitment.setRangeOfSalaryFrom(rs.getInt("RangeOfSalaryFrom"));
-                    recruitment.setRangeOfSalaryTo(rs.getInt("RangeOfSalaryTo"));
-                    recruitment.setRequirement(rs.getString("Requirement"));
+                    Recruitment recruitment = resultSetToRecruitment(rs);
                     result.add(recruitment);
                 }
             }
@@ -141,5 +121,40 @@ public class RecruitmentDAO {
         }
 
         return result;
+    }
+
+    public ArrayList<Recruitment> getRecruitment(){
+        ArrayList<Recruitment> result = new ArrayList<Recruitment>();
+        String query = """
+                        SELECT * FROM Recruitment ORDER BY CreatedAt DESC LIMIT 5
+                """;
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                while(rs.next()){
+                    Recruitment recruitment = resultSetToRecruitment(rs);
+                    result.add(recruitment);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return result;
+    }
+
+    public Recruitment resultSetToRecruitment(ResultSet rs) throws SQLException{
+        Recruitment recruitment = new Recruitment();
+        recruitment.setId(rs.getInt("Id"));
+        recruitment.setCompanyId(rs.getInt("CompanyId"));
+        recruitment.setPosition(rs.getString("Position"));
+        recruitment.setCreatedAt(rs.getTimestamp("CreatedAt"));
+        recruitment.setBenefit(rs.getString("Benefit"));
+        recruitment.setJobDescription(rs.getString("JobDescription"));
+        recruitment.setRangeOfSalaryFrom(rs.getInt("RangeOfSalaryFrom"));
+        recruitment.setRangeOfSalaryTo(rs.getInt("RangeOfSalaryTo"));
+        recruitment.setRequirement(rs.getString("Requirement"));
+        return recruitment;
     }
 }

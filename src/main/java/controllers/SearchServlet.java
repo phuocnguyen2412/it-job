@@ -36,8 +36,7 @@ public class SearchServlet extends BaseController {
                 String value = req.getParameter("value");
                 String city = req.getParameter("city");
 
-                List<Recruitment> recruitments = recruitmentBO.getRecruitment(city, key, value);
-
+                List<Recruitment> recruitments = recruitmentBO.getRecruitmentBySearch(city, key, value);
                 String recruitmentId = req.getParameter("recruitmentId");
                 Recruitment recruitment;
 
@@ -53,7 +52,7 @@ public class SearchServlet extends BaseController {
                 req.setAttribute("recruitment", recruitment);
                 render(req, resp, "/search");
                 break;
-            case "/company":
+            case "/company/detail":
                 get_detail(req, resp);
                 break;
             default:
@@ -68,31 +67,32 @@ public class SearchServlet extends BaseController {
             throw new NotFoundException();
         }
 
-        Company company = new CompanyBO().mockCompany();
-        Recruitment recruitment = new Recruitment();
-        recruitment.setPosition("Java Developer");
-        recruitment.setJobDescription("Develop software applications using Java programming language");
-        recruitment.setRequirement("At least 1 year of experience in Java programming");
-        recruitment.setRangeOfSalaryFrom(1000);
-        recruitment.setRangeOfSalaryTo(2000);
-        recruitment.setSkills("java,c++,c#,python,javascript");
-        recruitment.setBenefit("13th month salary, health insurance, annual leave");
-        recruitment.setAddresses(new ArrayList<>() {
-            {
-                add(new CompanyAddressBO().mockAdress());
-                add(new CompanyAddress(1, 1, "Ha Noi", "FPT Software Building"));
-            }
-        });
-        ArrayList<Recruitment> recruitments = new ArrayList<>() {
-            {
-                add(recruitment);
-                add(recruitment);
-                add(recruitment);
-            }
-        };
+        Company company = new CompanyBO().getCompanyById(Integer.parseInt(companyId));
+//        Recruitment recruitment = new Recruitment();
+//        recruitment.setPosition("Java Developer");
+//        recruitment.setJobDescription("Develop software applications using Java programming language");
+//        recruitment.setRequirement("At least 1 year of experience in Java programming");
+//        recruitment.setRangeOfSalaryFrom(1000);
+//        recruitment.setRangeOfSalaryTo(2000);
+//        recruitment.setSkills("java,c++,c#,python,javascript");
+//        recruitment.setBenefit("13th month salary, health insurance, annual leave");
+//        recruitment.setAddresses(new ArrayList<>() {
+//            {
+//                add(new CompanyAddressBO().mockAdress());
+//                add(new CompanyAddress(1, 1, "Ha Noi", "FPT Software Building"));
+//            }
+//        });
+//
+//        ArrayList<Recruitment> recruitments = new ArrayList<>() {
+//            {
+//                add(recruitment);
+//                add(recruitment);
+//                add(recruitment);
+//            }
+//        };
 
-//        RecruitmentDAO recruitmentDAO = new RecruitmentDAO();
-//        ArrayList<Recruitment> recruitments = recruitmentDAO.getRecruitment();
+        ArrayList<Recruitment> recruitments = recruitmentBO.getRecruitment();
+
         req.setAttribute("recruitments", recruitments);
         req.setAttribute("company", company);
         render(req, resp, "/company/detail");
