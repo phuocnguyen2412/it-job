@@ -1,5 +1,6 @@
 package filters;
 
+import exception.UnauthorizedException;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -30,10 +31,19 @@ public class AuthorizationFilter implements Filter {
         String path = request.getRequestURI();
 
         // Phân quyền dựa trên URL và role
-        if (path.startsWith(request.getContextPath() + "/admin")) { // URL dành cho Admin
-            if (role == null || !role.equals("admin")) {
-                response.sendRedirect(request.getContextPath() + "/auth/login"); // Không đủ quyền
-                return;
+        if (path.startsWith(request.getContextPath() + "/admin/*")) { // URL dành cho Admin
+            if (role == null || !role.equals("Admin")) {
+                throw new UnauthorizedException();
+            }
+        }
+        if (path.startsWith(request.getContextPath() + "/company/*")) { // URL dành cho Company
+            if (role == null || !role.equals("Company")) {
+                throw new UnauthorizedException();
+            }
+        }
+        if (path.startsWith(request.getContextPath() + "/user/*")) { // URL dành cho Employee
+            if (role == null || !role.equals("Employee")) {
+                throw new UnauthorizedException();
             }
         }
 
@@ -43,6 +53,13 @@ public class AuthorizationFilter implements Filter {
                 return;
             }
         }
+        if (path.startsWith(request.getContextPath() + "/auth")) { // URL cho auth (public)
+            if (session != null && session.getAttribute("loggedin") != null) {
+                response.sendRedirect(request.getContextPath() + "/home"); // Người dùng đã đăng nhập
+                return;
+            }
+        }
+
 
         chain.doFilter(request, response); // Tiếp tục xử lý request
     }

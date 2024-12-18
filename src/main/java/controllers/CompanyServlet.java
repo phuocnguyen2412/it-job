@@ -12,6 +12,11 @@ import models.bean.Recruitment;
 import models.bo.ApplicationBO;
 import models.bo.CompanyAddressBO;
 import models.bo.CompanyBO;
+import models.bo.CompanyAddressBO;
+import models.bo.CompanyBO;
+import models.bo.ApplicationBO;
+import models.bo.CompanyAddressBO;
+import models.bo.CompanyBO;
 import models.bo.RecruitmentBO;
 
 import java.io.IOException;
@@ -38,6 +43,9 @@ public class CompanyServlet extends BaseController {
         String path = req.getPathInfo() == null ? "/" : req.getPathInfo();
         System.out.println(path);
         switch (path) {
+            case "/detail":
+                get_detail(req, resp);
+                break;
             case "/create-recruitment":
                 List<CompanyAddress> addresses = new ArrayList<>() {
                     {

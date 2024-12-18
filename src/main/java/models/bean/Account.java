@@ -1,5 +1,7 @@
 package models.bean;
 
+import java.util.Arrays;
+
 public class Account {
     private int id;
     private int adminId;
@@ -38,9 +40,6 @@ public class Account {
         this.adminId = adminId;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
     public void setEmail(String email) {
         this.email = email;
@@ -68,6 +67,20 @@ public class Account {
 
     public void getIsLocked(int isLocked) {
         this.isLocked = isLocked;
+    }
+
+    public void setIsLocked(int isLocked) { this.isLocked = isLocked;}
+
+    @Override
+    public String toString() {
+        // Trả về chuỗi mô tả đối tượng
+        return "Account{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password=" + new String(password) +  // Mảng byte sẽ được chuyển thành chuỗi
+                ", roleId=" + roleId +
+                ", isLocked=" + isLocked +
+                '}';
     }
 
     public void setRoleName(String roleName) {

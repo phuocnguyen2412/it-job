@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class RecruitmentDAO {
     public int handleCreateRecruitment(Recruitment recruitment) throws SQLException{
@@ -15,7 +16,7 @@ public class RecruitmentDAO {
                                                  CreatedAt, Requirement, Benefit, JobDescription)
                         VALUES(?, ?, ?, ?, ?, ?, ?, ?)
                 """;
-        int result;
+        int result = 0;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -30,7 +31,7 @@ public class RecruitmentDAO {
 
             result = stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         return result;
     }
@@ -40,7 +41,7 @@ public class RecruitmentDAO {
                         UPDATE Recruitment SET Position = ?, RangeOfSalaryFrom = ?, RangeOfSalaryTo = ?, 
                         Requirement = ?, Benefit = ?, JobDescription = ?
                 """;
-        int result;
+        int result = 0;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -53,14 +54,14 @@ public class RecruitmentDAO {
 
             result = stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         return result;
     }
 
     public int handleDeleteRecruitment(int recruitmentId) throws SQLException{
         String query = "DELETE FROM Recruitment WHERE Id = ?";
-        int result;
+        int result = 0;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -68,7 +69,7 @@ public class RecruitmentDAO {
 
             result = stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         return result;
     }
@@ -94,8 +95,49 @@ public class RecruitmentDAO {
                 result.setRequirement(rs.getString("Requirement"));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
+        return result;
+    }
+
+    public ArrayList<Recruitment> getRecruitment(String country, String searchBy, String searchInput){
+        ArrayList<Recruitment> result = new ArrayList<Recruitment>();
+        String query = """
+                        SELECT * FROM Recruitment 
+                        JOIN Company ON Company.Id = Recruitment.CompanyId 
+                        WHERE 
+                """;
+        if(!country.equals("0")) query += "Country = ?";
+        if(searchBy.equals("position")){
+            query += "AND Position = ? ";
+        }
+        else{
+            query += "AND Company.Name = ?";
+        }
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, country);
+            stmt.setString(2, searchInput);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                Recruitment recruitment = new Recruitment();
+                recruitment.setId(rs.getInt("Id"));
+                recruitment.setCompanyId(rs.getInt("CompanyId"));
+                recruitment.setPosition(rs.getString("Position"));
+                recruitment.setCreatedAt(rs.getTimestamp("CreatedAt"));
+                recruitment.setBenefit(rs.getString("Benefit"));
+                recruitment.setJobDescription(rs.getString("JobDescription"));
+                recruitment.setRangeOfSalaryFrom(rs.getInt("RangeOfSalaryFrom"));
+                recruitment.setRangeOfSalaryTo(rs.getInt("RangeOfSalaryTo"));
+                recruitment.setRequirement(rs.getString("Requirement"));
+                result.add(recruitment);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
         return result;
     }
 }

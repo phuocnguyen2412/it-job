@@ -40,31 +40,42 @@ public class AccountServlet extends BaseController {
 
     }
 
-    private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        AccountBO accountBO = new AccountBO();
-        Account account;
+    private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         try {
-            account = accountBO.checkSignIn(email, password);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        if (account != null) {
-            request.getSession().setAttribute("account", account);
-            request.getSession().setAttribute("loggedin", true);
-            request.getSession().setAttribute("role", account.getRoleName());
-            render(request, response, "/home");
-        } else {
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+
+            Account account = accountBO.checkSignIn(email, password);
+
+            if (account != null) {
+                request.getSession().setAttribute("account", account);
+                request.getSession().setAttribute("loggedin", true);
+                request.getSession().setAttribute("role", account.getRoleName());
+                response.sendRedirect("http://localhost:8080/demo_jsp_war_exploded/home");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             request.setAttribute("errorMessage", "Invalid username or password!");
-            render(request, response, "/WEB-INF/pages/login.jsp");
+            render(request, response, "/auth/sign_in");
         }
     }
 
-    private void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        //
+        try{
+            int result = accountBO.handleCreateUser(name, email, password);
+            if(result > 0){
+                render(request, response, "/auth/sign_in");
+            }else{
+                render(request, response, "/auth/sign_up");
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 }
