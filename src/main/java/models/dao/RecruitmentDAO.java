@@ -94,6 +94,25 @@ public class RecruitmentDAO {
         return result;
     }
 
+    public Recruitment  getRecruitmentByCompanyId(int companyId) {
+        String query = "SELECT * FROM Recruitment WHERE companyId = ?";
+        Recruitment result = new Recruitment();
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, companyId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while(rs.next()){
+                    result = resultSetToRecruitment(rs);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
     public ArrayList<Recruitment> getRecruitmentBySearch(String countryInput, String searchBy, String searchInput) {
         ArrayList<Recruitment> result = new ArrayList<Recruitment>();
         String country = "";

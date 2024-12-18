@@ -42,6 +42,9 @@ public class RecruitmentBO {
         return recruitmentDAO.getRecruitmentBySearch(country, searchBy, searchInput);
     }
 
+    public Recruitment getRecruitmentByCompanyId(int companyId){
+        return recruitmentDAO.getRecruitmentByCompanyId(companyId);
+    }
 
     public ArrayList<Recruitment> getRecruitment() {
         return recruitmentDAO.getRecruitment();
