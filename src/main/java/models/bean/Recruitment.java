@@ -14,6 +14,7 @@ public class Recruitment {
     private String jobDescription;
     private List<CompanyAddress> addresses;
     private String skills;
+    private Company company;
 
     public Recruitment() {
     }
@@ -28,6 +29,14 @@ public class Recruitment {
         this.requirement = requirement;
         this.benefit = benefit;
         this.jobDescription = jobDescription;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public List<String> getSkills() {
@@ -48,6 +57,14 @@ public class Recruitment {
 
     public void setAddresses(List<CompanyAddress> addresses) {
         this.addresses = addresses;
+    }
+
+    public List<String> getSkillsList() {
+        return List.of(skills.split(","));
+    }
+
+    public List<String> getRequirementList() {
+        return List.of(requirement.split(","));
     }
 
     public int getId() {
@@ -124,5 +141,22 @@ public class Recruitment {
 
     public void setJobDescription(String jobDescription) {
         this.jobDescription = jobDescription;
+    }
+
+    @Override
+    public String toString() {
+        return "Recruitment{" +
+                "id=" + id +
+                ", position='" + position + '\'' +
+                ", rangeOfSalaryFrom=" + rangeOfSalaryFrom +
+                ", rangeOfSalaryTo=" + rangeOfSalaryTo +
+                ", companyId=" + companyId +
+                ", createdAt=" + createdAt +
+                ", requirement='" + requirement + '\'' +
+                ", benefit='" + benefit + '\'' +
+                ", jobDescription='" + jobDescription + '\'' +
+                ", addresses=" + addresses +
+                ", skills='" + skills + '\'' +
+                '}';
     }
 }
