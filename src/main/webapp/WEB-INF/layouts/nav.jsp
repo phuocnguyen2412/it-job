@@ -16,7 +16,7 @@
                class="text-[#fff]">Admin Dashboard</a>
             <% } %>
 
-            <% if (role.equals("Employee")) {%>
+            <% if (role.equals("User")) {%>
             <a style="color: #fff" href="http://localhost:8080/demo_jsp_war_exploded/user/application" class="me-3"
                class="text-[#fff]">My application</a>
             <a style="color: #fff" href="http://localhost:8080/demo_jsp_war_exploded/user/profile" class="me-3"
