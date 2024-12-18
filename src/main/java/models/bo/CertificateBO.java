@@ -4,7 +4,7 @@ import exception.BadRequestException;
 import models.bean.Certificate;
 import models.dao.CertificateDAO;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class CertificateBO {
     CertificateDAO certificateDAO = new CertificateDAO();
@@ -13,7 +13,7 @@ public class CertificateBO {
         return new Certificate(1, "Java", "Oracle", java.sql.Timestamp.valueOf("2021-01-01 00:00:00"), "Java", "https://www.oracle.com/java", 1);
     }
 
-    public List<Certificate> getCertificatesByUserId(int userId) {
+    public ArrayList<Certificate> getCertificatesByUserId(int userId) {
         if (userId <= 0) {
             throw new BadRequestException("User ID không hợp lệ!");
         }

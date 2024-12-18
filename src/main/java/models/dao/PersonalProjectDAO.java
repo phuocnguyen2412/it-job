@@ -13,20 +13,20 @@ import java.util.List;
 public class PersonalProjectDAO {
     public ArrayList<PersonalProject> getProjectsByUserId(int userId) {
         ArrayList<PersonalProject> projects = new ArrayList<>();
-        String sql = "SELECT * FROM Personal Project WHERE userId = ?";
+        String sql = "SELECT * FROM persionalproject WHERE UserId = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, userId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     PersonalProject project = new PersonalProject();
-                    project.setId(rs.getInt("id"));
-                    project.setName(rs.getString("name"));
-                    project.setDateStart(rs.getTimestamp("dateStart"));
-                    project.setDateEnd(rs.getTimestamp("dateEnd"));
-                    project.setDetail(rs.getString("detail"));
-                    project.setLink(rs.getString("link"));
-                    project.setUserId(rs.getInt("userId"));
+                    project.setId(rs.getInt("Id"));
+                    project.setName(rs.getString("Name"));
+                    project.setDateStart(rs.getTimestamp("DateStart"));
+                    project.setDateEnd(rs.getTimestamp("DateEnd"));
+                    project.setDetail(rs.getString("Detail"));
+                    project.setLink(rs.getString("Link"));
+                    project.setUserId(rs.getInt("UserId"));
                     projects.add(project);
                 }
             }
@@ -37,7 +37,7 @@ public class PersonalProjectDAO {
     }
 
     public boolean addProject(PersonalProject project) {
-        String sql = "INSERT INTO Personal Project (name, dateStart, dateEnd, detail, link, userId) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO persionalproject (Name, DateStart, DateEnd, Detail, Link, UserId) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, project.getName());
@@ -53,7 +53,7 @@ public class PersonalProjectDAO {
     }
 
     public boolean updateProject(PersonalProject project) {
-        String sql = "UPDATE Personal Project SET name = ?, dateStart = ?, dateEnd = ?, detail = ?, link = ? WHERE id = ?";
+        String sql = "UPDATE persionalproject SET Name = ?, DateStart = ?, DateEnd = ?, Detail = ?, Link = ? WHERE Id = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, project.getName());
@@ -69,7 +69,7 @@ public class PersonalProjectDAO {
     }
 
     public boolean deleteProject(int id) {
-        String sql = "DELETE FROM Personal Project WHERE id = ?";
+        String sql = "DELETE FROM persionalproject WHERE Id = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);

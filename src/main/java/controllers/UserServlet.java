@@ -41,13 +41,14 @@ public class UserServlet extends BaseController {
             case "/application" -> {
                 int userId = (int) req.getSession().getAttribute("userId");
                 /// Tìm các application theo user id
-                List<Application> applications = new ArrayList<>() {
-                    {
-                        add(applicationBO.mockApplication());
-                        add(applicationBO.mockApplication());
-                        add(applicationBO.mockApplication());
-                    }
-                };
+//                List<Application> applications = new ArrayList<>() {
+//                    {
+//                        add(applicationBO.mockApplication());
+//                        add(applicationBO.mockApplication());
+//                        add(applicationBO.mockApplication());
+//                    }
+//                };
+                ArrayList<Application> applications = applicationBO.getApplicationByUserId(userId);
                 req.setAttribute("applications", applications);
                 render(req, resp, "/user/application");
             }

@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CertificateDAO {
-    public List<Certificate> getCertificatesByUserId(int userId) {
-        List<Certificate> certificates = new ArrayList<>();
-        String sql = "SELECT * FROM Certificate WHERE userId = ?";
+    public ArrayList<Certificate> getCertificatesByUserId(int userId) {
+        ArrayList<Certificate> certificates = new ArrayList<>();
+        String sql = "SELECT * FROM Certificate WHERE UserId = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, userId);
@@ -21,12 +21,12 @@ public class CertificateDAO {
                 while (rs.next()) {
                     Certificate certificate = new Certificate();
                     certificate.setId(rs.getInt("id"));
-                    certificate.setName(rs.getString("name"));
-                    certificate.setOrganization(rs.getString("organization"));
-                    certificate.setDate(rs.getTimestamp("date"));
-                    certificate.setDetail(rs.getString("detail"));
-                    certificate.setLink(rs.getString("link"));
-                    certificate.setUserId(rs.getInt("userId"));
+                    certificate.setName(rs.getString("Name"));
+                    certificate.setOrganization(rs.getString("Organization"));
+                    certificate.setDate(rs.getTimestamp("Date"));
+                    certificate.setDetail(rs.getString("Detail"));
+                    certificate.setLink(rs.getString("Link"));
+                    certificate.setUserId(rs.getInt("UserId"));
                     certificates.add(certificate);
                 }
             }

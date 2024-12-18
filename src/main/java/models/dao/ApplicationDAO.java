@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ApplicationDAO {
     public void apply(Application application) {
@@ -68,24 +69,25 @@ public class ApplicationDAO {
         return application;
     }
 
-    public Application findByStatus(int userId) {
-        Application application = null;
-        String query = "SELECT * FROM Application WHERE UserId = ? and Status = 'Pending'";
+    public ArrayList<Application> getApplicationByUserId(int userId) {
+        ArrayList<Application> result = new ArrayList<>();
+        String query = "SELECT * FROM Application WHERE UserId = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, userId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                application = new Application();
+                Application application = new Application();
                 application.setId(rs.getInt("Id"));
                 application.setUserId(rs.getInt("UserId"));
                 application.setRecruitmentId(rs.getInt("RecruitmentId"));
                 application.setCv(rs.getString("CV"));
                 application.setStatus(rs.getString("Status"));
+                result.add(application);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return application;
+        return result;
     }
 }

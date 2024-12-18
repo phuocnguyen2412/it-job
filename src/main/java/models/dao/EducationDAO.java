@@ -86,8 +86,6 @@ public class EducationDAO {
                     education.setUserId(rs.getInt("userId"));
                     education.setSchool(rs.getString("school"));
                     education.setSpecialize(rs.getString("specialize"));
-                    education.setDateStart(rs.getTimestamp("dateStart"));
-                    education.setDateEnd(rs.getTimestamp("dateEnd"));
 
                     result.add(education);
                 }
