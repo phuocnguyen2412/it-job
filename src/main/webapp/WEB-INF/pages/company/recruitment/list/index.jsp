@@ -37,7 +37,7 @@
             </a>
         </td>
         <td>
-            <a href="${pageContext.request.contextPath}/company/edit-recruitment?id=<%= recruitment.getId() %>"
+            <a href="${pageContext.request.contextPath}/company/edit-recruitment?recruitment_id=<%= recruitment.getId() %>"
                class="btn btn-warning btn-sm">
                 <i class="bi bi-pencil"></i> Chỉnh sửa
             </a>

@@ -38,18 +38,8 @@ public class CompanyServlet extends BaseController {
         String path = req.getPathInfo() == null ? "/" : req.getPathInfo();
         System.out.println(path);
         switch (path) {
-            case "/detail":
-                get_detail(req, resp);
-                break;
             case "/create-recruitment":
-                List<CompanyAddress> addresses = new ArrayList<>() {
-                    {
-                        add(new CompanyAddress(1, 1, "Ha Noi", "FPT Software Building"));
-                        add(new CompanyAddress(1, 1, "Ha Noi", "FPT Software Building"));
-                    }
-                };
-                req.setAttribute("addresses", addresses);
-                render(req, resp, "/company/recruitment/create", "template");
+                get_create_recruitment(req, resp);
                 break;
             case "/edit-recruitment":
                 get_edit_recruitment(req, resp);
@@ -72,7 +62,7 @@ public class CompanyServlet extends BaseController {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getPathInfo() == null ? "/" : req.getPathInfo();
-        System.out.println(path);
+
         switch (path) {
 
             case "/create-recruitment":
@@ -92,14 +82,7 @@ public class CompanyServlet extends BaseController {
     }
 
     private void get_list_application(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Application> applications = new ArrayList<>() {
-            {
-                add(applicationBO.mockApplication());
-                add(applicationBO.mockApplication());
-                add(applicationBO.mockApplication());
-                add(applicationBO.mockApplication());
-            }
-        };
+        List<Application> applications = applicationBO.getApplicationsByRecruimentId((int) req.getSession().getAttribute("recruitment_id"));
         req.setAttribute("applications", applications);
         render(req, resp, "/company/recruitment/list-application", "template");
     }
@@ -141,7 +124,8 @@ public class CompanyServlet extends BaseController {
     }
 
     private void get_edit_recruitment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Recruitment recruitment = recruitmentBO.mockRecruitment();
+        int recruitmentId = Integer.parseInt(req.getParameter("recruitment_id"));
+        Recruitment recruitment = recruitmentBO.getRecruitmentById(recruitmentId);
         List<CompanyAddress> companyAddresses = new ArrayList<CompanyAddress>() {
             {
                 add(companyAddressBO.mockAdress());
@@ -179,7 +163,8 @@ public class CompanyServlet extends BaseController {
     }
 
     private void get_edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Company company = companyBO.getCompanyById(Integer.parseInt(req.getParameter("Id")));
+        int CompanyId = (int) req.getSession().getAttribute("companyId");
+        Company company = companyBO.getCompanyById(CompanyId);
         req.setAttribute("company", company);
         render(req, resp, "/company/edit", "template");
 
@@ -187,6 +172,7 @@ public class CompanyServlet extends BaseController {
 
     private void post_create_recruitment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Recruitment recruitment = getRecruitment(req);
+        int CompanyId = (int) req.getSession().getAttribute("companyId");
         String[] selectedAddressIds = req.getParameterValues("selectedAddresses");
         List<Integer> selectedAddresses = new ArrayList<>();
         if (selectedAddressIds != null) {
@@ -202,35 +188,4 @@ public class CompanyServlet extends BaseController {
         render(req, resp, "/company/recruitment/detail", "template");
     }
 
-    private void get_detail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String companyId = req.getParameter("id");
-        if (companyId == null) {
-            throw new NotFoundException();
-        }
-        Company company = new CompanyBO().mockCompany();
-        Recruitment recruitment = new Recruitment();
-        recruitment.setPosition("Java Developer");
-        recruitment.setJobDescription("Develop software applications using Java programming language");
-        recruitment.setRequirement("At least 1 year of experience in Java programming");
-        recruitment.setRangeOfSalaryFrom(1000);
-        recruitment.setRangeOfSalaryTo(2000);
-        recruitment.setSkills("java,c++,c#,python,javascript");
-        recruitment.setBenefit("13th month salary, health insurance, annual leave");
-        recruitment.setAddresses(new ArrayList<>() {
-            {
-                add(new CompanyAddressBO().mockAdress());
-                add(new CompanyAddress(1, 1, "Ha Noi", "FPT Software Building"));
-            }
-        });
-        ArrayList<Recruitment> recruitments = new ArrayList<>() {
-            {
-                add(recruitment);
-                add(recruitment);
-                add(recruitment);
-            }
-        };
-        req.setAttribute("recruitments", recruitments);
-        req.setAttribute("company", company);
-        render(req, resp, "/company/detail");
-    }
 }
