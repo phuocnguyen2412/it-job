@@ -24,7 +24,7 @@
 <!-- Main Content -->
 <div class="container my-5">
     <h1 class="mb-4">822 IT Jobs For "Chất" Developers</h1>
-    <form>
+    <form action="http://localhost:8080/demo_jsp_war_exploded/search" method="get">
         <div class="row">
             <div class="col-md-2">
                 <select name="city" class="form-select search-bar">

@@ -6,11 +6,7 @@ import models.dao.ExperienceDAO;
 import java.sql.SQLException;
 
 public class ExperienceBO {
-    private ExperienceDAO experienceDAO;
-
-    public ExperienceBO(ExperienceDAO experienceDAO) {
-        this.experienceDAO = experienceDAO;
-    }
+    ExperienceDAO experienceDAO = new ExperienceDAO();
 
     public Experience getExperienceById(int userId) throws SQLException {
         return experienceDAO.getExperienceByUserId(userId);

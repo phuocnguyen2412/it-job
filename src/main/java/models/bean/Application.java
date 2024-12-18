@@ -4,17 +4,36 @@ public class Application {
     private int id;
     private int userId;
     private int recruitmentId;
-    private byte[] cv;
+    private String cv;
     private String status;
+    private User user;
+    private Recruitment recruitment;
 
-    public Application() {}
+    public Application() {
+    }
 
-    public Application(int id, int userId, int recruitmentId, byte[] cv, String status) {
+    public Application(int id, int userId, int recruitmentId, String cv, String status) {
         this.id = id;
         this.userId = userId;
         this.recruitmentId = recruitmentId;
         this.cv = cv;
         this.status = status;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Recruitment getRecruitment() {
+        return recruitment;
+    }
+
+    public void setRecruitment(Recruitment recruitment) {
+        this.recruitment = recruitment;
     }
 
     public int getId() {
@@ -41,11 +60,11 @@ public class Application {
         this.recruitmentId = recruitmentId;
     }
 
-    public byte[] getCv() {
+    public String getCv() {
         return cv;
     }
 
-    public void setCv(byte[] cv) {
+    public void setCv(String cv) {
         this.cv = cv;
     }
 

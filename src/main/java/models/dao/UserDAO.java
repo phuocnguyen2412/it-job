@@ -47,10 +47,9 @@ public class UserDAO {
     }
 
     public boolean addUser(User user) {
-        String sql = "INSERT INTO User (name, introduce, email, phoneNumber, birthday, city, avatar, accountId, skills) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO User (Name, Introduce, Email, PhoneNumber, Birthday, City, Avatar, AccountId, Skills) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = Database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+             PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getIntroduce());
             stmt.setString(3, user.getEmail());
@@ -59,20 +58,19 @@ public class UserDAO {
             stmt.setString(6, user.getCity());
             stmt.setBytes(7, user.getAvatar());
             stmt.setInt(8, user.getAccountId());
-            stmt.setString(9, String.join(",", user.getSkills()));
-
+            stmt.setString(9, user.getSkills() == null ? "" : String.valueOf(user.getSkills()));
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return false;
         }
     }
 
     public boolean updateUser(User user) {
-        String sql = "UPDATE User SET name = ?, introduce = ?, email = ?, phoneNumber = ?, birthday = ?, city = ?, avatar = ?, accountId = ?, skills = ? WHERE id = ?";
+        String query = "UPDATE User SET Name = ?, Introduce = ?, Email = ?, PhoneNumber = ?, Birthday = ?, City = ?, Avatar = ?, Skills = ? WHERE Id = ?";
         try (Connection conn = Database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+             PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getIntroduce());
             stmt.setString(3, user.getEmail());
@@ -80,13 +78,13 @@ public class UserDAO {
             stmt.setDate(5, user.getBirthday());
             stmt.setString(6, user.getCity());
             stmt.setBytes(7, user.getAvatar());
-            stmt.setInt(8, user.getAccountId());
-            stmt.setString(9, String.join(",", user.getSkills()));
-            stmt.setInt(10, user.getId());
-
-            return stmt.executeUpdate() > 0;
+            stmt.setString(8, user.getSkills() == null ? "" : String.valueOf(user.getSkills()));
+            stmt.setInt(9, user.getId());
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -122,24 +120,16 @@ public class UserDAO {
 
     private User mapResultSetToUser(ResultSet rs) throws SQLException {
         User user = new User();
-        user.setId(rs.getInt("id"));
-        user.setName(rs.getString("name"));
-        user.setIntroduce(rs.getString("introduce"));
-        user.setEmail(rs.getString("email"));
-        user.setPhoneNumber(rs.getString("phoneNumber"));
-        user.setBirthday(rs.getDate("birthday"));
-        user.setCity(rs.getString("city"));
-        user.setAvatar(rs.getBytes("avatar"));
-        user.setAccountId(rs.getInt("accountId"));
-
-        // Sử dụng rs.getString() để lấy dữ liệu skills và chuyển thành List<String>
-        String skillsString = rs.getString("skills");
-        if (skillsString != null && !skillsString.isEmpty()) {
-            user.setSkills(skillsString);  // Gọi setter đã có cho skills (loại String)
-        } else {
-            user.setSkills("");  // Hoặc gán chuỗi rỗng nếu không có dữ liệu
-        }
-
+        user.setId(rs.getInt("Id"));
+        user.setName(rs.getString("Name"));
+        user.setIntroduce(rs.getString("Introduce"));
+        user.setEmail(rs.getString("Email"));
+        user.setPhoneNumber(rs.getString("PhoneNumber"));
+        user.setBirthday(rs.getDate("Birthday"));
+        user.setCity(rs.getString("City"));
+        user.setAvatar(rs.getBytes("Avatar"));
+        user.setAccountId(rs.getInt("AccountId"));
+        user.setSkills(rs.getString("Skills") == null ? "" : rs.getString("Skills"));
         return user;
     }
 

@@ -15,7 +15,7 @@ public class AdminServlet extends BaseController {
         String path = req.getPathInfo() == null ? "/" : req.getPathInfo();
         switch (path) {
             case "/create-account":
-                render(req, resp, "/admin/account/create", "templete");
+                render(req, resp, "/admin/account/create", "template");
                 break;
             case "/users":
                 render(req, resp, "/admin/users");

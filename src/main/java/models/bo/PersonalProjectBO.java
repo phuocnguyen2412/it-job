@@ -6,11 +6,7 @@ import models.dao.PersonalProjectDAO;
 import java.util.List;
 
 public class PersonalProjectBO {
-    private PersonalProjectDAO personalProjectDAO;
-
-    public PersonalProjectBO(PersonalProjectDAO personalProjectDAO) {
-        this.personalProjectDAO = personalProjectDAO;
-    }
+    PersonalProjectDAO personalProjectDAO = new PersonalProjectDAO();
 
     public List<PersonalProject> getProjectsByUserId(int userId) {
         return personalProjectDAO.getProjectsByUserId(userId);

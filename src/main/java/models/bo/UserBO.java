@@ -1,6 +1,7 @@
 package models.bo;
 
 import models.bean.Certificate;
+import models.bean.Education;
 import models.bean.User;
 import models.dao.UserDAO;
 
@@ -9,11 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserBO {
-    private final UserDAO userDAO;
-
-    public UserBO() {
-        this.userDAO = new UserDAO();
-    }
+    UserDAO userDAO = new UserDAO();
 
     public User mockData() {
         User user = new User();
@@ -32,7 +29,13 @@ public class UserBO {
                 add(new CertificateBO().mockData());
             }
         });
-
+        user.setEducations(new ArrayList<Education>() {
+            {
+                add(new EducationBO().mockData());
+                add(new EducationBO().mockData());
+                add(new EducationBO().mockData());
+            }
+        });
         return user;
 
 

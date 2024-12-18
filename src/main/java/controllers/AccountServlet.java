@@ -63,22 +63,30 @@ public class AccountServlet extends BaseController {
             if (account != null) {
                 request.getSession().setAttribute("account", account);
                 request.getSession().setAttribute("loggedin", true);
-                render(request, response, "/home");
-            } else {
-                request.setAttribute("errorMessage", "Invalid username or password!");
-                render(request, response, "/WEB-INF/pages/login.jsp");
+                response.sendRedirect("http://localhost:8080/demo_jsp_war_exploded/home");
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             request.setAttribute("errorMessage", "Invalid username or password!");
-            render(request, response, "/WEB-INF/pages/login.jsp");
+            render(request, response, "/auth/sign_in");
         }
-
     }
 
-    private void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         //
+        try{
+            int result = accountBO.handleCreateUser(name, email, password);
+            if(result > 0){
+                render(request, response, "/auth/sign_in");
+            }else{
+                render(request, response, "/auth/sign_up");
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
