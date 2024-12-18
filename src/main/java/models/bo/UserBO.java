@@ -6,11 +6,7 @@ import models.dao.UserDAO;
 import java.util.List;
 
 public class UserBO {
-    private UserDAO userDAO;
-
-    public UserBO(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
+    UserDAO userDAO = new UserDAO();
 
     public List<User> getAllUsers() {
         return userDAO.getAllUsers();

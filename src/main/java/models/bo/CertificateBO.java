@@ -6,11 +6,7 @@ import models.dao.CertificateDAO;
 import java.util.List;
 
 public class CertificateBO {
-    private CertificateDAO certificateDAO;
-
-    public CertificateBO(CertificateDAO certificateDAO) {
-        this.certificateDAO = certificateDAO;
-    }
+    CertificateDAO certificateDAO = new CertificateDAO();
 
     public List<Certificate> getCertificatesByUserId(int userId) {
         return certificateDAO.getCertificatesByUserId(userId);
