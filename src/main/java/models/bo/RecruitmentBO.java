@@ -28,7 +28,9 @@ public class RecruitmentBO {
     }
 
     public Recruitment getRecruitmentById(int recruitmentId) {
+       
         Recruitment recruitment = recruitmentDAO.getRecruitmentById(recruitmentId);
+        System.out.println(recruitment);
         Company company = companyBO.getCompanyById(recruitment.getCompanyId());
         ArrayList<CompanyAddress> companyAddresses = recruitmentAddressBO.getCompanyAddress(recruitment.getCompanyId());
         recruitment.setCompany(company);
@@ -36,7 +38,7 @@ public class RecruitmentBO {
         return recruitment;
     }
 
-    public ArrayList<Recruitment> getRecruitmentBySearch(String country, String searchBy, String searchInput){
+    public ArrayList<Recruitment> getRecruitmentBySearch(String country, String searchBy, String searchInput) {
         return recruitmentDAO.getRecruitmentBySearch(country, searchBy, searchInput);
     }
 

@@ -137,18 +137,24 @@
 <div class="container mx-auto py-10">
     <div class="row">
         <div class="col-4 flex-col gap-5">
-
             <% List<Recruitment> recruitments = (List<Recruitment>) request.getAttribute("recruitments");
-                for (Recruitment recruitment : recruitments) {%>
-            <a href="http://localhost:8080/demo_jsp_war_exploded/search?city=0&key=company&value=#&recruitmentId=<%=recruitment.getId()%>">
+                if (recruitments.isEmpty()) {%>
+            <div class="bg-[#fff4e9] border border-[#dedede] rounded-[8px] shadow-[0px_4px_24px_0px_#0000001f] gap-x-3 text-[#121212] leading-[24px] pt-[16px] p-3 mb-4">
+                <h2 class="text-[18px] font-[700] text-[#121212] my-3">Không tìm thấy công việc nào</h2>
+            </div>
+            <% } %>
+
+            <%for (Recruitment recruitment : recruitments) {%>
+            <a href="http://localhost:8080/demo_jsp_war_exploded/search?city=<%=(String) request.getAttribute("city")%>&key=<%=(String) request.getAttribute("key")%>&value=<%=(String) request.getAttribute("value")%>&recruitmentId=
+                    <%=recruitment.getId()%>">
                 <div class=" gap-y-3 flex flex-col bg-[#fff4e9] border border-[#dedede] rounded-[8px] shadow-[0px_4px_24px_0px_#0000001f] gap-x-3 text-[#121212] leading-[24px] pt-[16px] p-3 mb-4">
                     <div class="border-b-2 border-dashed border-gray-500 pb-3">
                         <div class="text-[#a6a6a6] text-[14px]">Đăng 40 ngày trước</div>
 
-                        <h2 class="text-[18px] font-[700] text-[#121212] my-3"><%= recruitment.getPosition()%>
+                        <h2 class="text-[18px] font-[700] text-[#121212] my-3"><%=recruitment.getPosition()%>
                         </h2>
                         <h2 class=""><i
-                                class="bi bi-currency-dollar text-green-500"></i> <%= recruitment.getSalarayRange()%>
+                                class="bi bi-currency-dollar text-green-500"></i> <%=recruitment.getSalarayRange()%>
                         </h2>
                     </div>
                     <div class="flex gap-3 border-b-2 border-dashed border-gray-500 pb-3">
@@ -170,16 +176,16 @@
         <div class="col-8">
             <div class="bg-[#fff] px-[24px] py-[32px] rounded-[8px] text-[#121212] mb-3 shadow-[0px_6px_32px_0px_#00000014]">
                 <div class="border-b-2 border-dashed border-gray-500 pb-4">
-                    <h1 class="text-[28px] font-bold"><%= recruitment_detail.getPosition()%>
+                    <h1 class="text-[28px] font-bold"><%=recruitment_detail.getPosition()%>
                     </h1>
                 </div>
                 <a href="http://localhost:8080/demo_jsp_war_exploded/search/company?id=<%=recruitment_detail.getCompany().getId()%>">
-                    <h2 class="mb-3 text-[24px] font-bold mt-3 text-blue-500"><%= recruitment_detail.getCompany().getName()%>
+                    <h2 class="mb-3 text-[24px] font-bold mt-3 text-blue-500"><%=recruitment_detail.getCompany().getName()%>
                     </h2>
                 </a>
 
 
-                <div class="mb-3 text-[#414042] text-[18px]"><%= recruitment_detail.getSalarayRange()%>
+                <div class="mb-3 text-[#414042] text-[18px]"><%=recruitment_detail.getSalarayRange()%>
                 </div>
                 <form action="http://localhost:8080/demo_jsp_war_exploded/user/create-application" method="post">
                     <input type="hidden" name="recruitmentId" value="<%=recruitment_detail.getId()%>">
@@ -189,7 +195,7 @@
 
                 <div class="mb-3">
                     <% for (CompanyAddress address : recruitment_detail.getAddresses()) { %>
-                    <div class="text-[#414042] mb-2"><i class="bi bi-geo-alt"></i> <%= address.getAddress()%>
+                    <div class="text-[#414042] mb-2"><i class="bi bi-geo-alt"></i> <%=address.getAddress()%>
                     </div>
                     <% } %>
                 </div>
@@ -200,7 +206,7 @@
                     </div>
                     <% } %>
                 </div>
-                <span><i class="bi bi-clock"></i> <%= recruitment_detail.getCreatedAt()%></span>
+                <span><i class="bi bi-clock"></i> <%=recruitment_detail.getCreatedAt()%></span>
             </div>
             <div class="bg-[#fff] px-[24px] py-[32px] rounded-[8px] text-[#121212] mb-3 shadow-[0px_6px_32px_0px_#00000014]">
                 <div class="border-b-2 border-dashed border-gray-500 pb-4 mb-3">
@@ -208,7 +214,7 @@
                     </h1>
                 </div>
                 <p>
-                    <%= recruitment_detail.getJobDescription()%>
+                    <%=recruitment_detail.getJobDescription()%>
                 </p>
 
             </div>
@@ -218,7 +224,7 @@
                     </h1>
                 </div>
                 <% for (String benefit : recruitment_detail.getAllBenefits()) { %>
-                <div>- <%= benefit%>
+                <div>- <%=benefit%>
                 </div>
                 <% } %>
             </div>
@@ -228,7 +234,7 @@
                     </h1>
                 </div>
                 <% for (String requirement : recruitment_detail.getRequirementList()) { %>
-                <div>- <%= requirement%>
+                <div>- <%=requirement%>
                 </div>
                 <% } %>
             </div>

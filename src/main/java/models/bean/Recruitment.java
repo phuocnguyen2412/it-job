@@ -157,6 +157,7 @@ public class Recruitment {
                 ", jobDescription='" + jobDescription + '\'' +
                 ", addresses=" + addresses +
                 ", skills='" + skills + '\'' +
+                ", company=" + company +
                 '}';
     }
 }

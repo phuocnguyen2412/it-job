@@ -37,16 +37,22 @@ public class SearchServlet extends BaseController {
                 String recruitmentId = req.getParameter("recruitmentId");
                 Recruitment recruitment;
 
+                System.out.println(recruitmentId);
                 if (recruitmentId != null) {
-                    recruitment = recruitmentBO.getRecruitmentById(Integer.parseInt(recruitmentId));
-                    recruitment.setId(Integer.parseInt(recruitmentId));
-                    req.setAttribute("recruitment", recruitment);
+
+                    recruitment = recruitmentBO.getRecruitmentById(Integer.parseInt(recruitmentId.trim()));
+
+
                 } else {
                     recruitment = recruitments.get(0);
                 }
-
+                System.out.println(recruitment);
                 req.setAttribute("recruitments", recruitments);
                 req.setAttribute("recruitment", recruitment);
+                req.setAttribute("city", city);
+                req.setAttribute("key", key);
+                req.setAttribute("value", value);
+
                 render(req, resp, "/search");
                 break;
             case "/company/detail":
