@@ -1,11 +1,5 @@
 package controllers;
 
-<<<<<<< HEAD
-=======
-import java.io.IOException;
-import java.sql.SQLException;
-
->>>>>>> be82e45205b05fede78c4253cfaba86f850bfda3
 import exception.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,19 +7,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.bean.Account;
 import models.bo.AccountBO;
-import models.dao.AccountDAO;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(name = "AccountServlet", urlPatterns = {"/auth/*"})
 public class AccountServlet extends BaseController {
-    private AccountBO accountBO;
-
-    public void init() throws ServletException {
-        super.init();
-        accountBO = new AccountBO(new AccountDAO()); // Tạo đối tượng AccountBO
-    }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        boolean loggedIn = request.getSession().getAttribute("loggedin") != null
@@ -56,18 +43,13 @@ public class AccountServlet extends BaseController {
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-<<<<<<< HEAD
-        Account account = accountBO.checkSignIn(email, password);
-=======
         AccountBO accountBO = new AccountBO();
         Account account;
-        try{
+        try {
             account = accountBO.checkSignIn(email, password);
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
->>>>>>> be82e45205b05fede78c4253cfaba86f850bfda3
         if (account != null) {
             request.getSession().setAttribute("account", account);
             request.getSession().setAttribute("loggedin", true);
@@ -82,6 +64,6 @@ public class AccountServlet extends BaseController {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        //
+
     }
 }
