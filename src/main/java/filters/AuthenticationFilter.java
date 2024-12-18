@@ -14,7 +14,7 @@ import models.bo.UserBO;
 
 import java.io.IOException;
 
-@WebFilter({})
+@WebFilter("/*")
 public class AuthenticationFilter implements Filter {
 
     @Override
@@ -29,9 +29,9 @@ public class AuthenticationFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         HttpSession session = httpRequest.getSession(false);
-
+        Object _account = session.getAttribute("account");
         Account account = (Account) session.getAttribute("account");
-
+        System.out.println(_account == account);
 
         if (session == null || session.getAttribute("userId") == null || !(Boolean) session.getAttribute("isSignedIn")) {
             throw new UnauthorizedException("Bạn phải đăng nhập!");
@@ -44,6 +44,7 @@ public class AuthenticationFilter implements Filter {
             if (company == null) {
                 throw new UnauthorizedException("Tài khoản không tồni");
             }
+            System.out.println(company.getId());
             session.setAttribute("companyId", company.getId());
         }
 
@@ -52,6 +53,7 @@ public class AuthenticationFilter implements Filter {
             if (user == null) {
                 throw new UnauthorizedException("Tài khoản không tồn tại");
             }
+            System.out.println(user.getId());
             session.setAttribute("userId", user.getId());
         }
 
