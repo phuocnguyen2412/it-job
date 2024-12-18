@@ -26,6 +26,10 @@ public class RecruitmentBO {
         return recruitmentDAO.getRecruitmentById(recruitmentId);
     }
 
+    public ArrayList<Recruitment> getRecruitment(String country, String searchBy, String searchInput){
+        return recruitmentDAO.getRecruitment(country, searchBy, searchInput);
+    }
+
     public Recruitment mockRecruitment() {
         Recruitment recruitment = new Recruitment();
         recruitment.setCreatedAt(new java.sql.Timestamp(System.currentTimeMillis()));

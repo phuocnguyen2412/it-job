@@ -100,24 +100,26 @@ public class RecruitmentDAO {
         return result;
     }
 
-    public ArrayList<Recruitment> getRecruitment(String city, String searchBy, String input){
+    public ArrayList<Recruitment> getRecruitment(String country, String searchBy, String searchInput){
         ArrayList<Recruitment> result = new ArrayList<Recruitment>();
         String query = """
                         SELECT * FROM Recruitment 
                         JOIN Company ON Company.Id = Recruitment.CompanyId 
-                            WHERE 
+                        WHERE 
                 """;
-
+        if(!country.equals("0")) query += "Country = ?";
         if(searchBy.equals("position")){
-            query += "Position = ? ";
+            query += "AND Position = ? ";
         }
         else{
-            query += "Company.Name = ?";
+            query += "AND Company.Name = ?";
         }
 
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
+            stmt.setString(1, country);
+            stmt.setString(2, searchInput);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 Recruitment recruitment = new Recruitment();
