@@ -53,26 +53,26 @@ public class SearchServlet extends BaseController {
                 req.setAttribute("recruitment", recruitment);
                 render(req, resp, "/search");
                 break;
-            case "/company/detail":
-                get_detail(req, resp);
-                break;
+//            case "/company/detail":
+//                get_detail(req, resp);
+//                break;
             default:
                 render(req, resp, "/search");
                 break;
         }
     }
 
-    private void get_detail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String companyId = req.getParameter("id");
-        System.out.println(companyId);
-        if (companyId == null) {
-            throw new NotFoundException();
-        }
-        Company company = new CompanyBO().mockCompany();
-
-        List<Recruitment> recruitments = new RecruitmentBO().mockRecruitments();
-        req.setAttribute("recruitments", recruitments);
-        req.setAttribute("company", company);
-        render(req, resp, "/company/detail");
-    }
+//    private void get_detail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        String companyId = req.getParameter("id");
+//        System.out.println(companyId);
+//        if (companyId == null) {
+//            throw new NotFoundException();
+//        }
+//        Company company = new CompanyBO().mockCompany();
+//
+//        List<Recruitment> recruitments = new RecruitmentBO().mockRecruitments();
+//        req.setAttribute("recruitments", recruitments);
+//        req.setAttribute("company", company);
+//        render(req, resp, "/company/detail");
+//    }
 }

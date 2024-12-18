@@ -1,5 +1,6 @@
 package filters;
 
+import com.google.protobuf.Message;
 import exception.UnauthorizedException;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -31,38 +32,25 @@ public class AuthorizationFilter implements Filter {
         String path = request.getRequestURI();
 
         // Phân quyền dựa trên URL và role
-        if (path.startsWith(request.getContextPath() + "/admin/*")) { // URL dành cho Admin
+        if (path.startsWith(request.getContextPath() + "/admin/")) { // URL dành cho Admin
             if (role == null || !role.equals("Admin")) {
-                throw new UnauthorizedException();
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied: Chỉ Admin mới được sử dụng chức năng này!");
             }
         }
-        if (path.startsWith(request.getContextPath() + "/company/*")) { // URL dành cho Company
+        if (path.startsWith(request.getContextPath() + "/company/")) { // URL dành cho Company
             if (role == null || !role.equals("Company")) {
-                throw new UnauthorizedException();
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied: Chỉ Company mới được sử dụng chức năng này!");
             }
         }
-        if (path.startsWith(request.getContextPath() + "/user/*")) { // URL dành cho Employee
+        if (path.startsWith(request.getContextPath() + "/user/")) { // URL dành cho Employee
             if (role == null || !role.equals("Employee")) {
-                throw new UnauthorizedException();
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied: Chỉ Employee mới được sử dụng chức năng này!");
             }
         }
-
-        if (path.startsWith(request.getContextPath() + "/auth")) { // URL cho auth (public)
-            if (session != null && session.getAttribute("loggedin") != null) {
-                response.sendRedirect(request.getContextPath() + "/home"); // Người dùng đã đăng nhập
-                return;
-            }
-        }
-        if (path.startsWith(request.getContextPath() + "/auth")) { // URL cho auth (public)
-            if (session != null && session.getAttribute("loggedin") != null) {
-                response.sendRedirect(request.getContextPath() + "/home"); // Người dùng đã đăng nhập
-                return;
-            }
-        }
-
 
         chain.doFilter(request, response); // Tiếp tục xử lý request
     }
+
 
     @Override
     public void destroy() {
