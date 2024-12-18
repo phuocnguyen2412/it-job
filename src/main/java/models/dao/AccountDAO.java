@@ -8,7 +8,9 @@ import java.sql.*;
 
 public class AccountDAO {
     public Account getAccount(String email, byte[] password) {
-        String query = "SELECT * FROM Account WHERE Email = ? AND Password = ?";
+        String query = """
+        SELECT a.*, r.Name AS RoleName FROM ITJOB.Account a JOIN ITJOB.Role r ON a.RoleId = r.Id 
+        WHERE a.Email = ? AND a.Password = ?""";
         Account result = new Account();
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -22,6 +24,7 @@ public class AccountDAO {
                     result.setEmail(rs.getString("Email"));
                     result.setPassword(rs.getBytes("Password"));
                     result.setRoleId(rs.getInt("RoleId"));
+                    result.setRoleName(rs.getString("RoleName"));
                     result.setIsLocked(rs.getInt("isLocked"));
                 }
             }

@@ -32,7 +32,6 @@ public class Account {
         this.id = id;
     }
 
-    public String getEmail() { return email;}
     public int getAdminId() {
         return adminId;
     }
