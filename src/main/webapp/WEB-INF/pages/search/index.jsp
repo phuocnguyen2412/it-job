@@ -181,8 +181,12 @@
 
                 <div class="mb-3 text-[#414042] text-[18px]"><%= recruitment_detail.getSalarayRange()%>
                 </div>
-                <button class="mb-3 btn w-full text-center rounded-[8px] py-[11px] px-[24px] bg-red-500">Apply now
-                </button>
+                <form action="http://localhost:8080/demo_jsp_war_exploded/user/create-application" method="post">
+                    <input type="hidden" name="recruitmentId" value="<%=recruitment_detail.getId()%>">
+                    <button class="mb-3 btn w-full text-center rounded-[8px] py-[11px] px-[24px] bg-red-500">Apply now
+                    </button>
+                </form>
+
                 <div class="mb-3">
                     <% for (CompanyAddress address : recruitment_detail.getAddresses()) { %>
                     <div class="text-[#414042] mb-2"><i class="bi bi-geo-alt"></i> <%= address.getAddress()%>
