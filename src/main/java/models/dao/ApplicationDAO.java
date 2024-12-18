@@ -16,7 +16,7 @@ public class ApplicationDAO {
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, application.getUserId());
             stmt.setInt(2, application.getRecruitmentId());
-            stmt.setString(3, application.getCv());
+            stmt.setString(3, "");
             stmt.setString(4, "Pending");
             stmt.executeUpdate();
         } catch (SQLException e) {

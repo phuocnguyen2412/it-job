@@ -51,7 +51,7 @@
 <div class="modal fade" id="addProjectModal" tabindex="-1" aria-labelledby="addProjectModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="addProject" method="post">
+            <form action="http://localhost:8080/demo_jsp_war_exploded/user/profile/project" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addProjectModalLabel">Thêm dự án mới</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

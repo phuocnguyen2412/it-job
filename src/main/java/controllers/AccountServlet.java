@@ -80,9 +80,9 @@ public class AccountServlet extends BaseController {
         try{
             int result = accountBO.handleCreateUser(name, email, password);
             if(result > 0){
-                render(request, response, "/auth/sign_in");
+                response.sendRedirect("http://localhost:8080/demo_jsp_war_exploded/auth/login");
             }else{
-                render(request, response, "/auth/sign_up");
+                response.sendRedirect("http://localhost:8080/demo_jsp_war_exploded/auth/register");
             }
         }
         catch (Exception e) {

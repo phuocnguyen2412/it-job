@@ -53,4 +53,7 @@ public class ApplicationBO {
         }
         return  result;
     }
+    public void handleCreateApplication(Application application){
+        applicationDAO.apply(application);
+    }
 }

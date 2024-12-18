@@ -9,6 +9,7 @@ import models.bean.Application;
 import models.bean.PersonalProject;
 import models.bean.User;
 import models.bo.ApplicationBO;
+import models.bo.PersonalProjectBO;
 import models.bo.UserBO;
 
 import java.io.IOException;
@@ -20,11 +21,14 @@ import java.util.ArrayList;
 public class UserServlet extends BaseController {
     private UserBO userBO;
     private ApplicationBO applicationBO;
+    private PersonalProjectBO personalProjectBO;
 
     @Override
     public void init() throws ServletException {
         userBO = new UserBO();
         applicationBO = new ApplicationBO();
+        personalProjectBO = new PersonalProjectBO();
+        a
     }
 
     @Override
@@ -64,24 +68,27 @@ public class UserServlet extends BaseController {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getPathInfo() == null ? "/" : req.getPathInfo();
-        String userId = (String) req.getSession().getAttribute("userId");
+        int userId = (int) req.getSession().getAttribute("userId");
         switch (path) {
             case "/profile/information" -> {
                 edit_infomation(req, resp);
             }
             case "/profile/introduce" -> {
                 String introduce = req.getParameter("introduce");
-                User user = new User();
+                User user = userBO.getUserById(userId);
                 user.setIntroduce(introduce);
-                user.setId(Integer.parseInt(userId));
                 userBO.updateUser(user);
             }
             case "/create-application" -> {
                 int recruitmentId = Integer.parseInt(req.getParameter("recruitmentId"));
                 Application application = new Application();
-                application.setUserId(Integer.parseInt(userId));
+                application.setUserId(userId);
                 application.setRecruitmentId(recruitmentId);
                 // tạo application
+                applicationBO.handleCreateApplication(application);
+            }
+            case "/profile/project" -> {
+                add_project(req, resp);
             }
             default -> {
                 throw new NotFoundException();
@@ -121,6 +128,7 @@ public class UserServlet extends BaseController {
         project.setLink(link);
         project.setUserId((int) request.getSession().getAttribute("userId"));
 
+        personalProjectBO.addProject(project);
 
         resp.sendRedirect("http://localhost:8080/demo_jsp_war_exploded/user/profile");
     }
