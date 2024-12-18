@@ -39,5 +39,5 @@ build/
 .DS_Store
 .fake
 data/mysql/mysql.sock
-
+data
 
