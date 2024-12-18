@@ -75,7 +75,7 @@ public class RecruitmentDAO {
     }
 
 
-    public Recruitment getRecruitmentById(int recruitmentId) throws SQLException{
+    public Recruitment getRecruitmentById(int recruitmentId) {
         String query = "SELECT * FROM Recruitment WHERE Id = ?";
         Recruitment result = new Recruitment();
         try (Connection conn = Database.getConnection();
@@ -100,39 +100,41 @@ public class RecruitmentDAO {
         return result;
     }
 
-    public ArrayList<Recruitment> getRecruitment(String country, String searchBy, String searchInput){
+    public ArrayList<Recruitment> getRecruitment(String countryInput, String searchBy, String searchInput){
         ArrayList<Recruitment> result = new ArrayList<Recruitment>();
+        String country = "";
         String query = """
                         SELECT * FROM Recruitment 
                         JOIN Company ON Company.Id = Recruitment.CompanyId 
-                        WHERE 
+                        WHERE Country LIKE ?
                 """;
-        if(!country.equals("0")) query += "Country = ?";
+        if(!countryInput.equals("0")) country = countryInput;
         if(searchBy.equals("position")){
-            query += "AND Position = ? ";
+            query += "AND Position LIKE ? ";
         }
         else{
-            query += "AND Company.Name = ?";
+            query += "AND Company.Name LIKE ?";
         }
 
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, country);
-            stmt.setString(2, searchInput);
-
+            stmt.setString(1, "%" + country + "%");
+            stmt.setString(2, "%" + searchInput + "%");
             try (ResultSet rs = stmt.executeQuery()) {
-                Recruitment recruitment = new Recruitment();
-                recruitment.setId(rs.getInt("Id"));
-                recruitment.setCompanyId(rs.getInt("CompanyId"));
-                recruitment.setPosition(rs.getString("Position"));
-                recruitment.setCreatedAt(rs.getTimestamp("CreatedAt"));
-                recruitment.setBenefit(rs.getString("Benefit"));
-                recruitment.setJobDescription(rs.getString("JobDescription"));
-                recruitment.setRangeOfSalaryFrom(rs.getInt("RangeOfSalaryFrom"));
-                recruitment.setRangeOfSalaryTo(rs.getInt("RangeOfSalaryTo"));
-                recruitment.setRequirement(rs.getString("Requirement"));
-                result.add(recruitment);
+                while(rs.next()){
+                    Recruitment recruitment = new Recruitment();
+                    recruitment.setId(rs.getInt("Id"));
+                    recruitment.setCompanyId(rs.getInt("CompanyId"));
+                    recruitment.setPosition(rs.getString("Position"));
+                    recruitment.setCreatedAt(rs.getTimestamp("CreatedAt"));
+                    recruitment.setBenefit(rs.getString("Benefit"));
+                    recruitment.setJobDescription(rs.getString("JobDescription"));
+                    recruitment.setRangeOfSalaryFrom(rs.getInt("RangeOfSalaryFrom"));
+                    recruitment.setRangeOfSalaryTo(rs.getInt("RangeOfSalaryTo"));
+                    recruitment.setRequirement(rs.getString("Requirement"));
+                    result.add(recruitment);
+                }
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

@@ -1,5 +1,6 @@
 package controllers;
 
+
 import exception.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,6 +14,13 @@ import java.sql.SQLException;
 
 @WebServlet(name = "AccountServlet", urlPatterns = {"/auth/*"})
 public class AccountServlet extends BaseController {
+    private AccountBO accountBO;
+
+    public void init() throws ServletException {
+        super.init();
+        accountBO = new AccountBO();
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        boolean loggedIn = request.getSession().getAttribute("loggedin") != null
@@ -31,18 +39,16 @@ public class AccountServlet extends BaseController {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path = request.getPathInfo() == null ? "/" : request.getPathInfo();
-        try{
-        switch (path) {
-            case "/login" -> login(request, response);
-            case "/register" -> register(request, response);
-            default -> throw new NotFoundException();
-        }
-        }catch (Exception e){
+        try {
+            String path = request.getPathInfo() == null ? "/" : request.getPathInfo();
+            switch (path) {
+                case "/login" -> login(request, response);
+                case "/register" -> register(request, response);
+                default -> throw new NotFoundException();
+            }
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-
-
+    }
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -82,6 +88,5 @@ public class AccountServlet extends BaseController {
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
 }

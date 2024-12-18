@@ -21,10 +21,10 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-2">
+        <div class="col-3">
             <%@ include file="side_bar.jsp" %>
         </div>
-        <div class="col-10">
+        <div class="col-9">
             <jsp:include page="${contentPage}"/>
         </div>
     </div>

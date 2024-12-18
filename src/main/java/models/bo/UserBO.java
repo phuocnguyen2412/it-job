@@ -45,7 +45,7 @@ public class UserBO {
         return userDAO.getAllUsers();
     }
 
-    public User getUserById(int id) throws SQLException {
+    public User getUserById(int id) {
         return userDAO.getUserById(id);
     }
 
@@ -53,7 +53,7 @@ public class UserBO {
         return userDAO.addUser(user);
     }
 
-    public boolean updateUser(User user) throws SQLException {
+    public boolean updateUser(User user) {
         return userDAO.updateUser(user);
     }
 

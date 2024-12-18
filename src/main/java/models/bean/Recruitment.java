@@ -1,7 +1,6 @@
 package models.bean;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Recruitment {
     private int id;
@@ -30,34 +29,6 @@ public class Recruitment {
         this.requirement = requirement;
         this.benefit = benefit;
         this.jobDescription = jobDescription;
-    }
-
-    public String getTimeAgo() {
-        long currentTime = System.currentTimeMillis();
-        long duration = currentTime - this.createdAt.getTime();
-
-        if (duration < 0) {
-            return "Thời gian không hợp lệ";
-        }
-
-        long seconds = TimeUnit.MILLISECONDS.toSeconds(duration);
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(duration);
-        long hours = TimeUnit.MILLISECONDS.toHours(duration);
-        long days = TimeUnit.MILLISECONDS.toDays(duration);
-
-        if (seconds < 60) {
-            return seconds + " giây vừa rồi";
-        } else if (minutes < 60) {
-            return minutes + " phút vừa rồi";
-        } else if (hours < 24) {
-            return hours + " tiếng vừa rồi";
-        } else if (days < 30) {
-            return days + " ngày vừa rồi";
-        } else if (days < 365) {
-            return (days / 30) + " tháng vừa rồi";
-        } else {
-            return (days / 365) + " năm vừa rồi";
-        }
     }
 
     public Company getCompany() {

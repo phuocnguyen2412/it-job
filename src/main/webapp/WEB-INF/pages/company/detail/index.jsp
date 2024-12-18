@@ -68,7 +68,27 @@
             </div>
 
         </div>
+        <div class="flex justify-center align-center">
+            <div>
+                4.1
+            </div>
+            <div class="">
+                <div class="star-rating">
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1" class="star">&#9733;</label>
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2" class="star">&#9733;</label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3" class="star">&#9733;</label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4" class="star">&#9733;</label>
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5" class="star">&#9733;</label>
+                </div>
+                <p>131 reviews</p>
+            </div>
 
+        </div>
     </div>
 </div>
 
@@ -175,7 +195,8 @@
                                 <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
                                 <span class="text-lg font-bold text-[#121212]">Da Nang</span>
                             </div>
-                            <p class="text-sm text-gray-600 mt-1">260 Lý Thái Tông, Hòa Minh, Liên Chiểu, Đà Nẵng</p>
+                            <p class="text-sm text-gray-600 mt-1">Vinh Trung Plaza, 255 - 257, Hưng Vương, Thanh Khe, Da
+                                Nang</p>
                         </div>
                     </div>
 
@@ -198,8 +219,7 @@
                 for (Recruitment recruitment : recruitments) {%>
             <div class=" gap-y-3 flex flex-col bg-[#fff4e9] border border-[#dedede] rounded-[8px] shadow-[0px_4px_24px_0px_#0000001f] gap-x-3 text-[#121212] leading-[24px] pt-[16px] p-3 mb-4">
                 <div class="border-b-2 border-dashed border-gray-500 pb-3">
-                    <div class="text-[#a6a6a6] text-[14px]"><%= recruitment.getTimeAgo()%>
-                    </div>
+                    <div class="text-[#a6a6a6] text-[14px]">Đăng 40 ngày trước</div>
 
                     <h2 class="text-[18px] font-[700] text-[#121212] my-3"><%= recruitment.getPosition()%>
                     </h2>

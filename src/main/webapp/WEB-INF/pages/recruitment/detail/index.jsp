@@ -52,7 +52,7 @@
                     </div>
                     <% } %>
                 </div>
-                <span><i class="bi bi-clock"></i> <%= recruitment.getTimeAgo()%></span>
+                <span><i class="bi bi-clock"></i> <%= recruitment.getCreatedAt()%></span>
             </div>
             <div class="bg-[#fff] px-[24px] py-[32px] rounded-[8px] text-[#121212] mb-3 shadow-[0px_6px_32px_0px_#00000014]">
                 <div class="border-b-2 border-dashed border-gray-500 pb-4 mb-3">

@@ -8,34 +8,35 @@ import java.util.ArrayList;
 
 public class CompanyBO {
     CompanyDAO companyDAO = new CompanyDAO();
-
     public int handleCreateCompany(Company company) throws SQLException {
         return companyDAO.handleCreateCompany(company);
     }
 
-    public int handleEditCompany(Company company) throws SQLException {
+    public int handleEditCompany(Company company) throws SQLException{
         return companyDAO.handleEditCompany(company);
     }
 
-    public int handleDeleteCompany(int companyId) throws SQLException {
+    public int handleDeleteCompany(int companyId) throws SQLException{
         return companyDAO.handleDeleteCompany(companyId);
     }
 
-    public Company getCompanyById(int companyId) throws SQLException {
+    public Company getCompanyById(int companyId) {
         return companyDAO.getCompanyById(companyId);
     }
 
-    public ArrayList<Company> getCompanyList() throws SQLException {
+    public ArrayList<Company> getCompanyList() throws SQLException{
         return companyDAO.getCompanyList();
     }
 
-    public ArrayList<Company> searchCompany(String city, String inputSearch) throws SQLException {
+    public ArrayList<Company> searchCompany(String city, String inputSearch) throws SQLException{
         return companyDAO.searchCompany(city, inputSearch);
     }
 
+    public Company getCompanyByAccountId(int accountId){
+        return companyDAO.getCompanyByAccountId(accountId);
+    }
     public Company mockCompany() {
         Company company = new Company();
-        company.setCountry("Vietnam");
         company.setName("FPT Software");
         company.setEmail("Huynhphuocnguyen@gmail.com");
         company.setIndustry("Software Development Outsourcing");
