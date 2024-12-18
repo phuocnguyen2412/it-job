@@ -75,7 +75,7 @@ public class RecruitmentDAO {
     }
 
 
-    public Recruitment getRecruitmentById(int recruitmentId) {
+    public Recruitment  getRecruitmentById(int recruitmentId) {
         String query = "SELECT * FROM Recruitment WHERE Id = ?";
         Recruitment result = new Recruitment();
         try (Connection conn = Database.getConnection();
@@ -84,7 +84,9 @@ public class RecruitmentDAO {
             stmt.setInt(1, recruitmentId);
 
             try (ResultSet rs = stmt.executeQuery()) {
-                result = resultSetToRecruitment(rs);
+                while(rs.next()){
+                    result = resultSetToRecruitment(rs);
+                }
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
