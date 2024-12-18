@@ -20,7 +20,7 @@ public class CompanyBO {
         return companyDAO.handleDeleteCompany(companyId);
     }
 
-    public Company getCompanyById(int companyId) throws SQLException{
+    public Company getCompanyById(int companyId) {
         return companyDAO.getCompanyById(companyId);
     }
 
@@ -32,6 +32,9 @@ public class CompanyBO {
         return companyDAO.searchCompany(city, inputSearch);
     }
 
+    public Company getCompanyByAccountId(int accountId){
+        return companyDAO.getCompanyByAccountId(accountId);
+    }
     public Company mockCompany() {
         Company company = new Company();
         company.setName("FPT Software");

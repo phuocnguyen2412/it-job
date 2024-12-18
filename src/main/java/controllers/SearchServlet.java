@@ -11,10 +11,12 @@ import models.bean.Recruitment;
 import models.bo.CompanyAddressBO;
 import models.bo.CompanyBO;
 import models.bo.RecruitmentBO;
+import models.dao.RecruitmentDAO;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @WebServlet(name = "SearchServlet", urlPatterns = {"/search/*"})
 public class SearchServlet extends BaseController {
@@ -30,20 +32,17 @@ public class SearchServlet extends BaseController {
         String path = req.getPathInfo() == null ? "/" : req.getPathInfo();
         switch (path) {
             case "/":
-                List<Recruitment> recruitments = new ArrayList<>() {
-                    {
-                        add(recruitmentBO.mockRecruitment());
-                        add(recruitmentBO.mockRecruitment());
-                        add(recruitmentBO.mockRecruitment());
-                        add(recruitmentBO.mockRecruitment());
-                    }
-                };
+                String key = req.getParameter("key");
+                String value = req.getParameter("value");
+                String city = req.getParameter("city");
+
+                List<Recruitment> recruitments = recruitmentBO.getRecruitment(city, key, value);
 
                 String recruitmentId = req.getParameter("recruitmentId");
                 Recruitment recruitment;
 
                 if (recruitmentId != null) {
-                    recruitment = recruitmentBO.mockRecruitment();
+                    recruitment = recruitmentBO.getRecruitmentById(Integer.parseInt(recruitmentId));
                     recruitment.setId(Integer.parseInt(recruitmentId));
                     req.setAttribute("recruitment", recruitment);
                 } else {
@@ -68,6 +67,7 @@ public class SearchServlet extends BaseController {
         if (companyId == null) {
             throw new NotFoundException();
         }
+
         Company company = new CompanyBO().mockCompany();
         Recruitment recruitment = new Recruitment();
         recruitment.setPosition("Java Developer");
@@ -90,6 +90,9 @@ public class SearchServlet extends BaseController {
                 add(recruitment);
             }
         };
+
+//        RecruitmentDAO recruitmentDAO = new RecruitmentDAO();
+//        ArrayList<Recruitment> recruitments = recruitmentDAO.getRecruitment();
         req.setAttribute("recruitments", recruitments);
         req.setAttribute("company", company);
         render(req, resp, "/company/detail");

@@ -6,6 +6,10 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import models.bean.Account;
+import models.bean.Company;
+import models.bo.CompanyBO;
+import models.dao.CompanyDAO;
 
 import java.io.IOException;
 
@@ -25,10 +29,18 @@ public class AuthenticationFilter implements Filter {
 
         HttpSession session = httpRequest.getSession(false);
 
+        Account account = (Account) session.getAttribute("account");
+
+
         if (session == null || session.getAttribute("userId") == null || !(Boolean) session.getAttribute("isSignedIn")) {
             throw new UnauthorizedException("Bạn phải đăng nhập!");
         }
 
+        if(account.getRoleName().equals("Company")){
+           CompanyBO companyBO = new CompanyBO();
+           Company company = companyBO.getCompanyByAccountId(account.getId());
+           session.setAttribute("companyId", company.getId());
+        }
 
         chain.doFilter(request, response);
     }

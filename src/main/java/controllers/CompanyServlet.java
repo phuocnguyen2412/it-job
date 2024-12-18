@@ -166,6 +166,7 @@ public class CompanyServlet extends BaseController {
 
     private void post_edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Company company = new Company();
+        company.setId((int)req.getSession().getAttribute("companyId"));
         company.setName(req.getParameter("name"));
         company.setEmail(req.getParameter("email"));
         company.setIndustry(req.getParameter("industry"));

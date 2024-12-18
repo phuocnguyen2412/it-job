@@ -79,13 +79,31 @@ public class CompanyDAO {
         return result;
     }
 
-    public Company getCompanyById(int companyId) throws SQLException{
+    public Company getCompanyById(int companyId) {
         String query = "SELECT * FROM Company WHERE Id = ?";
         Company result = new Company();
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, companyId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    result = resultSetToCompany(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    public Company getCompanyByAccountId(int accountId) {
+        String query = "SELECT * FROM Company WHERE AccountId = ?";
+        Company result = new Company();
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, accountId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     result = resultSetToCompany(rs);
