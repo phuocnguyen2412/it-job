@@ -6,12 +6,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.bean.Company;
-import models.bean.CompanyAddress;
 import models.bean.Recruitment;
-import models.bo.CompanyAddressBO;
 import models.bo.CompanyBO;
 import models.bo.RecruitmentBO;
-import models.dao.RecruitmentDAO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,29 +65,6 @@ public class SearchServlet extends BaseController {
         }
 
         Company company = new CompanyBO().getCompanyById(Integer.parseInt(companyId));
-//        Recruitment recruitment = new Recruitment();
-//        recruitment.setPosition("Java Developer");
-//        recruitment.setJobDescription("Develop software applications using Java programming language");
-//        recruitment.setRequirement("At least 1 year of experience in Java programming");
-//        recruitment.setRangeOfSalaryFrom(1000);
-//        recruitment.setRangeOfSalaryTo(2000);
-//        recruitment.setSkills("java,c++,c#,python,javascript");
-//        recruitment.setBenefit("13th month salary, health insurance, annual leave");
-//        recruitment.setAddresses(new ArrayList<>() {
-//            {
-//                add(new CompanyAddressBO().mockAdress());
-//                add(new CompanyAddress(1, 1, "Ha Noi", "FPT Software Building"));
-//            }
-//        });
-//
-//        ArrayList<Recruitment> recruitments = new ArrayList<>() {
-//            {
-//                add(recruitment);
-//                add(recruitment);
-//                add(recruitment);
-//            }
-//        };
-
         ArrayList<Recruitment> recruitments = recruitmentBO.getRecruitment();
 
         req.setAttribute("recruitments", recruitments);

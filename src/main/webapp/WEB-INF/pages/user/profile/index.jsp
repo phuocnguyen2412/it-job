@@ -25,17 +25,10 @@
         <%@include file="information.jsp" %>
         <%--        Giois thieju--%>
         <%@include file="introduce.jsp" %>
-
         <!-- Học vấn -->
         <%@include file="education.jsp" %>
-
         <!-- Project -->
         <%@include file="project.jsp" %>
-
-        <!-- Giấy chứng nhận -->
-        <%@include file="certificate.jsp" %>
-        <!-- Giải thưởng -->
-        <%@include file="award.jsp" %>
     </div>
 </div>
 <%@include file="/WEB-INF/layouts/footer.jsp" %>

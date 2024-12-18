@@ -62,6 +62,10 @@
             </button>
         </div>
         <div class="card-body bg-light">
+            <% if (user.getEducations().isEmpty()) { %>
+            <p>Chưa có thông tin học vấn</p>
+            <% } else { %>
+
             <% for (Education education : user.getEducations()) { %>
             <div class="border-b-2 border-dashed my-2 py-2">
                 <div class="flex justify-between j items-center mb-2">
@@ -82,7 +86,8 @@
                 </p>
                 <span> <%= education.getDateStart()%> - <%= education.getDateEnd()%> </span>
             </div>
-            <% } %>
+            <% }
+            } %>
         </div>
     </div>
 </div>
