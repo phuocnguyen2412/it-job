@@ -29,7 +29,7 @@ public class UserServlet extends BaseController {
             case "/profile":
                 User user = userBO.mockData();
                 req.setAttribute("user", user);
-                render(req, resp, "/user/profile");
+                render(req, resp, "/user/profile", "template");
                 break;
             case "/register":
                 render(req, resp, "/WEB-INF/pages/register.jsp");

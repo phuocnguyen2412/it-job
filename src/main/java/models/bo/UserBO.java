@@ -1,6 +1,7 @@
 package models.bo;
 
 import models.bean.Certificate;
+import models.bean.Education;
 import models.bean.User;
 import models.dao.UserDAO;
 
@@ -28,7 +29,13 @@ public class UserBO {
                 add(new CertificateBO().mockData());
             }
         });
-
+        user.setEducations(new ArrayList<Education>() {
+            {
+                add(new EducationBO().mockData());
+                add(new EducationBO().mockData());
+                add(new EducationBO().mockData());
+            }
+        });
         return user;
 
 

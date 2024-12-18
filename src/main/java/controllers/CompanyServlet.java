@@ -5,9 +5,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import models.bean.Application;
 import models.bean.Company;
 import models.bean.CompanyAddress;
 import models.bean.Recruitment;
+import models.bo.ApplicationBO;
+import models.bo.CompanyAddressBO;
+import models.bo.CompanyBO;
 import models.bo.CompanyAddressBO;
 import models.bo.CompanyBO;
 import models.bo.RecruitmentBO;
@@ -18,6 +22,19 @@ import java.util.List;
 
 @WebServlet(name = "CompanyServlet", urlPatterns = {"/company/*"})
 public class CompanyServlet extends BaseController {
+    private RecruitmentBO recruitmentBO;
+    private CompanyAddressBO companyAddressBO;
+    private ApplicationBO applicationBO;
+    private CompanyBO companyBO;
+
+    @Override
+    public void init() throws ServletException {
+        companyBO = new CompanyBO();
+        companyAddressBO = new CompanyAddressBO();
+        recruitmentBO = new RecruitmentBO();
+        applicationBO = new ApplicationBO();
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getPathInfo() == null ? "/" : req.getPathInfo();
@@ -43,19 +60,10 @@ public class CompanyServlet extends BaseController {
                 get_edit(req, resp);
                 break;
             case "/list-recruitment":
-                System.out.println("List recruitment");
-                Recruitment recruitment = new RecruitmentBO().mockRecruitment();
-
-                List<Recruitment> recruitments = new ArrayList<>() {
-                    {
-                        add(recruitment);
-                        add(recruitment);
-                        add(recruitment);
-                        add(recruitment);
-                    }
-                };
-                req.setAttribute("recruitments", recruitments);
-                render(req, resp, "/company/recruitment/list", "template");
+                get_list_recruitment(req, resp);
+                break;
+            case "/list-application":
+                get_list_application(req, resp);
                 break;
             default:
                 System.out.println("Not found");
@@ -85,6 +93,43 @@ public class CompanyServlet extends BaseController {
         }
     }
 
+    private void get_list_application(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<Application> applications = new ArrayList<>() {
+            {
+                add(applicationBO.mockApplication());
+                add(applicationBO.mockApplication());
+                add(applicationBO.mockApplication());
+                add(applicationBO.mockApplication());
+            }
+        };
+        req.setAttribute("applications", applications);
+        render(req, resp, "/company/recruitment/list-application", "template");
+    }
+
+    private void get_list_recruitment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<Recruitment> recruitments = new ArrayList<>() {
+            {
+                add(recruitmentBO.mockRecruitment());
+                add(recruitmentBO.mockRecruitment());
+                add(recruitmentBO.mockRecruitment());
+                add(recruitmentBO.mockRecruitment());
+            }
+        };
+        req.setAttribute("recruitments", recruitments);
+        render(req, resp, "/company/recruitment/list", "template");
+    }
+
+    private void get_create_recruitment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<CompanyAddress> addresses = new ArrayList<>() {
+            {
+                add(new CompanyAddress(1, 1, "Ha Noi", "FPT Software Building"));
+                add(new CompanyAddress(1, 1, "Ha Noi", "FPT Software Building"));
+            }
+        };
+        req.setAttribute("addresses", addresses);
+        render(req, resp, "/company/recruitment/create", "template");
+    }
+
     private Recruitment getRecruitment(HttpServletRequest req) {
         Recruitment recruitment = new Recruitment();
         recruitment.setPosition(req.getParameter("position"));
@@ -98,15 +143,15 @@ public class CompanyServlet extends BaseController {
     }
 
     private void get_edit_recruitment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Recruitment recruitment = new Recruitment();
-        recruitment.setCreatedAt(new java.sql.Timestamp(System.currentTimeMillis()));
-        recruitment.setPosition("Java Developer");
-        recruitment.setJobDescription("Develop software applications using Java programming language");
-        recruitment.setRequirement("At least 1 year of experience in Java programming");
-        recruitment.setRangeOfSalaryFrom(1000);
-        recruitment.setRangeOfSalaryTo(2000);
-        recruitment.setSkills("java,c++,c#,python,javascript");
-        recruitment.setBenefit("13th month salary, health insurance, annual leave");
+        Recruitment recruitment = recruitmentBO.mockRecruitment();
+        List<CompanyAddress> companyAddresses = new ArrayList<CompanyAddress>() {
+            {
+                add(companyAddressBO.mockAdress());
+                add(companyAddressBO.mockAdress());
+                add(companyAddressBO.mockAdress());
+            }
+        };
+        req.setAttribute("companyAddresses", companyAddresses);
         req.setAttribute("recruitment", recruitment);
         render(req, resp, "/company/recruitment/edit", "template");
     }
@@ -114,6 +159,7 @@ public class CompanyServlet extends BaseController {
     private void post_edit_recruitment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         Recruitment recruitment = getRecruitment(req);
+        String[] selectedAddresses = req.getParameterValues("addresses");
         System.out.println(recruitment);
         render(req, resp, "/company/recruitment/edit", "template");
     }
@@ -134,15 +180,7 @@ public class CompanyServlet extends BaseController {
     }
 
     private void get_edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Company company = new Company();
-        company.setName("FPT Software");
-        company.setEmail("Huynhphuocnguyen@gmail.com");
-        company.setIndustry("Software Development Outsourcing");
-        company.setSize("1000-5000");
-        company.setWorkingDays("Mon-Fri");
-        company.setIntroduce("FPT Software is a global company with offices in 52 countries. With 20 years of experience in the technology industry, we have a team of more than 10,000 professionals working in 33 countries. We provide world-class software development services in the areas of digital transformation, cloud computing, AI, IoT, and more.");
-        company.setLogo("https://rubicmarketing.com/wp-content/uploads/2022/07/y-nghia-logo-fpt-lan-3.jpg");
-        company.setSkills("java, c++, c#, python, javascript");
+        Company company = companyBO.mockCompany();
         req.setAttribute("company", company);
         render(req, resp, "/company/edit", "template");
 

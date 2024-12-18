@@ -95,7 +95,7 @@
     />
 </div>
 <div class="d-flex flex-column justify-content-center">
-    <h4 class="m-2 text-center"><%= user.getName() %>
+    <h4 class="m-2 text-center my-3 font-700 text-[28px]"><%= user.getName() %>
     </h4>
 </div>
 <div class="col col-8 mx-auto bg-light text-dark p-4 rounded-2xl mb-6">

@@ -6,6 +6,8 @@ public class Application {
     private int recruitmentId;
     private String cv;
     private String status;
+    private User user;
+    private Recruitment recruitment;
 
     public Application() {
     }
@@ -16,6 +18,22 @@ public class Application {
         this.recruitmentId = recruitmentId;
         this.cv = cv;
         this.status = status;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Recruitment getRecruitment() {
+        return recruitment;
+    }
+
+    public void setRecruitment(Recruitment recruitment) {
+        this.recruitment = recruitment;
     }
 
     public int getId() {
