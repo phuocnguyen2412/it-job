@@ -32,14 +32,14 @@ public class UserServlet extends BaseController {
 
         switch (path) {
             case "/profile" -> {
-                String userId = (String) req.getSession().getAttribute("userId");
-                User user = userBO.getUserById(Integer.parseInt(userId));
+                int userId = (int) req.getSession().getAttribute("userId");
+                User user = userBO.getUserById(userId);
                 req.setAttribute("user", user);
                 render(req, resp, "/user/profile");
             }
 
             case "/application" -> {
-                int userId = Integer.parseInt((String) req.getSession().getAttribute("userId"));
+                int userId = (int) req.getSession().getAttribute("userId");
                 /// Tìm các application theo user id
                 List<Application> applications = new ArrayList<>() {
                     {
