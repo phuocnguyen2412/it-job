@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RecruitmentDAO {
-    public int handleCreateRecruitment(Recruitment recruitment) throws SQLException{
+    public int handleCreateRecruitment(Recruitment recruitment) {
         String query = """
                         INSERT INTO Recruitment (Position, RangeOfSalaryFrom, RangeOfSalaryTo, CompanyId, 
                                                  CreatedAt, Requirement, Benefit, JobDescription)
@@ -36,7 +36,7 @@ public class RecruitmentDAO {
         return result;
     }
 
-    public int handleEditRecruitment(Recruitment recruitment) throws SQLException{
+    public int handleEditRecruitment(Recruitment recruitment) throws SQLException {
         String query = """
                         UPDATE Recruitment SET Position = ?, RangeOfSalaryFrom = ?, RangeOfSalaryTo = ?, 
                         Requirement = ?, Benefit = ?, JobDescription = ?
@@ -59,7 +59,7 @@ public class RecruitmentDAO {
         return result;
     }
 
-    public int handleDeleteRecruitment(int recruitmentId) throws SQLException{
+    public int handleDeleteRecruitment(int recruitmentId) throws SQLException {
         String query = "DELETE FROM Recruitment WHERE Id = ?";
         int result = 0;
         try (Connection conn = Database.getConnection();
@@ -100,7 +100,7 @@ public class RecruitmentDAO {
         return result;
     }
 
-    public ArrayList<Recruitment> getRecruitment(String countryInput, String searchBy, String searchInput){
+    public ArrayList<Recruitment> getRecruitment(String countryInput, String searchBy, String searchInput) {
         ArrayList<Recruitment> result = new ArrayList<Recruitment>();
         String country = "";
         String query = """
@@ -108,11 +108,10 @@ public class RecruitmentDAO {
                         JOIN Company ON Company.Id = Recruitment.CompanyId 
                         WHERE Country LIKE ?
                 """;
-        if(!countryInput.equals("0")) country = countryInput;
-        if(searchBy.equals("position")){
+        if (!countryInput.equals("0")) country = countryInput;
+        if (searchBy.equals("position")) {
             query += "AND Position LIKE ? ";
-        }
-        else{
+        } else {
             query += "AND Company.Name LIKE ?";
         }
 
@@ -122,7 +121,7 @@ public class RecruitmentDAO {
             stmt.setString(1, "%" + country + "%");
             stmt.setString(2, "%" + searchInput + "%");
             try (ResultSet rs = stmt.executeQuery()) {
-                while(rs.next()){
+                while (rs.next()) {
                     Recruitment recruitment = new Recruitment();
                     recruitment.setId(rs.getInt("Id"));
                     recruitment.setCompanyId(rs.getInt("CompanyId"));

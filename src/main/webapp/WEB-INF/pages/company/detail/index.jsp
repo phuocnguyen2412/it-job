@@ -55,7 +55,7 @@
             <div>
                 <h1 class="text-[#fff] text-[28px] font-[700] mb-2"><%= company.getName() %>
                 </h1>
-                <p class="text-[#fff] text-[14px] mb-4"><i class="bi bi-geo-alt"></i> Ho chi minh</p>
+             
                 <div class="flex gap-3">
                     <a class="flex items-center justify-center bg-[#ed1b2f]  rounded-[4px] text-white font-[Lexend] font-semibold gap-[8px] leading-[24px] py-[11px] px-[24px]">
                         View reviews
@@ -68,27 +68,7 @@
             </div>
 
         </div>
-        <div class="flex justify-center align-center">
-            <div>
-                4.1
-            </div>
-            <div class="">
-                <div class="star-rating">
-                    <input type="radio" id="star1" name="rating" value="1">
-                    <label for="star1" class="star">&#9733;</label>
-                    <input type="radio" id="star2" name="rating" value="2">
-                    <label for="star2" class="star">&#9733;</label>
-                    <input type="radio" id="star3" name="rating" value="3">
-                    <label for="star3" class="star">&#9733;</label>
-                    <input type="radio" id="star4" name="rating" value="4">
-                    <label for="star4" class="star">&#9733;</label>
-                    <input type="radio" id="star5" name="rating" value="5">
-                    <label for="star5" class="star">&#9733;</label>
-                </div>
-                <p>131 reviews</p>
-            </div>
 
-        </div>
     </div>
 </div>
 

@@ -12,8 +12,6 @@ import models.bean.Recruitment;
 import models.bo.ApplicationBO;
 import models.bo.CompanyAddressBO;
 import models.bo.CompanyBO;
-import models.bo.CompanyAddressBO;
-import models.bo.CompanyBO;
 import models.bo.RecruitmentBO;
 
 import java.io.IOException;
@@ -166,7 +164,7 @@ public class CompanyServlet extends BaseController {
 
     private void post_edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Company company = new Company();
-        company.setId((int)req.getSession().getAttribute("companyId"));
+        company.setId((int) req.getSession().getAttribute("companyId"));
         company.setName(req.getParameter("name"));
         company.setEmail(req.getParameter("email"));
         company.setIndustry(req.getParameter("industry"));
@@ -192,17 +190,14 @@ public class CompanyServlet extends BaseController {
         String[] selectedAddressIds = req.getParameterValues("selectedAddresses");
         List<Integer> selectedAddresses = new ArrayList<>();
         if (selectedAddressIds != null) {
-            // Chuyển các ID thành đối tượng CompanyAddress
-
             for (String id : selectedAddressIds) {
                 int addressId = Integer.parseInt(id);
-                System.out.println(addressId);
                 selectedAddresses.add(addressId);
-
             }
         }
         System.out.println(selectedAddresses);
         System.out.println(recruitment);
+        recruitmentBO.handleCreateRecruitment(recruitment);
         req.setAttribute("recruitment", recruitment);
         render(req, resp, "/company/recruitment/detail", "template");
     }
