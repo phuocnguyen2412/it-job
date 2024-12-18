@@ -6,7 +6,7 @@ import models.dao.EducationDAO;
 import java.sql.SQLException;
 
 public class EducationBO {
-    private final EducationDAO educationDAO;
+    private EducationDAO educationDAO;
 
     public EducationBO(EducationDAO educationDAO) {
         this.educationDAO = educationDAO;

@@ -1,21 +1,23 @@
 package models.bo;
 
-import models.bean.*;
+import models.bean.Account;
+import models.bean.Company;
 import models.dao.AccountDAO;
-import models.dao.CompanyDAO;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 public class AccountBO {
-    public static Account checkSignIn(String email, String password){
+    AccountDAO accountDAO = new AccountDAO();
+    public Account checkSignIn(String email, String password) throws SQLException{
         byte[] inputPassword = fromPasswordToHashCode(password);
 
-        return AccountDAO.getAccount(email, inputPassword);
+        return accountDAO.getAccount(email, inputPassword);
     }
 
-    public static byte[] fromPasswordToHashCode(String password){
+    public byte[] fromPasswordToHashCode(String password){
         try {
             // Tạo đối tượng MessageDigest với thuật toán SHA-256
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -27,32 +29,32 @@ public class AccountBO {
         return null;
     }
 
-    public static boolean checkExistEmail(String email){
-        return AccountDAO.checkExistEmail(email);
+    public boolean checkExistEmail(String email) throws SQLException {
+        return accountDAO.checkExistEmail(email);
     }
 
-    public static int handleCreateUser(String name, String email, String password){
-        return AccountDAO.handleCreateUser(name, email, fromPasswordToHashCode(password));
+    public int handleCreateUser(String name, String email, String password) throws SQLException{
+        return accountDAO.handleCreateUser(name, email, fromPasswordToHashCode(password));
     }
 
-    public static int handleCreateCompanyAccount(Company company, Account account, String password){
+    public int handleCreateCompanyAccount(Company company, Account account, String password) throws SQLException{
         account.setPassword(fromPasswordToHashCode(password));
-        return AccountDAO.handleCreateCompanyAccount(company, account);
+        return accountDAO.handleCreateCompanyAccount(company, account);
     }
 
-    public static int unlockCompanyAccount(int companyId){
-        return AccountDAO.handleUnlockAccount(companyId);
+    public int unlockCompanyAccount(int companyId) throws SQLException{
+        return accountDAO.handleUnlockAccount(companyId);
     }
 
-    public static int lockCompanyAccount(int companyId){
-        return AccountDAO.handleLockAccount(companyId);
+    public int lockCompanyAccount(int companyId) throws SQLException{
+        return accountDAO.handleLockAccount(companyId);
     }
 
-    public static int unlockUserAccount(int userId){
-        return AccountDAO.handleLockAccount(userId);
+    public int unlockUserAccount(int userId) throws SQLException{
+        return accountDAO.handleLockAccount(userId);
     }
 
-    public static int lockUserAccount(int userId){
-        return AccountDAO.handleUnlockAccount(userId);
+    public int lockUserAccount(int userId) throws SQLException{
+        return accountDAO.handleUnlockAccount(userId);
     }
 }

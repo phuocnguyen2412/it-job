@@ -1,5 +1,6 @@
 package models.dao;
 
+import config.Database;
 import models.bean.Education;
 
 import java.sql.Connection;
@@ -8,27 +9,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EducationDAO {
-    private final Connection connection;
-
-    public EducationDAO(Connection connection) {
-        this.connection = connection;
-    }
-
-    public boolean addEducation(Education education) throws SQLException {
+    public boolean addEducation(Education education) {
         String sql = "INSERT INTO Education (userId, school, specialize, dateStart, dateEnd) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, education.getUserId());
             stmt.setString(2, education.getSchool());
             stmt.setString(3, education.getSpecialize());
             stmt.setTimestamp(4, education.getDateStart());
             stmt.setTimestamp(5, education.getDateEnd());
             return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public boolean updateEducation(Education education) throws SQLException {
+    public boolean updateEducation(Education education) {
         String sql = "UPDATE Education SET userId = ?, school = ?, specialize = ?, dateStart = ?, dateEnd = ? WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, education.getUserId());
             stmt.setString(2, education.getSchool());
             stmt.setString(3, education.getSpecialize());
@@ -36,14 +35,19 @@ public class EducationDAO {
             stmt.setTimestamp(5, education.getDateEnd());
             stmt.setInt(6, education.getId());
             return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public boolean deleteEducation(int id) throws SQLException {
+    public boolean deleteEducation(int id) {
         String sql = "DELETE FROM Education WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -68,9 +72,10 @@ public class EducationDAO {
 //        return educations;
 //    }
 
-    public Education getEducationByUserId(int userId) throws SQLException {
+    public Education getEducationByUserId(int userId) {
         String sql = "SELECT * FROM Education WHERE userId = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, userId);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -85,6 +90,8 @@ public class EducationDAO {
                     return education;
                 }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return null;
     }

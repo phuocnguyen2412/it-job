@@ -3,14 +3,13 @@ package models.bo;
 import models.bean.Experience;
 import models.dao.ExperienceDAO;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ExperienceBO {
     private ExperienceDAO experienceDAO;
 
-    public ExperienceBO(Connection connection) {
-        this.experienceDAO = new ExperienceDAO(connection);
+    public ExperienceBO(ExperienceDAO experienceDAO) {
+        this.experienceDAO = experienceDAO;
     }
 
     public Experience getExperienceById(int userId) throws SQLException {

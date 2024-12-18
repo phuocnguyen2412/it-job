@@ -1,6 +1,5 @@
 package models.bo;
 
-import models.bean.Certificate;
 import models.bean.User;
 import models.dao.UserDAO;
 
@@ -61,5 +60,5 @@ public class UserBO {
     public List<User> searchUsersByName(String name) throws SQLException {
         return userDAO.searchUsersByName(name);
     }
-
+    
 }

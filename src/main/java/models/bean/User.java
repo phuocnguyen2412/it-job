@@ -18,8 +18,7 @@ public class User {
     private String skills;
     private List<Certificate> certificates;
 
-    public User() {
-    }
+    public User() {}
 
     public User(int id, String name, String introduce, String email, String phoneNumber, java.sql.Date birthday, String city, byte[] avatar, int accountId) {
         this.id = id;
@@ -57,13 +56,9 @@ public class User {
         this.educations = educations;
     }
 
-    public String getSkills() {
-        return skills;
-    }
 
-    public void setSkills(String skills) {
-        this.skills = skills;
-    }
+
+
 
     public List<Certificate> getCertificates() {
         return certificates;
@@ -144,4 +139,13 @@ public class User {
     public void setAccountId(int accountId) {
         this.accountId = accountId;
     }
+
+    public List<String> getSkills() {
+        return List.of(skills.split(","));
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
+
 }

@@ -1,7 +1,11 @@
 package controllers;
 
+<<<<<<< HEAD
+=======
 import java.io.IOException;
+import java.sql.SQLException;
 
+>>>>>>> be82e45205b05fede78c4253cfaba86f850bfda3
 import exception.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -9,9 +13,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.bean.Account;
 import models.bo.AccountBO;
+import models.dao.AccountDAO;
+
+import java.io.IOException;
 
 @WebServlet(name = "AccountServlet", urlPatterns = {"/auth/*"})
 public class AccountServlet extends BaseController {
+    private AccountBO accountBO;
+
+    public void init() throws ServletException {
+        super.init();
+        accountBO = new AccountBO();
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        boolean loggedIn = request.getSession().getAttribute("loggedin") != null
@@ -30,27 +44,40 @@ public class AccountServlet extends BaseController {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path = request.getPathInfo() == null ? "/" : request.getPathInfo();
-        switch (path) {
-            case "/login" -> login(request, response);
-            case "/register" -> register(request, response);
-            default -> throw new NotFoundException();
+        try {
+            String path = request.getPathInfo() == null ? "/" : request.getPathInfo();
+            switch (path) {
+                case "/login" -> login(request, response);
+                case "/register" -> register(request, response);
+                default -> throw new NotFoundException();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
 
     }
 
-    private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        Account account = AccountBO.checkSignIn(email, password);
-        if (account != null) {
-            request.getSession().setAttribute("account", account);
-            request.getSession().setAttribute("loggedin", true);
-            render(request, response, "/home");
-        } else {
-            request.setAttribute("errorMessage", "Invalid username or password!");
-            render(request, response, "/WEB-INF/pages/login.jsp");
-        }
+    private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+       try {
+           String email = request.getParameter("email");
+           String password = request.getParameter("password");
+
+           Account account = accountBO.checkSignIn(email, password);
+
+           if (account != null) {
+               request.getSession().setAttribute("account", account);
+               request.getSession().setAttribute("loggedin", true);
+               render(request, response, "/home");
+           } else {
+               request.setAttribute("errorMessage", "Invalid username or password!");
+               render(request, response, "/WEB-INF/pages/login.jsp");
+           }
+       } catch (Exception e) {
+              request.setAttribute("errorMessage", "Invalid username or password!");
+              render(request, response, "/WEB-INF/pages/login.jsp");
+       }
+
     }
 
     private void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

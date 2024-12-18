@@ -1,12 +1,16 @@
 package models.dao;
 
 import config.Database;
-import models.bean.*;
+import models.bean.Account;
+import models.bean.Company;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class AccountDAO {
-    public static Account getAccount(String email, byte[] password){
+    public Account getAccount(String email, byte[] password) throws SQLException{
         String query = "SELECT * FROM Account WHERE Email = ? AND Password = ?";
         Account result = new Account();
         try (Connection conn = Database.getConnection();
@@ -16,7 +20,7 @@ public class AccountDAO {
             stmt.setBytes(2, password);
 
             try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()){
+                while (rs.next()) {
                     result.setId(rs.getInt("Id"));
                     result.setAdminId(rs.getInt("AdminId"));
                     result.setEmail(rs.getString("Email"));
@@ -29,7 +33,8 @@ public class AccountDAO {
         }
         return result;
     }
-    public static boolean checkExistEmail(String email){
+
+    public boolean checkExistEmail(String email) throws SQLException{
         String query = "SELECT COUNT(*) FROM Account WHERE Email = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -46,7 +51,8 @@ public class AccountDAO {
         }
         return false;
     }
-    public static int handleCreateUser(String name, String email, byte[] password){
+
+    public int handleCreateUser(String name, String email, byte[] password) throws SQLException{
         String query = "INSERT INTO Role (Name) VALUES (?)";
         int roleId = 0;
         int result;
@@ -56,14 +62,13 @@ public class AccountDAO {
             stmt.setString(1, "Employee");
 
             result = stmt.executeUpdate();
-            if(result > 0){
-                try(ResultSet rs = stmt.getGeneratedKeys()){
-                    if(rs.next()){
+            if (result > 0) {
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
                         roleId = rs.getInt(1);
                     }
                 }
-            }
-            else return result;
+            } else return result;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -78,14 +83,13 @@ public class AccountDAO {
             stmt.setInt(3, roleId);
 
             result = stmt.executeUpdate();
-            if(result > 0){
-                try(ResultSet rs = stmt.getGeneratedKeys()){
-                    if(rs.next()){
+            if (result > 0) {
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
                         accountId = rs.getInt(1);
                     }
                 }
-            }
-            else return result;
+            } else return result;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -104,7 +108,7 @@ public class AccountDAO {
         return result;
     }
 
-    public static int handleCreateCompanyAccount(Company company, Account account){
+    public int handleCreateCompanyAccount(Company company, Account account) throws SQLException{
         int result;
         int roleId = 0;
         String query = "INSERT INTO Role(Name) VALUES (?)";
@@ -114,8 +118,8 @@ public class AccountDAO {
             stmt.setString(1, "Company");
             stmt.executeUpdate();
 
-            try(ResultSet rs =stmt.getGeneratedKeys()){
-                if(rs.next()){
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
                     roleId = rs.getInt(1);
                 }
             }
@@ -135,8 +139,8 @@ public class AccountDAO {
             stmt.setInt(5, 0);
             stmt.executeUpdate();
 
-            try(ResultSet rs =stmt.getGeneratedKeys()){
-                if(rs.next()){
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
                     accountId = rs.getInt(1);
                 }
             }
@@ -156,7 +160,7 @@ public class AccountDAO {
         return result;
     }
 
-    public static int handleUnlockAccount(int Id){
+    public int handleUnlockAccount(int Id) throws SQLException{
         String query = "UPDATE Account SET isLooked = '0' WHERE Id = ?";
         int result;
         try (Connection conn = Database.getConnection();
@@ -171,7 +175,7 @@ public class AccountDAO {
         return result;
     }
 
-    public static int handleLockAccount(int Id){
+    public int handleLockAccount(int Id) throws SQLException{
         String query = "UPDATE Account SET isLooked = '1' WHERE Id = ?";
         int result;
         try (Connection conn = Database.getConnection();
