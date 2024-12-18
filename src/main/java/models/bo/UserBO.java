@@ -2,6 +2,7 @@ package models.bo;
 
 import models.bean.Certificate;
 import models.bean.Education;
+import models.bean.PersonalProject;
 import models.bean.User;
 import models.dao.UserDAO;
 
@@ -11,6 +12,8 @@ import java.util.List;
 
 public class UserBO {
     UserDAO userDAO = new UserDAO();
+    PersonalProjectBO personalProjectBO = new PersonalProjectBO();
+    EducationBO educationBO = new EducationBO();
 
     public User mockData() {
         User user = new User();
@@ -46,7 +49,12 @@ public class UserBO {
     }
 
     public User getUserById(int id) {
-        return userDAO.getUserById(id);
+        User user = userDAO.getUserById(id);
+        ArrayList<PersonalProject> personalProjects = personalProjectBO.getProjectsByUserId(id);
+        ArrayList<Education> educations = educationBO.getEducationByUserId(id);
+        user.setEducations(educations);
+        user.setProjects(personalProjects);
+        return user;
     }
 
     public boolean addUser(User user) throws SQLException {

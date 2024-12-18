@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class EducationDAO {
     public boolean addEducation(Education education) {
@@ -72,7 +73,8 @@ public class EducationDAO {
 //        return educations;
 //    }
 
-    public Education getEducationByUserId(int userId) {
+    public ArrayList<Education> getEducationByUserId(int userId) {
+        ArrayList<Education> result = new ArrayList<>();
         String sql = "SELECT * FROM Education WHERE userId = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -87,12 +89,12 @@ public class EducationDAO {
                     education.setDateStart(rs.getTimestamp("dateStart"));
                     education.setDateEnd(rs.getTimestamp("dateEnd"));
 
-                    return education;
+                    result.add(education);
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return result;
     }
 }

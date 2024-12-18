@@ -3,12 +3,13 @@ package models.bo;
 import models.bean.PersonalProject;
 import models.dao.PersonalProjectDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PersonalProjectBO {
     PersonalProjectDAO personalProjectDAO = new PersonalProjectDAO();
 
-    public List<PersonalProject> getProjectsByUserId(int userId) {
+    public ArrayList<PersonalProject> getProjectsByUserId(int userId) {
         return personalProjectDAO.getProjectsByUserId(userId);
     }
 

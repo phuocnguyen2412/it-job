@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonalProjectDAO {
-    public List<PersonalProject> getProjectsByUserId(int userId) {
-        List<PersonalProject> projects = new ArrayList<>();
+    public ArrayList<PersonalProject> getProjectsByUserId(int userId) {
+        ArrayList<PersonalProject> projects = new ArrayList<>();
         String sql = "SELECT * FROM Personal Project WHERE userId = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

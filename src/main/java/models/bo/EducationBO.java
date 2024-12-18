@@ -5,6 +5,7 @@ import models.dao.EducationDAO;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class EducationBO {
     private final EducationDAO educationDAO;
@@ -37,7 +38,7 @@ public class EducationBO {
         return educationDAO.deleteEducation(id);
     }
 
-    public Education getEducationByUserId(int userId) throws SQLException {
+    public ArrayList<Education> getEducationByUserId(int userId) {
         return educationDAO.getEducationByUserId(userId);
     }
 
