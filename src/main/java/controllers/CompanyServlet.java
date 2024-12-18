@@ -82,20 +82,14 @@ public class CompanyServlet extends BaseController {
     }
 
     private void get_list_application(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Application> applications = applicationBO.getApplicationsByRecruimentId((int) req.getSession().getAttribute("recruitment_id"));
+        int recruitmentId = Integer.parseInt(req.getParameter("recruitment_id"));
+        List<Application> applications = applicationBO.getApplicationsByRecruimentId(recruitmentId);
         req.setAttribute("applications", applications);
         render(req, resp, "/company/recruitment/list-application", "template");
     }
 
     private void get_list_recruitment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Recruitment> recruitments = new ArrayList<>() {
-            {
-                add(recruitmentBO.mockRecruitment());
-                add(recruitmentBO.mockRecruitment());
-                add(recruitmentBO.mockRecruitment());
-                add(recruitmentBO.mockRecruitment());
-            }
-        };
+        List<Recruitment> recruitments = recruitmentBO.getRecruitmentsByCompanyId((int) req.getSession().getAttribute("companyId"));
         req.setAttribute("recruitments", recruitments);
         render(req, resp, "/company/recruitment/list", "template");
     }
@@ -124,6 +118,7 @@ public class CompanyServlet extends BaseController {
     }
 
     private void get_edit_recruitment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println(req.getParameter("recruitment_id"));
         int recruitmentId = Integer.parseInt(req.getParameter("recruitment_id"));
         Recruitment recruitment = recruitmentBO.getRecruitmentById(recruitmentId);
         List<CompanyAddress> companyAddresses = new ArrayList<CompanyAddress>() {

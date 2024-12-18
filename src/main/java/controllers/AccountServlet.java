@@ -23,12 +23,6 @@ public class AccountServlet extends BaseController {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        boolean loggedIn = request.getSession().getAttribute("loggedin") != null
-//                ? (Boolean) request.getSession().getAttribute("loggedin")
-//                : false;
-//        if (loggedIn) {
-//            request.getSession().removeAttribute("loggedin");
-//        }
         String path = request.getPathInfo() == null ? "/" : request.getPathInfo();
         switch (path) {
             case "/login" -> render(request, response, "/auth/sign_in");
@@ -48,11 +42,11 @@ public class AccountServlet extends BaseController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-    }
+        }
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-            AccountBO accountBO = new AccountBO();
+        AccountBO accountBO = new AccountBO();
         try {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
@@ -77,15 +71,14 @@ public class AccountServlet extends BaseController {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         AccountBO accountBO = new AccountBO();
-        try{
+        try {
             int result = accountBO.handleCreateUser(name, email, password);
-            if(result > 0){
+            if (result > 0) {
                 response.sendRedirect("http://localhost:8080/demo_jsp_war_exploded/auth/login");
-            }else{
+            } else {
                 response.sendRedirect("http://localhost:8080/demo_jsp_war_exploded/auth/register");
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
