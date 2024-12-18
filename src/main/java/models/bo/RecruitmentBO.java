@@ -36,6 +36,11 @@ public class RecruitmentBO {
         return recruitment;
     }
 
+    public ArrayList<Recruitment> getRecruitmentBySearch(String country, String searchBy, String searchInput){
+        return recruitmentDAO.getRecruitmentBySearch(country, searchBy, searchInput);
+    }
+
+
     public ArrayList<Recruitment> getRecruitment(String country, String searchBy, String searchInput) {
         return recruitmentDAO.getRecruitment(country, searchBy, searchInput);
     }

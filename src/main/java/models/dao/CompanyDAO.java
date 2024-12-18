@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public class CompanyDAO {
     public int handleCreateCompany(Company company) throws SQLException{
         String query = """
-                        INSERT INTO Company (Name, Introduce, Country, Industry, WorkingDays, Size, Detail, Email, Logo, AccountId) 
-                        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        INSERT INTO Company (Name, Introduce, Country, Industry, WorkingDays, Size, Detail, Email, Logo, AccountId, Skills) 
+                        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
         int result;
         try (Connection conn = Database.getConnection();
@@ -29,6 +29,7 @@ public class CompanyDAO {
             stmt.setString(8, company.getEmail());
             stmt.setString(9, company.getLogo());
             stmt.setInt(10, company.getAccountId());
+            stmt.setString(11, company.getSkills().toString());
 
             result = stmt.executeUpdate();
         } catch (SQLException e) {
@@ -39,8 +40,9 @@ public class CompanyDAO {
 
     public int handleEditCompany(Company company) throws SQLException{
         String query = """
-                   UPDATE Company SET Name = ?, Introduce = ?, Country = ?, Industry = ?, WorkingDays = ?, Size = ?, Detail = ?, Email = ?, Logo = ?
-                   WHERE Id = ?
+                        UPDATE Company SET Name = ?, Introduce = ?, Country = ?, Industry = ?, WorkingDays = ?, Size = ?, 
+                        Detail = ?, Email = ?, Logo = ?, Skill = ?
+                        WHERE Id = ?
                 """;
         int result;
         try (Connection conn = Database.getConnection();
@@ -55,7 +57,8 @@ public class CompanyDAO {
             stmt.setString(7, company.getDetail());
             stmt.setString(8, company.getEmail());
             stmt.setString(9, company.getLogo());
-            stmt.setInt(10, company.getId());
+            stmt.setString(10, company.getSkills().toString());
+            stmt.setInt(11, company.getId());
 
             result = stmt.executeUpdate();
         } catch (SQLException e) {
@@ -114,6 +117,7 @@ public class CompanyDAO {
         }
         return result;
     }
+
 
     public ArrayList<Company> getCompanyList() throws SQLException{
         String query = "SELECT * FROM Company ORDER BY Size DESC LIMIT 12";
@@ -184,9 +188,9 @@ public class CompanyDAO {
             company.setCountry(rs.getString("Country"));
             company.setIndustry(rs.getString("Industry"));
             company.setWorkingDays(rs.getString("WorkingDays"));
-            company.setDetail(rs.getString("Detail"));
             company.setEmail(rs.getString("Email"));
             company.setLogo(rs.getString("Logo"));
+            company.setSkills(rs.getString("Skills"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
