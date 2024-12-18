@@ -11,25 +11,25 @@
     <!-- Email Field -->
     <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+        <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
     </div>
 
     <!-- Password Field -->
     <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" required>
     </div>
 
     <!-- Company Name Field -->
     <div class="mb-3">
         <label for="companyName" class="form-label">Company Name</label>
-        <input type="text" class="form-control" id="companyName" placeholder="Enter your company name" required>
+        <input type="text" class="form-control" name="companyName" id="companyName" placeholder="Enter your company name" required>
     </div>
 
     <!-- Company Logo Field -->
     <div class="mb-3">
         <label for="companyLogo" class="form-label">Company Logo</label>
-        <input type="file" class="form-control" id="companyLogo" accept="image/*" required>
+        <input type="file" class="form-control" name="companyLogo" id="companyLogo" accept="image/*" required>
     </div>
 
     <!-- Submit Button -->

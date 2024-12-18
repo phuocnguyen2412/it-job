@@ -25,8 +25,8 @@ public class AccountBO {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             // Chuyển đổi password thành mảng byte và hash
             return digest.digest(password.getBytes());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());;
         }
         return null;
     }
@@ -42,9 +42,12 @@ public class AccountBO {
         return accountDAO.handleCreateUser(name, email, fromPasswordToHashCode(password));
     }
 
-    public int handleCreateCompanyAccount(Company company, Account account, String password) throws BadRequestException{
-        account.setPassword(fromPasswordToHashCode(password));
-        return accountDAO.handleCreateCompanyAccount(company, account);
+    public int handleCreateCompanyAccount(String email, String inputPassword, String name, String logo) {
+        byte[] password = fromPasswordToHashCode(inputPassword);
+        if(checkExistEmail(email)){
+            throw new BadRequestException("Email đã tồn tại!");
+        }
+        return accountDAO.handleCreateCompanyAccount(email, password, name, logo);
     }
 
     public int unlockCompanyAccount(int companyId) {

@@ -41,8 +41,8 @@ public class RecruitmentBO {
     }
 
 
-    public ArrayList<Recruitment> getRecruitment(String country, String searchBy, String searchInput) {
-        return recruitmentDAO.getRecruitment(country, searchBy, searchInput);
+    public ArrayList<Recruitment> getRecruitment() {
+        return recruitmentDAO.getRecruitment();
     }
 
     public Recruitment mockRecruitment() {

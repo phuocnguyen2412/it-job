@@ -179,7 +179,7 @@ public class CompanyServlet extends BaseController {
     }
 
     private void get_edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Company company = companyBO.mockCompany();
+        Company company = companyBO.getCompanyById(Integer.parseInt(req.getParameter("Id")));
         req.setAttribute("company", company);
         render(req, resp, "/company/edit", "template");
 

@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class RecruitmentDAO {
-    public int handleCreateRecruitment(Recruitment recruitment) throws SQLException{
+    public int handleCreateRecruitment(Recruitment recruitment) {
         String query = """
                         INSERT INTO Recruitment (Position, RangeOfSalaryFrom, RangeOfSalaryTo, CompanyId, 
                                                  CreatedAt, Requirement, Benefit, JobDescription)

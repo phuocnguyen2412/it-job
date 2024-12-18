@@ -91,7 +91,7 @@ public class AccountDAO {
         return result;
     }
 
-    public int handleCreateCompanyAccount(Company company, Account account) {
+    public int handleCreateCompanyAccount(String email, byte[] password, String name, String logo) {
         int result;
         String query = "INSERT INTO Account (Email, Password, RoleId, isLocked) VALUES (?, ?, ?, ?)";
         int accountId = 0;
@@ -99,10 +99,10 @@ public class AccountDAO {
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setString(2, account.getEmail());
-            stmt.setBytes(3, account.getPassword());
-            stmt.setInt(4, 3);
-            stmt.setInt(5, 0);
+            stmt.setString(1, email);
+            stmt.setBytes(2, password);
+            stmt.setInt(3, 3); // 3: company
+            stmt.setInt(4, 0);
             stmt.executeUpdate();
 
             try (ResultSet rs = stmt.getGeneratedKeys()) {
@@ -113,12 +113,15 @@ public class AccountDAO {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        query = "UPDATE Company SET AccountId = ? WHERE Id = ?";
+        query = "INSERT INTO Company(Name, Email, Logo, AccountId) VALUES (?, ?, ?, ?)";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, accountId);
-            stmt.setInt(2, company.getId());
+            stmt.setString(1, name);
+            stmt.setString(2, email);
+            stmt.setString(3, logo);
+            stmt.setInt(4, accountId);
+
             result = stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
