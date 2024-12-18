@@ -48,12 +48,11 @@ public class AccountServlet extends BaseController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-
-
+    }
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+            AccountBO accountBO = new AccountBO();
         try {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
@@ -77,7 +76,7 @@ public class AccountServlet extends BaseController {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        //
+        AccountBO accountBO = new AccountBO();
         try{
             int result = accountBO.handleCreateUser(name, email, password);
             if(result > 0){
