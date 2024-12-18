@@ -28,7 +28,7 @@ public class UserServlet extends BaseController {
         userBO = new UserBO();
         applicationBO = new ApplicationBO();
         personalProjectBO = new PersonalProjectBO();
-        a
+
     }
 
     @Override

@@ -84,7 +84,7 @@
                 <p class="mb-2">
                     <%=education.getSchool()%>
                 </p>
-                <span> <%= education.getDateStart()%> - <%= education.getDateEnd()%> </span>
+                
             </div>
             <% }
             } %>
