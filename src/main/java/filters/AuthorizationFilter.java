@@ -1,7 +1,5 @@
 package filters;
 
-import com.google.protobuf.Message;
-import exception.UnauthorizedException;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -43,7 +41,7 @@ public class AuthorizationFilter implements Filter {
             }
         }
         if (path.startsWith(request.getContextPath() + "/user/")) { // URL dành cho Employee
-            if (role == null || !role.equals("Employee")) {
+            if (role == null || !role.equals("User")) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied: Chỉ Employee mới được sử dụng chức năng này!");
             }
         }
