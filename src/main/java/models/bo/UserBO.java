@@ -9,11 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserBO {
-    private final UserDAO userDAO;
-
-    public UserBO() {
-        this.userDAO = new UserDAO();
-    }
+    UserDAO userDAO = new UserDAO();
 
     public User mockData() {
         User user = new User();
