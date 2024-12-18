@@ -4,7 +4,6 @@ import exception.BadRequestException;
 import models.bean.Certificate;
 import models.dao.CertificateDAO;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class CertificateBO {
@@ -23,21 +22,13 @@ public class CertificateBO {
             throw new BadRequestException("User ID không hợp lệ!");
         }
 
-        try {
-            return certificateDAO.getCertificatesByUserId(userId);
-        } catch (SQLException e) {
-            throw new RuntimeException("Lỗi khi lấy danh sách chứng chỉ cho user ID: " + userId, e);
-        }
+        return certificateDAO.getCertificatesByUserId(userId);
     }
 
     public boolean addCertificate(Certificate certificate) {
         validateCertificate(certificate);
 
-        try {
-            return certificateDAO.addCertificate(certificate);
-        } catch (SQLException e) {
-            throw new RuntimeException("Lỗi khi thêm chứng chỉ mới", e);
-        }
+        return certificateDAO.addCertificate(certificate);
     }
 
     public boolean updateCertificate(Certificate certificate) {
@@ -47,11 +38,7 @@ public class CertificateBO {
 
         validateCertificate(certificate);
 
-        try {
-            return certificateDAO.updateCertificate(certificate);
-        } catch (SQLException e) {
-            throw new RuntimeException("Lỗi khi cập nhật chứng chỉ", e);
-        }
+        return certificateDAO.updateCertificate(certificate);
     }
 
     public boolean deleteCertificate(int certificateId) {
@@ -59,11 +46,7 @@ public class CertificateBO {
             throw new BadRequestException("ID chứng chỉ không hợp lệ!");
         }
 
-        try {
-            return certificateDAO.deleteCertificate(certificateId);
-        } catch (SQLException e) {
-            throw new RuntimeException("Lỗi khi xóa chứng chỉ với ID: " + certificateId, e);
-        }
+        return certificateDAO.deleteCertificate(certificateId);
     }
 
     private void validateCertificate(Certificate certificate) {

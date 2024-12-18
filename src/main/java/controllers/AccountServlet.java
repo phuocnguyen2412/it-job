@@ -1,11 +1,6 @@
 package controllers;
 
-<<<<<<< HEAD
-=======
-import java.io.IOException;
-import java.sql.SQLException;
 
->>>>>>> be82e45205b05fede78c4253cfaba86f850bfda3
 import exception.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,9 +8,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.bean.Account;
 import models.bo.AccountBO;
-import models.dao.AccountDAO;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(name = "AccountServlet", urlPatterns = {"/auth/*"})
 public class AccountServlet extends BaseController {
@@ -59,24 +54,24 @@ public class AccountServlet extends BaseController {
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-       try {
-           String email = request.getParameter("email");
-           String password = request.getParameter("password");
+        try {
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
 
-           Account account = accountBO.checkSignIn(email, password);
+            Account account = accountBO.checkSignIn(email, password);
 
-           if (account != null) {
-               request.getSession().setAttribute("account", account);
-               request.getSession().setAttribute("loggedin", true);
-               render(request, response, "/home");
-           } else {
-               request.setAttribute("errorMessage", "Invalid username or password!");
-               render(request, response, "/WEB-INF/pages/login.jsp");
-           }
-       } catch (Exception e) {
-              request.setAttribute("errorMessage", "Invalid username or password!");
-              render(request, response, "/WEB-INF/pages/login.jsp");
-       }
+            if (account != null) {
+                request.getSession().setAttribute("account", account);
+                request.getSession().setAttribute("loggedin", true);
+                render(request, response, "/home");
+            } else {
+                request.setAttribute("errorMessage", "Invalid username or password!");
+                render(request, response, "/WEB-INF/pages/login.jsp");
+            }
+        } catch (Exception e) {
+            request.setAttribute("errorMessage", "Invalid username or password!");
+            render(request, response, "/WEB-INF/pages/login.jsp");
+        }
 
     }
 

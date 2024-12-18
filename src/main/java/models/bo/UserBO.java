@@ -1,5 +1,6 @@
 package models.bo;
 
+import models.bean.Certificate;
 import models.bean.User;
 import models.dao.UserDAO;
 
@@ -45,7 +46,7 @@ public class UserBO {
         return userDAO.getUserById(id);
     }
 
-    public List<User> addUser(User user) throws SQLException {
+    public boolean addUser(User user) throws SQLException {
         return userDAO.addUser(user);
     }
 
@@ -60,5 +61,5 @@ public class UserBO {
     public List<User> searchUsersByName(String name) throws SQLException {
         return userDAO.searchUsersByName(name);
     }
-    
+
 }

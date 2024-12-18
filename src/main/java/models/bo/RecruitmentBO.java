@@ -1,9 +1,9 @@
 package models.bo;
 
+import models.bean.CompanyAddress;
 import models.bean.Recruitment;
 import models.dao.RecruitmentDAO;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -14,15 +14,15 @@ public class RecruitmentBO {
         return recruitmentDAO.handleCreateRecruitment(recruitment);
     }
 
-    public int handleEditRecruitment(Recruitment recruitment) throws SQLException{
+    public int handleEditRecruitment(Recruitment recruitment) throws SQLException {
         return recruitmentDAO.handleEditRecruitment(recruitment);
     }
 
-    public int handleDeleteRecruitment(int recruitmentId) throws SQLException{
+    public int handleDeleteRecruitment(int recruitmentId) throws SQLException {
         return recruitmentDAO.handleDeleteRecruitment(recruitmentId);
     }
 
-    public Recruitment getRecruitment(int recruitmentId) throws SQLException{
+    public Recruitment getRecruitment(int recruitmentId) throws SQLException {
         return recruitmentDAO.getRecruitmentById(recruitmentId);
     }
 
