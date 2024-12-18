@@ -37,7 +37,7 @@ public class AccountBO {
 
     public int handleCreateUser(String name, String email, String password) throws BadRequestException {
         if(checkExistEmail(email)){
-            throw new BadRequestException("Email đã ton tại!");
+            throw new BadRequestException("Email đã tồn tại!");
         }
         return accountDAO.handleCreateUser(name, email, fromPasswordToHashCode(password));
     }
