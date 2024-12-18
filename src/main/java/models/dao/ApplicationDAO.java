@@ -90,4 +90,26 @@ public class ApplicationDAO {
         }
         return result;
     }
+
+    public ArrayList<Application> getApplicationByRecruitmentId(int recruitmentId) {
+        ArrayList<Application> result = new ArrayList<>();
+        String query = "SELECT * FROM Application WHERE recruitmentId = ?";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, recruitmentId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Application application = new Application();
+                application.setId(rs.getInt("Id"));
+                application.setUserId(rs.getInt("UserId"));
+                application.setRecruitmentId(rs.getInt("RecruitmentId"));
+                application.setCv(rs.getString("CV"));
+                application.setStatus(rs.getString("Status"));
+                result.add(application);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

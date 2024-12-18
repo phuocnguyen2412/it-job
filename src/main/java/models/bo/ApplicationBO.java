@@ -56,4 +56,7 @@ public class ApplicationBO {
     public void handleCreateApplication(Application application){
         applicationDAO.apply(application);
     }
+    public ArrayList<Application> getApplicationsByRecruimentId(int recruitmentId){
+        return applicationDAO.getApplicationByRecruitmentId(recruitmentId);
+    }
 }
