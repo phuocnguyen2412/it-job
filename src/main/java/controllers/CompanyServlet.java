@@ -12,11 +12,6 @@ import models.bean.Recruitment;
 import models.bo.ApplicationBO;
 import models.bo.CompanyAddressBO;
 import models.bo.CompanyBO;
-import models.bo.CompanyAddressBO;
-import models.bo.CompanyBO;
-import models.bo.ApplicationBO;
-import models.bo.CompanyAddressBO;
-import models.bo.CompanyBO;
 import models.bo.RecruitmentBO;
 
 import java.io.IOException;
@@ -43,24 +38,14 @@ public class CompanyServlet extends BaseController {
         String path = req.getPathInfo() == null ? "/" : req.getPathInfo();
         System.out.println(path);
         switch (path) {
-            case "/detail":
-                get_detail(req, resp);
-                break;
             case "/create-recruitment":
-                List<CompanyAddress> addresses = new ArrayList<>() {
-                    {
-                        add(new CompanyAddress(1, 1, "Ha Noi", "FPT Software Building"));
-                        add(new CompanyAddress(1, 1, "Ha Noi", "FPT Software Building"));
-                    }
-                };
-                req.setAttribute("addresses", addresses);
-                render(req, resp, "/company/recruitment/create", "template");
+                get_create_recruitment(req, resp);
                 break;
             case "/edit-recruitment":
                 get_edit_recruitment(req, resp);
                 break;
-            case "/edit":
-                get_edit(req, resp);
+            case "/edit-company":
+                get_edit_company(req, resp);
                 break;
             case "/list-recruitment":
                 get_list_recruitment(req, resp);
@@ -86,8 +71,8 @@ public class CompanyServlet extends BaseController {
             case "/edit-recruitment":
                 post_edit_recruitment(req, resp);
                 break;
-            case "/edit":
-                post_edit(req, resp);
+            case "/edit-company":
+                post_edit_company(req, resp);
 
                 break;
             default:
@@ -95,6 +80,7 @@ public class CompanyServlet extends BaseController {
                 throw new NotFoundException();
         }
     }
+
 
     private void get_list_application(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Application> applications = new ArrayList<>() {
@@ -167,7 +153,7 @@ public class CompanyServlet extends BaseController {
         render(req, resp, "/company/recruitment/edit", "template");
     }
 
-    private void post_edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void post_edit_company(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Company company = new Company();
         company.setName(req.getParameter("name"));
         company.setEmail(req.getParameter("email"));
@@ -182,7 +168,7 @@ public class CompanyServlet extends BaseController {
         render(req, resp, "/company/edit", "template");
     }
 
-    private void get_edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void get_edit_company(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Company company = companyBO.mockCompany();
         req.setAttribute("company", company);
         render(req, resp, "/company/edit", "template");
@@ -209,35 +195,4 @@ public class CompanyServlet extends BaseController {
         render(req, resp, "/company/recruitment/detail", "template");
     }
 
-    private void get_detail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String companyId = req.getParameter("id");
-        if (companyId == null) {
-            throw new NotFoundException();
-        }
-        Company company = new CompanyBO().mockCompany();
-        Recruitment recruitment = new Recruitment();
-        recruitment.setPosition("Java Developer");
-        recruitment.setJobDescription("Develop software applications using Java programming language");
-        recruitment.setRequirement("At least 1 year of experience in Java programming");
-        recruitment.setRangeOfSalaryFrom(1000);
-        recruitment.setRangeOfSalaryTo(2000);
-        recruitment.setSkills("java,c++,c#,python,javascript");
-        recruitment.setBenefit("13th month salary, health insurance, annual leave");
-        recruitment.setAddresses(new ArrayList<>() {
-            {
-                add(new CompanyAddressBO().mockAdress());
-                add(new CompanyAddress(1, 1, "Ha Noi", "FPT Software Building"));
-            }
-        });
-        ArrayList<Recruitment> recruitments = new ArrayList<>() {
-            {
-                add(recruitment);
-                add(recruitment);
-                add(recruitment);
-            }
-        };
-        req.setAttribute("recruitments", recruitments);
-        req.setAttribute("company", company);
-        render(req, resp, "/company/detail");
-    }
 }

@@ -1,6 +1,5 @@
 package models.bean;
 
-import java.util.Arrays;
 
 public class Account {
     private int id;
@@ -24,6 +23,14 @@ public class Account {
         this.isLocked = isLocked;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public int getId() {
         return id;
     }
@@ -38,11 +45,6 @@ public class Account {
 
     public void setAdminId(int adminId) {
         this.adminId = adminId;
-    }
-
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public byte[] getPassword() {
@@ -65,11 +67,13 @@ public class Account {
         return isLocked;
     }
 
-    public void getIsLocked(int isLocked) {
+    public void setIsLocked(int isLocked) {
         this.isLocked = isLocked;
     }
 
-    public void setIsLocked(int isLocked) { this.isLocked = isLocked;}
+    public void getIsLocked(int isLocked) {
+        this.isLocked = isLocked;
+    }
 
     @Override
     public String toString() {
@@ -83,11 +87,11 @@ public class Account {
                 '}';
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
     public String getRoleName() {
         return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

@@ -6,6 +6,7 @@ import models.dao.RecruitmentDAO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecruitmentBO {
     RecruitmentDAO recruitmentDAO = new RecruitmentDAO();
@@ -26,7 +27,7 @@ public class RecruitmentBO {
         return recruitmentDAO.getRecruitmentById(recruitmentId);
     }
 
-    public ArrayList<Recruitment> getRecruitment(String country, String searchBy, String searchInput){
+    public ArrayList<Recruitment> getRecruitment(String country, String searchBy, String searchInput) {
         return recruitmentDAO.getRecruitment(country, searchBy, searchInput);
     }
 
@@ -49,5 +50,9 @@ public class RecruitmentBO {
             }
         });
         return recruitment;
+    }
+
+    public List<Recruitment> mockRecruitments() {
+        return new ArrayList<>();
     }
 }

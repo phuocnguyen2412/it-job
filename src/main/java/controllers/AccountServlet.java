@@ -9,18 +9,13 @@ import models.bean.Account;
 import models.bo.AccountBO;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet(name = "AccountServlet", urlPatterns = {"/auth/*"})
 public class AccountServlet extends BaseController {
+    private final AccountBO accountBO = new AccountBO();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        boolean loggedIn = request.getSession().getAttribute("loggedin") != null
-//                ? (Boolean) request.getSession().getAttribute("loggedin")
-//                : false;
-//        if (loggedIn) {
-//            request.getSession().removeAttribute("loggedin");
-//        }
         String path = request.getPathInfo() == null ? "/" : request.getPathInfo();
         switch (path) {
             case "/login" -> render(request, response, "/auth/sign_in");
@@ -35,12 +30,14 @@ public class AccountServlet extends BaseController {
         switch (path) {
             case "/login" -> login(request, response);
             case "/register" -> register(request, response);
+
+
             default -> throw new NotFoundException();
         }
 
     }
 
-    private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+    private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
@@ -60,20 +57,19 @@ public class AccountServlet extends BaseController {
         }
     }
 
-    private void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+    private void register(HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         //
-        try{
+        try {
             int result = accountBO.handleCreateUser(name, email, password);
-            if(result > 0){
+            if (result > 0) {
                 render(request, response, "/auth/sign_in");
-            }else{
+            } else {
                 render(request, response, "/auth/sign_up");
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
