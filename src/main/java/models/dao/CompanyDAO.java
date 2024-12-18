@@ -119,8 +119,15 @@ public class CompanyDAO {
     }
 
 
-    public ArrayList<Company> getCompanyList() throws SQLException{
-        String query = "SELECT * FROM Company ORDER BY Size DESC LIMIT 12";
+    public ArrayList<Company> getCompanyList() {
+        String query = """
+                        SELECT Company.*, COUNT(Recruitment.CompanyId) AS RecruitmentCount
+                        FROM Company
+                        JOIN Recruitment ON Recruitment.CompanyId = Company.Id
+                        GROUP BY Company.Id
+                        ORDER BY RecruitmentCount DESC
+                        LIMIT 12;
+                """;
         ArrayList<Company> result = new ArrayList<>();
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -132,7 +139,7 @@ public class CompanyDAO {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         return result;
     }

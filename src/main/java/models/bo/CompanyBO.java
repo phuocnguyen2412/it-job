@@ -24,7 +24,7 @@ public class CompanyBO {
         return companyDAO.getCompanyById(companyId);
     }
 
-    public ArrayList<Company> getCompanyList() throws SQLException{
+    public ArrayList<Company> getCompanyList() {
         return companyDAO.getCompanyList();
     }
 
