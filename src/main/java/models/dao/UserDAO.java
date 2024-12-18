@@ -28,6 +28,24 @@ public class UserDAO {
         return users;
     }
 
+    public User getUserByAccountId(int accountId) {
+        User user = null;
+        String sql = "SELECT * FROM User WHERE AccountId = ?";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, accountId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    user = mapResultSetToUser(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
+    }
+
     public User getUserById(int id) {
         User user = null;
         String sql = "SELECT * FROM User WHERE id = ?";

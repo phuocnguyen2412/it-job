@@ -65,4 +65,7 @@ public class UserBO {
         return userDAO.searchUsersByName(name);
     }
 
+    public User getUserByAccountId(int accountId){
+        return userDAO.getUserByAccountId(accountId);
+    }
 }
