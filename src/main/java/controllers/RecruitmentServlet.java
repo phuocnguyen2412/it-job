@@ -22,15 +22,18 @@ public class RecruitmentServlet extends BaseController {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getPathInfo();
         switch (path) {
-            case "/detail":
+            case "/detail" -> {
                 int id = Integer.parseInt(req.getParameter("id"));
                 Recruitment recruitment = recruimentBO.mockRecruitment();
                 req.setAttribute("recruitment", recruitment);
                 render(req, resp, "/recruitment/detail");
-                break;
-            default:
+
+            }
+
+            default -> {
                 render(req, resp, "/recruitment/index");
-                break;
+            }
+
         }
     }
 }

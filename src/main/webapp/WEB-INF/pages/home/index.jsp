@@ -162,7 +162,7 @@
             </p>
             <div class="flex justify-between items-center mt-4">
                 <span class="text-green-500 font-semibold">5 Jobs</span>
-                <a href="http://localhost:8080/demo_jsp_war_exploded/company/detail?id=<%= company.getId()%>"
+                <a href="http://localhost:8080/demo_jsp_war_exploded/search/company/detail?id=<%= company.getId()%>"
                    class="text-blue-500 hover:underline"
                 >See more &gt;</a
                 >
