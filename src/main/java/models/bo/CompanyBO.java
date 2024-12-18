@@ -3,31 +3,33 @@ package models.bo;
 import models.bean.Company;
 import models.dao.CompanyDAO;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CompanyBO {
-    public static int handleCreateCompany(Company company) {
-        return CompanyDAO.handleCreateCompany(company);
+    CompanyDAO companyDAO = new CompanyDAO();
+    public int handleCreateCompany(Company company) throws SQLException {
+        return companyDAO.handleCreateCompany(company);
     }
 
-    public static int handleEditCompany(Company company) {
-        return CompanyDAO.handleEditCompany(company);
+    public int handleEditCompany(Company company) throws SQLException{
+        return companyDAO.handleEditCompany(company);
     }
 
-    public static int handleDeleteCompany(int companyId) {
-        return CompanyDAO.handleDeleteCompany(companyId);
+    public int handleDeleteCompany(int companyId) throws SQLException{
+        return companyDAO.handleDeleteCompany(companyId);
     }
 
-    public static Company getCompanyById(int companyId) {
-        return CompanyDAO.getCompanyById(companyId);
+    public Company getCompanyById(int companyId) throws SQLException{
+        return companyDAO.getCompanyById(companyId);
     }
 
-    public static ArrayList<Company> getCompanyList() {
-        return CompanyDAO.getCompanyList();
+    public ArrayList<Company> getCompanyList() throws SQLException{
+        return companyDAO.getCompanyList();
     }
 
-    public static ArrayList<Company> searchCompany(String city, String inputSearch) {
-        return CompanyDAO.searchCompany(city, inputSearch);
+    public ArrayList<Company> searchCompany(String city, String inputSearch) throws SQLException{
+        return companyDAO.searchCompany(city, inputSearch);
     }
 
     public Company mockCompany() {

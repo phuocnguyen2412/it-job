@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CompanyAddressDAO {
-    public static int handleCreateCompanyAddress(CompanyAddress companyAddress){
+    public int handleCreateCompanyAddress(CompanyAddress companyAddress){
         String query = "INSERT INTO CompanyAddress (CompanyId, Address, Detail) VALUES (?, ?, ?)";
         int result;
         try (Connection conn = Database.getConnection();
@@ -27,7 +27,7 @@ public class CompanyAddressDAO {
         return result;
     }
 
-    public static int handleEditCompanyAddress(CompanyAddress companyAddress){
+    public int handleEditCompanyAddress(CompanyAddress companyAddress){
         String query = "UPDATE CompanyAddress SET Address = ?, Detail = ?";
         int result;
         try (Connection conn = Database.getConnection();
@@ -43,7 +43,7 @@ public class CompanyAddressDAO {
         return result;
     }
 
-    public static int handleDeleteCompanyAddress(int companyAddressId){
+    public int handleDeleteCompanyAddress(int companyAddressId){
         String query = "DELETE FROM CompanyAddress WHERE Id = ?";
         int result;
         try (Connection conn = Database.getConnection();
@@ -58,7 +58,7 @@ public class CompanyAddressDAO {
         return result;
     }
 
-    public static ArrayList<CompanyAddress> getCompanyAddress(int companyId){
+    public ArrayList<CompanyAddress> getCompanyAddress(int companyId){
         String query = "SELECT * FROM CompanyAddress WHERE CompanyId = ?";
         ArrayList<CompanyAddress> result = new ArrayList<>();
         try (Connection conn = Database.getConnection();

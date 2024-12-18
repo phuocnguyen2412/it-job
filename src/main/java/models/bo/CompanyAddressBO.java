@@ -6,20 +6,22 @@ import models.dao.CompanyAddressDAO;
 import java.util.ArrayList;
 
 public class CompanyAddressBO {
-    public static int handleCreateCompanyAddress(CompanyAddress companyAddress) {
-        return CompanyAddressDAO.handleCreateCompanyAddress(companyAddress);
+    CompanyAddressDAO companyAddressDAO = new CompanyAddressDAO();
+
+    public int handleCreateCompanyAddress(CompanyAddress companyAddress) {
+        return companyAddressDAO.handleCreateCompanyAddress(companyAddress);
     }
 
-    public static int handleEditCompanyAddress(CompanyAddress companyAddress) {
-        return CompanyAddressDAO.handleEditCompanyAddress(companyAddress);
+    public int handleEditCompanyAddress(CompanyAddress companyAddress) {
+        return companyAddressDAO.handleEditCompanyAddress(companyAddress);
     }
 
-    public static int handleDeleteCompanyAddress(int companyAddressId) {
-        return CompanyAddressDAO.handleDeleteCompanyAddress(companyAddressId);
+    public int handleDeleteCompanyAddress(int companyAddressId) {
+        return companyAddressDAO.handleDeleteCompanyAddress(companyAddressId);
     }
 
-    public static ArrayList<CompanyAddress> getCompanyAddress(int companyId) {
-        return CompanyAddressDAO.getCompanyAddress(companyId);
+    public ArrayList<CompanyAddress> getCompanyAddress(int companyId) {
+        return companyAddressDAO.getCompanyAddress(companyId);
     }
 
     public CompanyAddress mockAdress() {

@@ -4,23 +4,27 @@ import models.bean.CompanyAddress;
 import models.bean.Recruitment;
 import models.dao.RecruitmentDAO;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RecruitmentBO {
-    public static int handleCreateRecruitment(Recruitment recruitment) {
-        return RecruitmentDAO.handleCreateRecruitment(recruitment);
+    RecruitmentDAO recruitmentDAO = new RecruitmentDAO();
+
+    public int handleCreateRecruitment(Recruitment recruitment) throws SQLException {
+        return recruitmentDAO.handleCreateRecruitment(recruitment);
     }
 
-    public static int handleEditRecruitment(Recruitment recruitment) {
-        return RecruitmentDAO.handleEditRecruitment(recruitment);
+    public int handleEditRecruitment(Recruitment recruitment) throws SQLException{
+        return recruitmentDAO.handleEditRecruitment(recruitment);
     }
 
-    public static int handleDeleteRecruitment(int recruitmentId) {
-        return RecruitmentDAO.handleDeleteRecruitment(recruitmentId);
+    public int handleDeleteRecruitment(int recruitmentId) throws SQLException{
+        return recruitmentDAO.handleDeleteRecruitment(recruitmentId);
     }
 
-    public static Recruitment getRecruitment(int recruitmentId) {
-        return RecruitmentDAO.getRecruitmentById(recruitmentId);
+    public Recruitment getRecruitment(int recruitmentId) throws SQLException{
+        return recruitmentDAO.getRecruitmentById(recruitmentId);
     }
 
     public Recruitment mockRecruitment() {

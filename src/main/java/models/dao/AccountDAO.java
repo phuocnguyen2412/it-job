@@ -6,7 +6,7 @@ import models.bean.*;
 import java.sql.*;
 
 public class AccountDAO {
-    public static Account getAccount(String email, byte[] password){
+    public Account getAccount(String email, byte[] password) throws SQLException{
         String query = "SELECT * FROM Account WHERE Email = ? AND Password = ?";
         Account result = new Account();
         try (Connection conn = Database.getConnection();
@@ -29,7 +29,7 @@ public class AccountDAO {
         }
         return result;
     }
-    public static boolean checkExistEmail(String email){
+    public boolean checkExistEmail(String email) throws SQLException{
         String query = "SELECT COUNT(*) FROM Account WHERE Email = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -46,7 +46,7 @@ public class AccountDAO {
         }
         return false;
     }
-    public static int handleCreateUser(String name, String email, byte[] password){
+    public int handleCreateUser(String name, String email, byte[] password) throws SQLException{
         String query = "INSERT INTO Role (Name) VALUES (?)";
         int roleId = 0;
         int result;
@@ -104,7 +104,7 @@ public class AccountDAO {
         return result;
     }
 
-    public static int handleCreateCompanyAccount(Company company, Account account){
+    public int handleCreateCompanyAccount(Company company, Account account) throws SQLException{
         int result;
         int roleId = 0;
         String query = "INSERT INTO Role(Name) VALUES (?)";
@@ -156,7 +156,7 @@ public class AccountDAO {
         return result;
     }
 
-    public static int handleUnlockAccount(int Id){
+    public int handleUnlockAccount(int Id) throws SQLException{
         String query = "UPDATE Account SET isLooked = '0' WHERE Id = ?";
         int result;
         try (Connection conn = Database.getConnection();
@@ -171,7 +171,7 @@ public class AccountDAO {
         return result;
     }
 
-    public static int handleLockAccount(int Id){
+    public int handleLockAccount(int Id) throws SQLException{
         String query = "UPDATE Account SET isLooked = '1' WHERE Id = ?";
         int result;
         try (Connection conn = Database.getConnection();
