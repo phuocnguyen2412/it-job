@@ -6,16 +6,19 @@ public class Account {
     private String email;
     private byte[] password;
     private int roleId;
+    private String roleName;
     private int isLocked;
 
-    public Account() {}
+    public Account() {
+    }
 
-    public Account(int id, int adminId, String email, byte[] password, int roleId, int isLocked) {
+    public Account(int id, int adminId, String email, byte[] password, int roleId, String roleName, int isLocked) {
         this.id = id;
         this.adminId = adminId;
         this.email = email;
         this.password = password;
         this.roleId = roleId;
+        this.roleName = roleName;
         this.isLocked = isLocked;
     }
 
@@ -35,19 +38,43 @@ public class Account {
         this.adminId = adminId;
     }
 
-    public String getEmail() { return email;}
+    public String getEmail() {
+        return email;
+    }
 
-    public void setEmail(String email) { this.email = email;}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public byte[] getPassword() { return password;}
+    public byte[] getPassword() {
+        return password;
+    }
 
-    public void setPassword(byte[] password) { this.password = password;}
+    public void setPassword(byte[] password) {
+        this.password = password;
+    }
 
-    public int getRoleId() {return roleId;}
+    public int getRoleId() {
+        return roleId;
+    }
 
-    public void setRoleId(int roleId) { this.roleId = roleId;}
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
 
-    public int getIsLooked() {return isLocked;}
+    public int getIsLocked() {
+        return isLocked;
+    }
 
-    public void getIsLocked(int isLocked) { this.isLocked = isLocked;}
+    public void getIsLocked(int isLocked) {
+        this.isLocked = isLocked;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
 }

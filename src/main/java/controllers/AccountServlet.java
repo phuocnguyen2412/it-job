@@ -53,6 +53,7 @@ public class AccountServlet extends BaseController {
         if (account != null) {
             request.getSession().setAttribute("account", account);
             request.getSession().setAttribute("loggedin", true);
+            request.getSession().setAttribute("role", account.getRoleName());
             render(request, response, "/home");
         } else {
             request.setAttribute("errorMessage", "Invalid username or password!");

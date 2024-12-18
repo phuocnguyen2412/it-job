@@ -10,8 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AccountDAO {
-    public Account getAccount(String email, byte[] password) throws SQLException{
-        String query = "SELECT * FROM Account WHERE Email = ? AND Password = ?";
+    public Account getAccount(String email, byte[] password) throws SQLException {
+        String query = """
+                SELECT r.Name AS RoleName 
+                FROM ITJOB.Account a 
+                JOIN ITJOB.Role r ON a.RoleId = r.Id 
+                WHERE a.Email = ? AND a.Password = ?""";
         Account result = new Account();
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -26,6 +30,7 @@ public class AccountDAO {
                     result.setEmail(rs.getString("Email"));
                     result.setPassword(rs.getBytes("Password"));
                     result.setRoleId(rs.getInt("RoleId"));
+                    result.setRoleName(rs.getString("RoleName"));
                 }
             }
         } catch (SQLException e) {
@@ -34,7 +39,7 @@ public class AccountDAO {
         return result;
     }
 
-    public boolean checkExistEmail(String email) throws SQLException{
+    public boolean checkExistEmail(String email) throws SQLException {
         String query = "SELECT COUNT(*) FROM Account WHERE Email = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -52,7 +57,7 @@ public class AccountDAO {
         return false;
     }
 
-    public int handleCreateUser(String name, String email, byte[] password) throws SQLException{
+    public int handleCreateUser(String name, String email, byte[] password) throws SQLException {
         String query = "INSERT INTO Role (Name) VALUES (?)";
         int roleId = 0;
         int result;
@@ -108,7 +113,7 @@ public class AccountDAO {
         return result;
     }
 
-    public int handleCreateCompanyAccount(Company company, Account account) throws SQLException{
+    public int handleCreateCompanyAccount(Company company, Account account) throws SQLException {
         int result;
         int roleId = 0;
         String query = "INSERT INTO Role(Name) VALUES (?)";
@@ -160,7 +165,7 @@ public class AccountDAO {
         return result;
     }
 
-    public int handleUnlockAccount(int Id) throws SQLException{
+    public int handleUnlockAccount(int Id) throws SQLException {
         String query = "UPDATE Account SET isLooked = '0' WHERE Id = ?";
         int result;
         try (Connection conn = Database.getConnection();
@@ -175,7 +180,7 @@ public class AccountDAO {
         return result;
     }
 
-    public int handleLockAccount(int Id) throws SQLException{
+    public int handleLockAccount(int Id) throws SQLException {
         String query = "UPDATE Account SET isLooked = '1' WHERE Id = ?";
         int result;
         try (Connection conn = Database.getConnection();
