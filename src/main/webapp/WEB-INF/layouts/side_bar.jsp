@@ -2,7 +2,7 @@
 <%
     boolean loggedIn = session.getAttribute("loggedin") != null ? (Boolean) session.getAttribute("loggedin") : false;
 %>
-<nav class="nav flex-column bordered">
+<nav class="nav  flex-column bordered">
     <a class='nav-link' href="${pageContext.request.contextPath}/home">Trang chủ</a>
     <a class='nav-link' href="${pageContext.request.contextPath}/company/edit">Chỉnh sửa thông tin công ty</a>
     <a class='nav-link' href="${pageContext.request.contextPath}/company/create-recruitment">Tạo việc làm</a>

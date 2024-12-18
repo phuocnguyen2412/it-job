@@ -12,10 +12,13 @@ public class User {
     private String city;
     private byte[] avatar;
     private int accountId;
+    private List<PersonalProject> projects;
+    private List<Experience> experiences;
+    private List<Education> educations;
     private String skills;
+    private List<Certificate> certificates;
 
-    public User() {
-    }
+    public User() {}
 
     public User(int id, String name, String introduce, String email, String phoneNumber, java.sql.Date birthday, String city, byte[] avatar, int accountId) {
         this.id = id;
@@ -27,7 +30,42 @@ public class User {
         this.city = city;
         this.avatar = avatar;
         this.accountId = accountId;
-        this.skills = skills;
+    }
+
+    public List<PersonalProject> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<PersonalProject> projects) {
+        this.projects = projects;
+    }
+
+    public List<Experience> getExperiences() {
+        return experiences;
+    }
+
+    public void setExperiences(List<Experience> experiences) {
+        this.experiences = experiences;
+    }
+
+    public List<Education> getEducations() {
+        return educations;
+    }
+
+    public void setEducations(List<Education> educations) {
+        this.educations = educations;
+    }
+
+
+
+
+
+    public List<Certificate> getCertificates() {
+        return certificates;
+    }
+
+    public void setCertificates(List<Certificate> certificates) {
+        this.certificates = certificates;
     }
 
     public int getId() {

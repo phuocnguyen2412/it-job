@@ -20,7 +20,7 @@
 
 <!-- Main Content -->
 <div class="container my-5">
-    <div class="row">
+    <div class="row items-center">
         <div class="col-12 col-md-5">
             <h1>Chào mừng bạn đến với IT Jobs</h1>
             <p class="mb-3">
@@ -47,8 +47,6 @@
                     <a class="text-primary" href="<%= request.getContextPath() %>/auth/register">Đăng ký ngay</a>
                 </p>
             </form>
-        </div>
-        <div class="col-12 col-md-7">
             <h2>
                 Đăng nhập để truy cập ngay vào hàng ngàn đánh giá và dữ
                 liệu lương thị trường IT
@@ -72,6 +70,10 @@
                     Quản lý hồ sơ và quyền riêng tư của bạn
                 </li>
             </ul>
+        </div>
+        <div class="col-12 col-md-7">
+            <img class="w-full h-full-vh img-cover"
+                 src="https://itviec.com/assets/customer/sign_in/logo-a2f6301beddfd012e9c6a71aed3d4cae576e2c7244fb4a41b2ff7c31bbd83f0e.png"/>
         </div>
     </div>
 </div>
