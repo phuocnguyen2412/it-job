@@ -89,13 +89,13 @@
 <div class="avatar">
     <img
             class="rounded-circle mx-auto"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWdu-qOixArQruGnl8wz6iK-ygXGGGOSQytg&s"
-            alt="User Avatar"
+            src="<%= user.getAvatar() == null ? "https://ibiettuot.com/wp-content/uploads/2021/10/avatar-mac-dinh.png" : user.getAvatar() %>"
+            alt="U"
             style="height: 300px; width: 300px;"
     />
 </div>
 <div class="d-flex flex-column justify-content-center">
-    <h4 class="m-2 text-center my-3 font-700 text-[28px]"><%= user.getName() %>
+    <h4 class="m-2 text-center my-3 font-700 text-[28px]"><%= user.getName() == null ? "Hãy thêm ten của bạn!" : user.getName() %>
     </h4>
 </div>
 <div class="col col-8 mx-auto bg-light text-dark p-4 rounded-2xl mb-6">
@@ -106,82 +106,25 @@
                 data-bs-toggle="modal"
                 data-bs-target="#editPersonalInfo"
         >
-            <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-pencil"
-                    viewBox="0 0 16 16"
-            >
-                <path
-                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"
-                />
-            </svg>
+            <i class="bi bi-pencil-square"></i>
         </button>
     </div>
     <div class="d-flex justify-content-between">
         <div class="d-flex align-items-center gap-2">
-            <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-envelope"
-                    viewBox="0 0 16 16"
-            >
-                <path
-                        d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"
-                />
-            </svg>
+            <i class="bi bi-envelope"></i>
             <span><%= user.getEmail() %></span>
         </div>
         <div class="d-flex align-items-center gap-2">
-            <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-phone"
-                    viewBox="0 0 16 16"
-            >
-                <path
-                        d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
-                />
-                <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
-            </svg>
-            <span><%= user.getPhoneNumber() %></span>
+            <i class="bi bi-phone"></i>
+            <span><%= user.getPhoneNumber() == null ? "hãy thêm số điện thoại của bạn!" : user.getPhoneNumber() %></span>
         </div>
         <div class="d-flex align-items-center gap-2">
-            <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-envelope"
-                    viewBox="0 0 16 16"
-            >
-                <path
-                        d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"
-                />
-            </svg>
-            <span><%= user.getCity() %></span>
+            <i class="bi bi-globe-americas"></i>
+            <span><%= user.getCity() == null ? "Hãy thêm thành phố của bạn" : user.getCity() %></span>
         </div>
         <div class="d-flex align-items-center gap-2">
-            <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-phone"
-                    viewBox="0 0 16 16"
-            >
-                <path
-                        d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
-                />
-                <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
-            </svg>
-            <span><%= user.getBirthday() %></span>
+            <i class="bi bi-cake2"></i>
+            <span><%= user.getBirthday() == null ? "hãy thêm ngày sinh của bạn!" : user.getBirthday() %></span>
         </div>
     </div>
 </div>
