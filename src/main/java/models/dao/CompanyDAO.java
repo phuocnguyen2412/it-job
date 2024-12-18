@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CompanyDAO {
-    public static int handleCreateCompany(Company company) {
+    public int handleCreateCompany(Company company) {
         String query = "INSERT INTO Company (Name, Introduce, Country, Industry, WorkingDays, Size, Detail, Email, Logo, AccountId) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int result;
@@ -35,7 +35,7 @@ public class CompanyDAO {
         return result;
     }
 
-    public static int handleEditCompany(Company company) {
+    public int handleEditCompany(Company company) {
         String query = """
                    UPDATE Company SET Name = ?, Introduce = ?, Country = ?, Industry = ?, WorkingDays = ?, Size = ?, Detail = ?, Email = ?, Logo = ?
                    WHERE Id = ?
@@ -62,7 +62,7 @@ public class CompanyDAO {
         return result;
     }
 
-    public static int handleDeleteCompany(int companyId) {
+    public int handleDeleteCompany(int companyId) {
         String query = "DELETE FROM Company WHERE Id = ?";
         int result;
         try (Connection conn = Database.getConnection();
@@ -77,7 +77,7 @@ public class CompanyDAO {
         return result;
     }
 
-    public static Company getCompanyById(int companyId) {
+    public Company getCompanyById(int companyId) {
         String query = "SELECT * FROM Company WHERE Id = ?";
         Company result = new Company();
         try (Connection conn = Database.getConnection();
@@ -95,7 +95,7 @@ public class CompanyDAO {
         return result;
     }
 
-    public static ArrayList<Company> getCompanyList() {
+    public ArrayList<Company> getCompanyList() {
         String query = "SELECT * FROM Company ORDER BY Size DESC LIMIT 12";
         ArrayList<Company> result = new ArrayList<>();
         try (Connection conn = Database.getConnection();
@@ -113,7 +113,7 @@ public class CompanyDAO {
         return result;
     }
 
-    public static ArrayList<Company> searchCompany(String city, String searchInput) {
+    public ArrayList<Company> searchCompany(String city, String searchInput) {
         ArrayList<Company> result = new ArrayList<>();
         String query;
         if (city.equals("All Cities")) {
@@ -151,7 +151,7 @@ public class CompanyDAO {
         return result;
     }
 
-    public static Company resultSetToCompany(ResultSet rs) {
+    public Company resultSetToCompany(ResultSet rs) {
         Company company = new Company();
         try {
             company.setId(rs.getInt("Id"));

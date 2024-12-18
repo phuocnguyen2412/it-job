@@ -1,5 +1,7 @@
 package models.bean;
 
+import java.util.List;
+
 public class User {
     private int id;
     private String name;
@@ -10,8 +12,10 @@ public class User {
     private String city;
     private byte[] avatar;
     private int accountId;
+    private String skills;
 
-    public User() {}
+    public User() {
+    }
 
     public User(int id, String name, String introduce, String email, String phoneNumber, java.sql.Date birthday, String city, byte[] avatar, int accountId) {
         this.id = id;
@@ -23,6 +27,7 @@ public class User {
         this.city = city;
         this.avatar = avatar;
         this.accountId = accountId;
+        this.skills = skills;
     }
 
     public int getId() {
@@ -96,4 +101,13 @@ public class User {
     public void setAccountId(int accountId) {
         this.accountId = accountId;
     }
+
+    public List<String> getSkills() {
+        return List.of(skills.split(","));
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
+
 }

@@ -3,39 +3,36 @@ package models.bo;
 import models.bean.User;
 import models.dao.UserDAO;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 public class UserBO {
-    private final UserDAO userDAO;
+    private UserDAO userDAO;
 
-    public UserBO(Connection connection) {
-        this.userDAO = new UserDAO(connection);
+    public UserBO(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
-    public List<User> getAllUsers() throws SQLException {
+    public List<User> getAllUsers() {
         return userDAO.getAllUsers();
     }
 
-    public User getUserById(int id) throws SQLException {
+    public User getUserById(int id) {
         return userDAO.getUserById(id);
     }
 
-    public List<User> addUser(User user) throws SQLException {
+    public boolean addUser(User user) {
         return userDAO.addUser(user);
     }
 
-    public boolean updateUser(User user) throws SQLException {
+    public boolean updateUser(User user) {
         return userDAO.updateUser(user);
     }
 
-    public boolean deleteUser(int id) throws SQLException {
+    public boolean deleteUser(int id) {
         return userDAO.deleteUser(id);
     }
 
-    public List<User> searchUsersByName(String name) throws SQLException {
+    public List<User> searchUsersByName(String name) {
         return userDAO.searchUsersByName(name);
     }
-    
 }

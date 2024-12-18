@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RecruitmentDAO {
-    public static int handleCreateRecruitment(Recruitment recruitment){
+    public int handleCreateRecruitment(Recruitment recruitment) {
         String query = "INSERT INTO Recruitment (Position, RangeOfSalaryFrom, RangeOfSalaryTo, CompanyId, CreatedAt, Requirement, Benefit, JobDescription) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         int result;
@@ -32,7 +32,7 @@ public class RecruitmentDAO {
         return result;
     }
 
-    public static int handleEditRecruitment(Recruitment recruitment){
+    public int handleEditRecruitment(Recruitment recruitment) {
         String query = "UPDATE Recruitment SET Position = ?, RangeOfSalaryFrom = ?, RangeOfSalaryTo = ?, " +
                 "Requirement = ?, Benefit = ?, JobDescription = ?";
         int result;
@@ -53,7 +53,7 @@ public class RecruitmentDAO {
         return result;
     }
 
-    public static int handleDeleteRecruitment(int recruitmentId){
+    public int handleDeleteRecruitment(int recruitmentId) {
         String query = "DELETE FROM Recruitment WHERE Id = ?";
         int result;
         try (Connection conn = Database.getConnection();
@@ -68,7 +68,7 @@ public class RecruitmentDAO {
         return result;
     }
 
-    public static Recruitment getRecruitmentById(int recruitmentId){
+    public Recruitment getRecruitmentById(int recruitmentId) {
         String query = "SELECT * FROM Recruitment WHERE Id = ?";
         Recruitment result = new Recruitment();
         try (Connection conn = Database.getConnection();
@@ -76,7 +76,7 @@ public class RecruitmentDAO {
 
             stmt.setInt(1, recruitmentId);
 
-            try(ResultSet rs = stmt.executeQuery()){
+            try (ResultSet rs = stmt.executeQuery()) {
                 result.setId(rs.getInt("Id"));
                 result.setCompanyId(rs.getInt("CompanyId"));
                 result.setPosition(rs.getString("Position"));

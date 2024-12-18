@@ -1,7 +1,5 @@
 package controllers;
 
-import java.io.IOException;
-
 import exception.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -9,9 +7,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.bean.Account;
 import models.bo.AccountBO;
+import models.dao.AccountDAO;
+
+import java.io.IOException;
 
 @WebServlet(name = "AccountServlet", urlPatterns = {"/auth/*"})
 public class AccountServlet extends BaseController {
+    private AccountBO accountBO;
+
+    public void init() throws ServletException {
+        super.init();
+        accountBO = new AccountBO(new AccountDAO()); // Tạo đối tượng AccountBO
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        boolean loggedIn = request.getSession().getAttribute("loggedin") != null
@@ -42,7 +50,7 @@ public class AccountServlet extends BaseController {
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        Account account = AccountBO.checkSignIn(email, password);
+        Account account = accountBO.checkSignIn(email, password);
         if (account != null) {
             request.getSession().setAttribute("account", account);
             request.getSession().setAttribute("loggedin", true);

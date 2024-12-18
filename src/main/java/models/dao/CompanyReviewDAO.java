@@ -10,9 +10,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CompanyReviewDAO {
-    public static int handleCreateCompanyReview(CompanyReview companyReview){
+    public int handleCreateCompanyReview(CompanyReview companyReview) {
         String query = "INSERT INTO CompanyReview (UserId, Detail, Point, CreatedAt, CompanyId) " +
-                       "VALUES(?, ?, ?, ?, ?)";
+                "VALUES(?, ?, ?, ?, ?)";
         int result;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -30,7 +30,7 @@ public class CompanyReviewDAO {
         return result;
     }
 
-    public static int handleEditCompanyReview(CompanyReview companyReview){
+    public int handleEditCompanyReview(CompanyReview companyReview) {
         String query = "UPDATE CompanyReview SET Detail = ?, CompanyId = ? WHERE Id = ?";
         int result;
         try (Connection conn = Database.getConnection();
@@ -47,7 +47,7 @@ public class CompanyReviewDAO {
         return result;
     }
 
-    public static int handleDeleteCompanyReview(int companyReviewId){
+    public int handleDeleteCompanyReview(int companyReviewId) {
         String query = "DELETE FROM CompanyReview WHERE Id = ?";
         int result;
         try (Connection conn = Database.getConnection();
@@ -62,7 +62,7 @@ public class CompanyReviewDAO {
         return result;
     }
 
-    public static CompanyReview getCompanyReviewById(int companyReviewId){
+    public CompanyReview getCompanyReviewById(int companyReviewId) {
         CompanyReview result = new CompanyReview();
         String query = "SELECT * FROM CompanyReview WHERE Id = ?";
         try (Connection conn = Database.getConnection();
@@ -70,8 +70,8 @@ public class CompanyReviewDAO {
 
             stmt.setInt(1, companyReviewId);
 
-            try(ResultSet rs = stmt.executeQuery()){
-                while (rs.next()){
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
                     result.setId(rs.getInt("Id"));
                     result.setUserId(rs.getInt("UserId"));
                     result.setDetail(rs.getString("Detail"));
@@ -86,7 +86,7 @@ public class CompanyReviewDAO {
         return result;
     }
 
-    public static ArrayList<CompanyReview> getCompanyReviewList(int companyId){
+    public ArrayList<CompanyReview> getCompanyReviewList(int companyId) {
         ArrayList<CompanyReview> result = new ArrayList<>();
         String query = "SELECT * FROM CompanyReview WHERE CompanyId = ? ORDER BY Point DESC LIMIT 5";
         try (Connection conn = Database.getConnection();
@@ -94,8 +94,8 @@ public class CompanyReviewDAO {
 
             stmt.setInt(1, companyId);
 
-            try(ResultSet rs = stmt.executeQuery()){
-                while (rs.next()){
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
                     CompanyReview companyReview = new CompanyReview();
                     companyReview.setId(rs.getInt("Id"));
                     companyReview.setUserId(rs.getInt("UserId"));

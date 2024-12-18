@@ -1,32 +1,38 @@
 package models.bo;
 
-import models.bean.*;
+import models.bean.Company;
 import models.dao.CompanyDAO;
 
 import java.util.ArrayList;
 
 public class CompanyBO {
-    public static int handleCreateCompany(Company company){
-        return CompanyDAO.handleCreateCompany(company);
+    private CompanyDAO companyDAO;
+
+    public CompanyBO(CompanyDAO companyDAO) {
+        this.companyDAO = companyDAO;
     }
 
-    public static int handleEditCompany(Company company){
-        return CompanyDAO.handleEditCompany(company);
+    public int handleCreateCompany(Company company) {
+        return companyDAO.handleCreateCompany(company);
     }
 
-    public static int handleDeleteCompany(int companyId){
-        return CompanyDAO.handleDeleteCompany(companyId);
+    public int handleEditCompany(Company company) {
+        return companyDAO.handleEditCompany(company);
     }
 
-    public static Company getCompanyById(int companyId){
-        return CompanyDAO.getCompanyById(companyId);
+    public int handleDeleteCompany(int companyId) {
+        return companyDAO.handleDeleteCompany(companyId);
     }
 
-    public static ArrayList<Company> getCompanyList(){
-        return CompanyDAO.getCompanyList();
+    public Company getCompanyById(int companyId) {
+        return companyDAO.getCompanyById(companyId);
     }
 
-    public static ArrayList<Company> searchCompany(String city, String inputSearch){
-        return CompanyDAO.searchCompany(city, inputSearch);
+    public ArrayList<Company> getCompanyList() {
+        return companyDAO.getCompanyList();
+    }
+
+    public ArrayList<Company> searchCompany(String city, String inputSearch) {
+        return companyDAO.searchCompany(city, inputSearch);
     }
 }

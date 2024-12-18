@@ -1,5 +1,6 @@
 package models.dao;
 
+import config.Database;
 import models.bean.PersonalProject;
 
 import java.sql.Connection;
@@ -10,16 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonalProjectDAO {
-    private final Connection connection;
-
-    public PersonalProjectDAO(Connection connection) {
-        this.connection = connection;
-    }
-
-    public List<PersonalProject> getProjectsByUserId(int userId) throws SQLException {
+    public List<PersonalProject> getProjectsByUserId(int userId) {
         List<PersonalProject> projects = new ArrayList<>();
         String sql = "SELECT * FROM PersonalProject WHERE userId = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, userId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -34,13 +30,16 @@ public class PersonalProjectDAO {
                     projects.add(project);
                 }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return projects;
     }
 
-    public boolean addProject(PersonalProject project) throws SQLException {
+    public boolean addProject(PersonalProject project) {
         String sql = "INSERT INTO PersonalProject (name, dateStart, dateEnd, detail, link, userId) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, project.getName());
             stmt.setTimestamp(2, project.getDateStart());
             stmt.setTimestamp(3, project.getDateEnd());
@@ -48,12 +47,15 @@ public class PersonalProjectDAO {
             stmt.setString(5, project.getLink());
             stmt.setInt(6, project.getUserId());
             return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public boolean updateProject(PersonalProject project) throws SQLException {
+    public boolean updateProject(PersonalProject project) {
         String sql = "UPDATE PersonalProject SET name = ?, dateStart = ?, dateEnd = ?, detail = ?, link = ? WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, project.getName());
             stmt.setTimestamp(2, project.getDateStart());
             stmt.setTimestamp(3, project.getDateEnd());
@@ -61,14 +63,19 @@ public class PersonalProjectDAO {
             stmt.setString(5, project.getLink());
             stmt.setInt(6, project.getId());
             return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public boolean deleteProject(int id) throws SQLException {
+    public boolean deleteProject(int id) {
         String sql = "DELETE FROM PersonalProject WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -16,23 +16,38 @@ public class testDAO {
         }
 
         try {
-            UserDAO userDAO = new UserDAO(conn);
+            UserDAO userDAO = new UserDAO();
+
+            // Tạo đối tượng User mới
             User newUser = new User();
             newUser.setName("Trần Nguyên Tâm");
             newUser.setIntroduce("HelloAE");
             newUser.setEmail("trannguyentam2004@gmail.com");
             newUser.setPhoneNumber("0375053769");
-            newUser.setBirthday(java.sql.Date.valueOf("2004-12-28")); // Định dạng yyyy-MM-dd
+            newUser.setBirthday(java.sql.Date.valueOf("2004-12-28"));
             newUser.setCity("Thừa Thiên Huế");
-            newUser.setAvatar(null); // Nếu không có avatar
-            newUser.setAccountId(1); // ID tài khoản
+            newUser.setAvatar(null);
+            newUser.setAccountId(1);
 
-            // Truyền đối tượng User vào phương thức addUser
-            List<User> users = userDAO.addUser(newUser);
-            if (users.isEmpty()) {
-                System.out.println("Không có người dùng nào trong cơ sở dữ liệu.");
+            // Thêm người dùng vào cơ sở dữ liệu
+            boolean success = userDAO.addUser(newUser);  // Phương thức addUser trả về boolean
+
+            if (success) {
+                System.out.println("Thêm người dùng thành công.");
+
+                // Sau khi thêm người dùng, lấy danh sách tất cả người dùng
+                List<User> users = userDAO.getAllUsers();  // Lấy danh sách người dùng từ cơ sở dữ liệu
+
+                if (users.isEmpty()) {
+                    System.out.println("Không có người dùng nào trong cơ sở dữ liệu.");
+                } else {
+                    System.out.println("Danh sách người dùng sau khi thêm:");
+                    for (User user : users) {
+                        System.out.println(user);
+                    }
+                }
             } else {
-                System.out.println(users);
+                System.out.println("Thêm người dùng thất bại.");
             }
         } catch (Exception e) {
             System.err.println("Lỗi khi truy vấn cơ sở dữ liệu: " + e.getMessage());

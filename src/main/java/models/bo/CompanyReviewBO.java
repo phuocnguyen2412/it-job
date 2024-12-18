@@ -6,23 +6,29 @@ import models.dao.CompanyReviewDAO;
 import java.util.ArrayList;
 
 public class CompanyReviewBO {
-    public static int handleCreateCompanyReview(CompanyReview companyReview){
-        return CompanyReviewDAO.handleCreateCompanyReview(companyReview);
+    private CompanyReviewDAO companyReviewDAO;
+
+    public CompanyReviewBO(CompanyReviewDAO companyReviewDAO) {
+        this.companyReviewDAO = companyReviewDAO;
     }
 
-    public static int handleEditCompanyReview(CompanyReview companyReview){
-        return CompanyReviewDAO.handleEditCompanyReview(companyReview);
+    public int handleCreateCompanyReview(CompanyReview companyReview) {
+        return companyReviewDAO.handleCreateCompanyReview(companyReview);
     }
 
-    public static int handleDeleteCompanyReview(int companyReviewId){
-        return CompanyReviewDAO.handleDeleteCompanyReview(companyReviewId);
+    public int handleEditCompanyReview(CompanyReview companyReview) {
+        return companyReviewDAO.handleEditCompanyReview(companyReview);
     }
 
-    public static CompanyReview getCompanyReviewById(int companyReviewId){
-        return CompanyReviewDAO.getCompanyReviewById(companyReviewId);
+    public int handleDeleteCompanyReview(int companyReviewId) {
+        return companyReviewDAO.handleDeleteCompanyReview(companyReviewId);
     }
 
-    public static ArrayList<CompanyReview> getCompanyReviewList(int companyId){
-        return CompanyReviewDAO.getCompanyReviewList(companyId);
+    public CompanyReview getCompanyReviewById(int companyReviewId) {
+        return companyReviewDAO.getCompanyReviewById(companyReviewId);
+    }
+
+    public ArrayList<CompanyReview> getCompanyReviewList(int companyId) {
+        return companyReviewDAO.getCompanyReviewList(companyId);
     }
 }

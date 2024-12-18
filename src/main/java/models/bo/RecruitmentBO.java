@@ -4,19 +4,25 @@ import models.bean.Recruitment;
 import models.dao.RecruitmentDAO;
 
 public class RecruitmentBO {
-    public static int handleCreateRecruitment(Recruitment recruitment){
-        return RecruitmentDAO.handleCreateRecruitment(recruitment);
+    private RecruitmentDAO recruitmentDAO;
+
+    public RecruitmentBO(RecruitmentDAO recruitmentDAO) {
+        this.recruitmentDAO = recruitmentDAO;
     }
 
-    public static int handleEditRecruitment(Recruitment recruitment){
-        return RecruitmentDAO.handleEditRecruitment(recruitment);
+    public int handleCreateRecruitment(Recruitment recruitment) {
+        return recruitmentDAO.handleCreateRecruitment(recruitment);
     }
 
-    public static int handleDeleteRecruitment(int recruitmentId){
-        return RecruitmentDAO.handleDeleteRecruitment(recruitmentId);
+    public int handleEditRecruitment(Recruitment recruitment) {
+        return recruitmentDAO.handleEditRecruitment(recruitment);
     }
 
-    public static Recruitment getRecruitment(int recruitmentId){
-        return RecruitmentDAO.getRecruitmentById(recruitmentId);
+    public int handleDeleteRecruitment(int recruitmentId) {
+        return recruitmentDAO.handleDeleteRecruitment(recruitmentId);
+    }
+
+    public Recruitment getRecruitment(int recruitmentId) {
+        return recruitmentDAO.getRecruitmentById(recruitmentId);
     }
 }
