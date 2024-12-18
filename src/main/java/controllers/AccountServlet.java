@@ -1,5 +1,11 @@
 package controllers;
 
+<<<<<<< HEAD
+=======
+import java.io.IOException;
+import java.sql.SQLException;
+
+>>>>>>> be82e45205b05fede78c4253cfaba86f850bfda3
 import exception.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -50,7 +56,18 @@ public class AccountServlet extends BaseController {
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+<<<<<<< HEAD
         Account account = accountBO.checkSignIn(email, password);
+=======
+        AccountBO accountBO = new AccountBO();
+        Account account;
+        try{
+            account = accountBO.checkSignIn(email, password);
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+>>>>>>> be82e45205b05fede78c4253cfaba86f850bfda3
         if (account != null) {
             request.getSession().setAttribute("account", account);
             request.getSession().setAttribute("loggedin", true);

@@ -6,8 +6,8 @@ import models.dao.CompanyAddressDAO;
 import java.util.ArrayList;
 
 public class CompanyAddressBO {
-    private CompanyAddressDAO companyAddressDAO;
-    
+    CompanyAddressDAO companyAddressDAO = new CompanyAddressDAO();
+
     public int handleCreateCompanyAddress(CompanyAddress companyAddress) {
         return companyAddressDAO.handleCreateCompanyAddress(companyAddress);
     }
@@ -22,5 +22,9 @@ public class CompanyAddressBO {
 
     public ArrayList<CompanyAddress> getCompanyAddress(int companyId) {
         return companyAddressDAO.getCompanyAddress(companyId);
+    }
+
+    public CompanyAddress mockAdress() {
+        return new CompanyAddress(1, 1, "Ha Noi", "FPT Software Building");
     }
 }

@@ -10,9 +10,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CompanyReviewDAO {
-    public int handleCreateCompanyReview(CompanyReview companyReview) {
-        String query = "INSERT INTO CompanyReview (UserId, Detail, Point, CreatedAt, CompanyId) " +
-                "VALUES(?, ?, ?, ?, ?)";
+    public int handleCreateCompanyReview(CompanyReview companyReview) throws SQLException{
+        String query = """
+                        INSERT INTO CompanyReview (UserId, Detail, Point, CreatedAt, CompanyId) 
+                        VALUES(?, ?, ?, ?, ?)
+                """;
         int result;
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -30,7 +32,8 @@ public class CompanyReviewDAO {
         return result;
     }
 
-    public int handleEditCompanyReview(CompanyReview companyReview) {
+
+    public int handleEditCompanyReview(CompanyReview companyReview) throws SQLException{
         String query = "UPDATE CompanyReview SET Detail = ?, CompanyId = ? WHERE Id = ?";
         int result;
         try (Connection conn = Database.getConnection();
@@ -47,7 +50,7 @@ public class CompanyReviewDAO {
         return result;
     }
 
-    public int handleDeleteCompanyReview(int companyReviewId) {
+    public int handleDeleteCompanyReview(int companyReviewId) throws SQLException{
         String query = "DELETE FROM CompanyReview WHERE Id = ?";
         int result;
         try (Connection conn = Database.getConnection();
@@ -62,7 +65,8 @@ public class CompanyReviewDAO {
         return result;
     }
 
-    public CompanyReview getCompanyReviewById(int companyReviewId) {
+
+    public CompanyReview getCompanyReviewById(int companyReviewId) throws SQLException{
         CompanyReview result = new CompanyReview();
         String query = "SELECT * FROM CompanyReview WHERE Id = ?";
         try (Connection conn = Database.getConnection();
@@ -86,7 +90,8 @@ public class CompanyReviewDAO {
         return result;
     }
 
-    public ArrayList<CompanyReview> getCompanyReviewList(int companyId) {
+
+    public ArrayList<CompanyReview> getCompanyReviewList(int companyId) throws SQLException{
         ArrayList<CompanyReview> result = new ArrayList<>();
         String query = "SELECT * FROM CompanyReview WHERE CompanyId = ? ORDER BY Point DESC LIMIT 5";
         try (Connection conn = Database.getConnection();

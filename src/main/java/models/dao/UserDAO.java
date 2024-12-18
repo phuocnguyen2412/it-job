@@ -47,7 +47,7 @@ public class UserDAO {
     }
 
     public boolean addUser(User user) {
-        String sql = "INSERT INTO User (name, introduce, email, phoneNumber, birthday, city, avatar, accountId, skills) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = """INSERT INTO User (name, introduce, email, phoneNumber, birthday, city, avatar, accountId, skills) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -69,7 +69,7 @@ public class UserDAO {
     }
 
     public boolean updateUser(User user) {
-        String sql = "UPDATE User SET name = ?, introduce = ?, email = ?, phoneNumber = ?, birthday = ?, city = ?, avatar = ?, accountId = ?, skills = ? WHERE id = ?";
+        String sql = """UPDATE User SET name = ?, introduce = ?, email = ?, phoneNumber = ?, birthday = ?, city = ?, avatar = ?, accountId = ?, skills = ? WHERE id = ?""";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
