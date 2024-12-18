@@ -61,7 +61,7 @@
                                 type="date"
                                 class="form-control"
                                 id="dateInput"
-                                name="city"
+                                name="birthday"
                                 value="<%= user.getBirthday() %>"
                         />
                     </div>

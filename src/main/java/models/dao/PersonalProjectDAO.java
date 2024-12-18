@@ -8,12 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PersonalProjectDAO {
     public ArrayList<PersonalProject> getProjectsByUserId(int userId) {
         ArrayList<PersonalProject> projects = new ArrayList<>();
-        String sql = "SELECT * FROM persionalproject WHERE UserId = ?";
+        String sql = "SELECT * FROM `persional project` WHERE UserId = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, userId);
@@ -37,7 +36,7 @@ public class PersonalProjectDAO {
     }
 
     public boolean addProject(PersonalProject project) {
-        String sql = "INSERT INTO persionalproject (Name, DateStart, DateEnd, Detail, Link, UserId) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO `persional project` (Name, DateStart, DateEnd, Detail, Link, UserId) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, project.getName());
@@ -53,7 +52,7 @@ public class PersonalProjectDAO {
     }
 
     public boolean updateProject(PersonalProject project) {
-        String sql = "UPDATE persionalproject SET Name = ?, DateStart = ?, DateEnd = ?, Detail = ?, Link = ? WHERE Id = ?";
+        String sql = "UPDATE `persional project` SET Name = ?, DateStart = ?, DateEnd = ?, Detail = ?, Link = ? WHERE Id = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, project.getName());
@@ -69,7 +68,7 @@ public class PersonalProjectDAO {
     }
 
     public boolean deleteProject(int id) {
-        String sql = "DELETE FROM persionalproject WHERE Id = ?";
+        String sql = "DELETE FROM `persional project` WHERE Id = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);

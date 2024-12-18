@@ -16,7 +16,7 @@
     <%@include file="/WEB-INF/layouts/header.jsp" %>
 </head>
 <body>
-
+<%@include file="/WEB-INF/layouts/nav.jsp" %>
 
 <!-- Main Content -->
 <div class="container my-5">

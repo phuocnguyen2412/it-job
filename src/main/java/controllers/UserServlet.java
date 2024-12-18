@@ -6,13 +6,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.bean.Application;
+import models.bean.PersonalProject;
 import models.bean.User;
 import models.bo.ApplicationBO;
 import models.bo.UserBO;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet(name = "UserServlet", urlPatterns = {"/user/*"})
 public class UserServlet extends BaseController {
@@ -89,16 +91,37 @@ public class UserServlet extends BaseController {
 
     private void edit_infomation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
-
         String phone = req.getParameter("phone");
-        String address = req.getParameter("address");
+        String city = req.getParameter("city");
+        String birthday = req.getParameter("birthday");
 
         User user = new User();
         user.setName(name);
         user.setPhoneNumber(phone);
-        user.setCity(address);
+        user.setCity(city);
+        user.setBirthday(Date.valueOf(birthday));
+        user.setId((int) req.getSession().getAttribute("userId"));
 
         req.setAttribute("user", user);
         render(req, resp, "/user/profile");
+    }
+
+    private void add_project(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+        String name = request.getParameter("projectName");
+        String detail = request.getParameter("projectDetail");
+        String dateStart = request.getParameter("dateStart");
+        String dateEnd = request.getParameter("dateEnd");
+        String link = request.getParameter("projectLink");
+
+        PersonalProject project = new PersonalProject();
+        project.setName(name);
+        project.setDetail(detail);
+        project.setDateStart(Timestamp.valueOf(dateStart));
+        project.setDateEnd(Timestamp.valueOf(dateEnd));
+        project.setLink(link);
+        project.setUserId((int) request.getSession().getAttribute("userId"));
+
+
+        resp.sendRedirect("http://localhost:8080/demo_jsp_war_exploded/user/profile");
     }
 }

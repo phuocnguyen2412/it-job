@@ -30,7 +30,7 @@
                 ></button>
             </div>
             <div class="modal-body">
-                <form action="http://localhost:8080/demo_jsp_war_exploded/user/profile" method="post">
+                <form action="http://localhost:8080/demo_jsp_war_exploded/user/introduce" method="post">
                     <div class="mb-3">
                         <label for="introduceInput" class="form-label"
                         >Giới thiệu</label>
@@ -38,6 +38,7 @@
                                 class="form-control"
                                 id="introduceInput"
                                 rows="4"
+                                name="introduce"
                         ><%= user.getIntroduce() == null ? "Hãy thêm phần giơí thiệu của bạn!" : user.getIntroduce()%></textarea>
                     </div>
                 </form>
@@ -51,7 +52,7 @@
                     Hủy
                 </button>
                 <button
-                        type="button"
+                        type="submit"
                         class="btn btn-primary"
                         id="saveIntroduceButton"
                 >
