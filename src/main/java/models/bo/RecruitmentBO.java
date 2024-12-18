@@ -5,11 +5,7 @@ import models.dao.RecruitmentDAO;
 
 public class RecruitmentBO {
     private RecruitmentDAO recruitmentDAO;
-
-    public RecruitmentBO(RecruitmentDAO recruitmentDAO) {
-        this.recruitmentDAO = recruitmentDAO;
-    }
-
+    
     public int handleCreateRecruitment(Recruitment recruitment) {
         return recruitmentDAO.handleCreateRecruitment(recruitment);
     }

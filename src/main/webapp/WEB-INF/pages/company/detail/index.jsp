@@ -201,9 +201,11 @@
                     </div>
 
                     <!-- Map -->
-                    <div class="w-3/4 bg-gray-200 p-4 rounded-md shadow-md">
-                        <div class="h-[400px] bg-cover bg-center rounded-md"
-                             style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?center=Ho+Chi+Minh&zoom=14&size=400x400&markers=color:red%7Clabel:S%7C10.762622,106.660172');"></div>
+                    <div class="w-3/4 bg-gray-200 p-2 rounded-md shadow-md">
+
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9443.042745712964!2d108.16884419879474!3d16.069523149325427!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3142191e2023af1f%3A0xcc9f24852645b6f6!2zU-G7kSAyNjAgTMO9IFRow6FpIFTDtG5n!5e0!3m2!1svi!2s!4v1734445958418!5m2!1svi!2s"
+                                class="w-full h-full" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
 
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 package models.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
@@ -38,7 +39,7 @@ public class Company {
 
 
     public List<CompanyAddress> getAddresses() {
-        return addresses;
+        return addresses != null ? addresses : new ArrayList<>();
     }
 
     public Company setAddresses(List<CompanyAddress> addresses) {
@@ -140,5 +141,24 @@ public class Company {
 
     public void setAccountId(int accountId) {
         this.accountId = accountId;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", introduce='" + introduce + '\'' +
+                ", country='" + country + '\'' +
+                ", industry='" + industry + '\'' +
+                ", workingDays='" + workingDays + '\'' +
+                ", size='" + size + '\'' +
+                ", detail='" + detail + '\'' +
+                ", email='" + email + '\'' +
+                ", logo='" + logo + '\'' +
+                ", accountId=" + accountId +
+                ", Skills='" + Skills + '\'' +
+                ", addresses=" + addresses +
+                '}';
     }
 }

@@ -14,8 +14,8 @@ public class AdminServlet extends BaseController {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getPathInfo() == null ? "/" : req.getPathInfo();
         switch (path) {
-            case "/dashboard":
-                render(req, resp, "/admin/dashboard");
+            case "/create-account":
+                render(req, resp, "/admin/account/create", "templete");
                 break;
             case "/users":
                 render(req, resp, "/admin/users");

@@ -13,7 +13,7 @@ import java.util.List;
 public class PersonalProjectDAO {
     public List<PersonalProject> getProjectsByUserId(int userId) {
         List<PersonalProject> projects = new ArrayList<>();
-        String sql = "SELECT * FROM PersonalProject WHERE userId = ?";
+        String sql = "SELECT * FROM Personal Project WHERE userId = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, userId);
@@ -37,7 +37,7 @@ public class PersonalProjectDAO {
     }
 
     public boolean addProject(PersonalProject project) {
-        String sql = "INSERT INTO PersonalProject (name, dateStart, dateEnd, detail, link, userId) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Personal Project (name, dateStart, dateEnd, detail, link, userId) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, project.getName());
@@ -53,7 +53,7 @@ public class PersonalProjectDAO {
     }
 
     public boolean updateProject(PersonalProject project) {
-        String sql = "UPDATE PersonalProject SET name = ?, dateStart = ?, dateEnd = ?, detail = ?, link = ? WHERE id = ?";
+        String sql = "UPDATE Personal Project SET name = ?, dateStart = ?, dateEnd = ?, detail = ?, link = ? WHERE id = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, project.getName());
@@ -69,7 +69,7 @@ public class PersonalProjectDAO {
     }
 
     public boolean deleteProject(int id) {
-        String sql = "DELETE FROM PersonalProject WHERE id = ?";
+        String sql = "DELETE FROM Personal Project WHERE id = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);

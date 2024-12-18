@@ -59,7 +59,7 @@ public class UserDAO {
             stmt.setString(6, user.getCity());
             stmt.setBytes(7, user.getAvatar());
             stmt.setInt(8, user.getAccountId());
-            stmt.setString(9, String.join(",", user.getSkills())); // Chuyển List<String> thành String
+            stmt.setString(9, String.join(",", user.getSkills()));
 
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;

@@ -9,8 +9,10 @@ import java.io.IOException;
 
 abstract public class BaseController extends HttpServlet {
     protected void render(HttpServletRequest req, HttpServletResponse resp, String contentPage, String layout) throws ServletException, IOException {
-        req.setAttribute("contentPage", contentPage);
-        req.getRequestDispatcher("/WEB-INF/layouts/" + layout + ".jsp").forward(req, resp);
+        req.setAttribute("contentPage", "/WEB-INF/pages" + contentPage + "/index.jsp");
+        System.out.println("/WEB-INF/pages" + contentPage + "/index.jsp");
+        String path = "/WEB-INF/layouts/" + layout + ".jsp";
+        req.getRequestDispatcher(path).forward(req, resp);
     }
 
     protected void render(HttpServletRequest req, HttpServletResponse resp, String path) throws ServletException, IOException {

@@ -8,10 +8,6 @@ import java.util.ArrayList;
 public class CompanyBO {
     private CompanyDAO companyDAO;
 
-    public CompanyBO(CompanyDAO companyDAO) {
-        this.companyDAO = companyDAO;
-    }
-
     public int handleCreateCompany(Company company) {
         return companyDAO.handleCreateCompany(company);
     }

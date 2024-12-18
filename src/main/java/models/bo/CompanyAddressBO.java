@@ -7,11 +7,7 @@ import java.util.ArrayList;
 
 public class CompanyAddressBO {
     private CompanyAddressDAO companyAddressDAO;
-
-    public CompanyAddressBO(CompanyAddressDAO companyAddressDAO) {
-        this.companyAddressDAO = companyAddressDAO;
-    }
-
+    
     public int handleCreateCompanyAddress(CompanyAddress companyAddress) {
         return companyAddressDAO.handleCreateCompanyAddress(companyAddress);
     }
