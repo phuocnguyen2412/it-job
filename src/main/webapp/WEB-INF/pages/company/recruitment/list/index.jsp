@@ -9,13 +9,13 @@
         <th>Vị trí</th>
         <th>Mức lương</th>
         <th>Ngày tạo</th>
+        <th>Xem danh sách ứng viên</th>
         <th>Chỉnh sửa</th>
         <th>Xem chi tiết</th>
     </tr>
     </thead>
     <tbody>
     <%
-        // Ví dụ danh sách việc làm
         List<Recruitment> recruitments = (List<Recruitment>) request.getAttribute("recruitments");
         if (recruitments != null && !recruitments.isEmpty()) {
             for (int i = 0; i < recruitments.size(); i++) {
@@ -31,6 +31,12 @@
         <td><%= recruitment.getCreatedAt() %>
         </td>
         <td>
+            <a href="${pageContext.request.contextPath}/company/list-application?recruitment_id=<%= recruitment.getId() %>"
+               class="btn btn-success btn-sm">
+                <i class="bi bi-pencil"></i> Xem ứng viên
+            </a>
+        </td>
+        <td>
             <a href="${pageContext.request.contextPath}/company/edit-recruitment?id=<%= recruitment.getId() %>"
                class="btn btn-warning btn-sm">
                 <i class="bi bi-pencil"></i> Chỉnh sửa
@@ -39,7 +45,7 @@
         <td>
             <a href="${pageContext.request.contextPath}/recruitment/detail?id=<%= recruitment.getId() %>"
                class="btn btn-info btn-sm">
-                <i class="bi bi-eye"></i> Xem chi tiết
+                <i class="bi bi-eye"></i>Xem chi tiết
             </a>
         </td>
     </tr>

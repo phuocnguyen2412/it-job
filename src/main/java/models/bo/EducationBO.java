@@ -4,12 +4,25 @@ import models.bean.Education;
 import models.dao.EducationDAO;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class EducationBO {
-    private EducationDAO educationDAO;
+    private final EducationDAO educationDAO;
 
-    public EducationBO(EducationDAO educationDAO) {
-        this.educationDAO = educationDAO;
+    public EducationBO() {
+        this.educationDAO = new EducationDAO();
+    }
+
+    public Education mockData() {
+        Education education = new Education();
+        education.setUserId(1);
+        education.setSchool("University of Science");
+        education.setSpecialize("Information Technology");
+
+        education.setDateStart(Timestamp.valueOf("2020-01-01 00:00:00"));
+        education.setDateEnd(Timestamp.valueOf("2024-01-01 00:00:00"));
+
+        return education;
     }
 
     public boolean addEducation(Education education) throws SQLException {
