@@ -1,6 +1,5 @@
 package controllers;
 
-
 import exception.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,13 +13,6 @@ import java.sql.SQLException;
 
 @WebServlet(name = "AccountServlet", urlPatterns = {"/auth/*"})
 public class AccountServlet extends BaseController {
-    private AccountBO accountBO;
-
-    public void init() throws ServletException {
-        super.init();
-        accountBO = new AccountBO();
-    }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        boolean loggedIn = request.getSession().getAttribute("loggedin") != null
@@ -39,46 +31,39 @@ public class AccountServlet extends BaseController {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            String path = request.getPathInfo() == null ? "/" : request.getPathInfo();
-            switch (path) {
-                case "/login" -> login(request, response);
-                case "/register" -> register(request, response);
-                default -> throw new NotFoundException();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        String path = request.getPathInfo() == null ? "/" : request.getPathInfo();
+        switch (path) {
+            case "/login" -> login(request, response);
+            case "/register" -> register(request, response);
+            default -> throw new NotFoundException();
         }
-
 
     }
 
-    private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+    private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        AccountBO accountBO = new AccountBO();
+        Account account;
         try {
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-
-            Account account = accountBO.checkSignIn(email, password);
-
-            if (account != null) {
-                request.getSession().setAttribute("account", account);
-                request.getSession().setAttribute("loggedin", true);
-                render(request, response, "/home");
-            } else {
-                request.setAttribute("errorMessage", "Invalid username or password!");
-                render(request, response, "/WEB-INF/pages/login.jsp");
-            }
-        } catch (Exception e) {
+            account = accountBO.checkSignIn(email, password);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if (account != null) {
+            request.getSession().setAttribute("account", account);
+            request.getSession().setAttribute("loggedin", true);
+            render(request, response, "/home");
+        } else {
             request.setAttribute("errorMessage", "Invalid username or password!");
             render(request, response, "/WEB-INF/pages/login.jsp");
         }
-
     }
 
     private void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        //
+
     }
 }

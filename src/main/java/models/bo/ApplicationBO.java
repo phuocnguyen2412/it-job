@@ -2,6 +2,9 @@ package models.bo;
 
 import models.bean.Application;
 
+import models.bean.Application;
+import models.dao.ApplicationDAO;
+
 public class ApplicationBO {
     public Application mockApplication() {
         Application application = new Application();
@@ -13,5 +16,10 @@ public class ApplicationBO {
         application.setUser(new UserBO().mockData());
         application.setRecruitment(new RecruitmentBO().mockRecruitment());
         return application;
+    }
+    ApplicationDAO applicationDAO = new ApplicationDAO();
+
+    public Application getAllApplication(int userId, int recruitmentId) {
+        return applicationDAO.getAppication(userId, recruitmentId);
     }
 }

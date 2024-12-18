@@ -141,6 +141,9 @@ public class User {
     }
 
     public List<String> getSkills() {
+        if (skills == null || skills.isEmpty()) {
+            return List.of();
+        }
         return List.of(skills.split(","));
     }
 
