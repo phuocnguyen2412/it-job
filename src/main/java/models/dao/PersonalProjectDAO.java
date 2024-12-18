@@ -37,7 +37,7 @@ public class PersonalProjectDAO {
     }
 
     public boolean addProject(PersonalProject project) {
-        String sql = """INSERT INTO Personal Project (name, dateStart, dateEnd, detail, link, userId) VALUES (?, ?, ?, ?, ?, ?)""";
+        String sql = "INSERT INTO Personal Project (name, dateStart, dateEnd, detail, link, userId) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, project.getName());
