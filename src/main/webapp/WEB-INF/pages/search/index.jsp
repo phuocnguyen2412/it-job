@@ -1,12 +1,13 @@
-<%@ page import="models.bean.Company" %>
+<%@ page import="models.bean.Recruitment" %>
 <%@ page import="java.util.List" %>
 <%@ page import="models.bean.CompanyAddress" %><%--
   Created by IntelliJ IDEA.
   User: nguyenhuynh
-  Date: 7/12/24
-  Time: 19:02
+  Date: 18/12/24
+  Time: 16:34
   To change this template use File | Settings | File Templates.
 --%>
+<% Recruitment recruitment_detail = (Recruitment) request.getAttribute("recruitment");%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -134,42 +135,101 @@
 </div>
 
 <div class="container mx-auto py-10">
-    <h1 class="text-2xl font-bold text-center mb-8">Top Companies</h1>
+    <div class="row">
+        <div class="col-4 flex-col gap-5">
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <% List<Company> companies = (List<Company>) request.getAttribute("companies");
-            for (Company company : companies) { %>
-        <div class="bg-white rounded-lg shadow-lg p-6">
-            <div class="flex justify-center">
-                <img
-                        src="<%= company.getLogo() %>"
-                        alt="FPT Software Logo"
-                        class="w-20 h-20 mb-4"
-                />
-            </div>
-            <h2 class="text-center font-semibold text-lg">
-                <%= company.getName() %>
-            </h2>
-            <div class="flex flex-wrap justify-center gap-2 mt-4">
-                <% for (String skill : company.getSkills()) { %>
-                <span class="bg-gray-200 text-sm px-3 py-1 rounded"><%= skill%></span>
-                <% } %>
-            </div>
-            <p class="text-center text-gray-500 text-sm mt-4">
-                <% for (CompanyAddress address : company.getAddresses()) { %>
-                <%= address.getAddress() %>
-                <% } %>
-            </p>
-            <div class="flex justify-between items-center mt-4">
-                <span class="text-green-500 font-semibold">5 Jobs</span>
-                <a href="http://localhost:8080/demo_jsp_war_exploded/company/detail?id=<%= company.getId()%>"
-                   class="text-blue-500 hover:underline"
-                >See more &gt;</a
-                >
-            </div>
+            <% List<Recruitment> recruitments = (List<Recruitment>) request.getAttribute("recruitments");
+                for (Recruitment recruitment : recruitments) {%>
+            <a href="http://localhost:8080/demo_jsp_war_exploded/search?city=0&key=company&value=#&recruitmentId=<%=recruitment.getId()%>">
+                <div class=" gap-y-3 flex flex-col bg-[#fff4e9] border border-[#dedede] rounded-[8px] shadow-[0px_4px_24px_0px_#0000001f] gap-x-3 text-[#121212] leading-[24px] pt-[16px] p-3 mb-4">
+                    <div class="border-b-2 border-dashed border-gray-500 pb-3">
+                        <div class="text-[#a6a6a6] text-[14px]">Đăng 40 ngày trước</div>
+
+                        <h2 class="text-[18px] font-[700] text-[#121212] my-3"><%= recruitment.getPosition()%>
+                        </h2>
+                        <h2 class=""><i
+                                class="bi bi-currency-dollar text-green-500"></i> <%= recruitment.getSalarayRange()%>
+                        </h2>
+                    </div>
+                    <div class="flex gap-3 border-b-2 border-dashed border-gray-500 pb-3">
+                        <% for (String skill : recruitment.getSkills()) { %>
+                        <div class="rounded-[20px] border border-solid border-[#dedede] px-3 py-1"><%=skill%>
+                        </div>
+                        <% } %>
+                    </div>
+                    <% for (String benefit : recruitment.getAllBenefits()) {%>
+                    <div class=" text-[18px]">
+                        <i class="bi bi-check2-all text-red-500"></i>
+                        <%=benefit%>
+                    </div>
+                    <% } %>
+                </div>
+            </a>
+            <% } %>
         </div>
+        <div class="col-8">
+            <div class="bg-[#fff] px-[24px] py-[32px] rounded-[8px] text-[#121212] mb-3 shadow-[0px_6px_32px_0px_#00000014]">
+                <div class="border-b-2 border-dashed border-gray-500 pb-4">
+                    <h1 class="text-[28px] font-bold"><%= recruitment_detail.getPosition()%>
+                    </h1>
+                </div>
+                <a href="http://localhost:8080/demo_jsp_war_exploded/search/company?id=<%=recruitment_detail.getCompany().getId()%>">
+                    <h2 class="mb-3 text-[24px] font-bold mt-3 text-blue-500"><%= recruitment_detail.getCompany().getName()%>
+                    </h2>
+                </a>
 
-        <% } %>
+
+                <div class="mb-3 text-[#414042] text-[18px]"><%= recruitment_detail.getSalarayRange()%>
+                </div>
+                <button class="mb-3 btn w-full text-center rounded-[8px] py-[11px] px-[24px] bg-red-500">Apply now
+                </button>
+                <div class="mb-3">
+                    <% for (CompanyAddress address : recruitment_detail.getAddresses()) { %>
+                    <div class="text-[#414042] mb-2"><i class="bi bi-geo-alt"></i> <%= address.getAddress()%>
+                    </div>
+                    <% } %>
+                </div>
+
+                <div class="flex gap-3 mb-3">
+                    <% for (String skill : recruitment_detail.getSkills()) { %>
+                    <div class="rounded-[20px] border border-solid border-[#dedede] px-3 py-1"><%=skill%>
+                    </div>
+                    <% } %>
+                </div>
+                <span><i class="bi bi-clock"></i> <%= recruitment_detail.getCreatedAt()%></span>
+            </div>
+            <div class="bg-[#fff] px-[24px] py-[32px] rounded-[8px] text-[#121212] mb-3 shadow-[0px_6px_32px_0px_#00000014]">
+                <div class="border-b-2 border-dashed border-gray-500 pb-4 mb-3">
+                    <h1 class="text-[22px] font-bold">Job description
+                    </h1>
+                </div>
+                <p>
+                    <%= recruitment_detail.getJobDescription()%>
+                </p>
+
+            </div>
+            <div class="bg-[#fff] px-[24px] py-[32px] rounded-[8px] text-[#121212] mb-3 shadow-[0px_6px_32px_0px_#00000014]">
+                <div class="border-b-2 border-dashed border-gray-500 pb-4 mb-3">
+                    <h1 class="text-[22px] font-bold">Benefits
+                    </h1>
+                </div>
+                <% for (String benefit : recruitment_detail.getAllBenefits()) { %>
+                <div>- <%= benefit%>
+                </div>
+                <% } %>
+            </div>
+            <div class="bg-[#fff] px-[24px] py-[32px] rounded-[8px] text-[#121212] mb-3 shadow-[0px_6px_32px_0px_#00000014]">
+                <div class="border-b-2 border-dashed border-gray-500 pb-4 mb-3">
+                    <h1 class="text-[22px] font-bold">Requirements
+                    </h1>
+                </div>
+                <% for (String requirement : recruitment_detail.getRequirementList()) { %>
+                <div>- <%= requirement%>
+                </div>
+                <% } %>
+            </div>
+
+        </div>
     </div>
 </div>
 

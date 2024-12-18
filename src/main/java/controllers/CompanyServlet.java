@@ -8,8 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import models.bean.Company;
 import models.bean.CompanyAddress;
 import models.bean.Recruitment;
-import models.bo.CompanyAddressBO;
-import models.bo.CompanyBO;
 import models.bo.RecruitmentBO;
 
 import java.io.IOException;
@@ -23,9 +21,7 @@ public class CompanyServlet extends BaseController {
         String path = req.getPathInfo() == null ? "/" : req.getPathInfo();
         System.out.println(path);
         switch (path) {
-            case "/detail":
-                get_detail(req, resp);
-                break;
+
             case "/create-recruitment":
                 List<CompanyAddress> addresses = new ArrayList<>() {
                     {
@@ -168,35 +164,5 @@ public class CompanyServlet extends BaseController {
         render(req, resp, "/company/recruitment/detail", "template");
     }
 
-    private void get_detail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String companyId = req.getParameter("id");
-        if (companyId == null) {
-            throw new NotFoundException();
-        }
-        Company company = new CompanyBO().mockCompany();
-        Recruitment recruitment = new Recruitment();
-        recruitment.setPosition("Java Developer");
-        recruitment.setJobDescription("Develop software applications using Java programming language");
-        recruitment.setRequirement("At least 1 year of experience in Java programming");
-        recruitment.setRangeOfSalaryFrom(1000);
-        recruitment.setRangeOfSalaryTo(2000);
-        recruitment.setSkills("java,c++,c#,python,javascript");
-        recruitment.setBenefit("13th month salary, health insurance, annual leave");
-        recruitment.setAddresses(new ArrayList<>() {
-            {
-                add(new CompanyAddressBO().mockAdress());
-                add(new CompanyAddress(1, 1, "Ha Noi", "FPT Software Building"));
-            }
-        });
-        ArrayList<Recruitment> recruitments = new ArrayList<>() {
-            {
-                add(recruitment);
-                add(recruitment);
-                add(recruitment);
-            }
-        };
-        req.setAttribute("recruitments", recruitments);
-        req.setAttribute("company", company);
-        render(req, resp, "/company/detail");
-    }
+
 }

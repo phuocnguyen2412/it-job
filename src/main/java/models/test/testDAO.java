@@ -16,7 +16,7 @@ public class testDAO {
         }
 
         try {
-            UserDAO userDAO = new UserDAO(conn);
+            UserDAO userDAO = new UserDAO();
             User newUser = new User();
             newUser.setName("Trần Nguyên Tâm");
             newUser.setIntroduce("HelloAE");

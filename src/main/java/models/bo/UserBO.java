@@ -1,17 +1,41 @@
 package models.bo;
 
+import models.bean.Certificate;
 import models.bean.User;
 import models.dao.UserDAO;
 
-import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserBO {
     private final UserDAO userDAO;
 
-    public UserBO(Connection connection) {
-        this.userDAO = new UserDAO(connection);
+    public UserBO() {
+        this.userDAO = new UserDAO();
+    }
+
+    public User mockData() {
+        User user = new User();
+        user.setId(1);
+        user.setName("Nguyen Van A");
+        user.setEmail("abc@gmail.com");
+        user.setCity("Da nang");
+        user.setPhoneNumber("0123456789");
+        user.setBirthday(java.sql.Date.valueOf("1999-01-01"));
+        user.setIntroduce("Hello");
+        user.setAccountId(1);
+        user.setCertificates(new ArrayList<Certificate>() {
+            {
+                add(new CertificateBO().mockData());
+                add(new CertificateBO().mockData());
+                add(new CertificateBO().mockData());
+            }
+        });
+
+        return user;
+
+
     }
 
     public List<User> getAllUsers() throws SQLException {
@@ -37,5 +61,5 @@ public class UserBO {
     public List<User> searchUsersByName(String name) throws SQLException {
         return userDAO.searchUsersByName(name);
     }
-    
+
 }

@@ -19,8 +19,13 @@
 
 <!-- Main Content -->
 <div class="container my-5">
-    <div class="row justify-content-center">
+    <div class="row items-center">
         <div class="col-12 col-md-7">
+            <img class="w-full h-full-vh img-cover"
+                 src="https://itviec.com/assets/customer/sign_in/logo-a2f6301beddfd012e9c6a71aed3d4cae576e2c7244fb4a41b2ff7c31bbd83f0e.png"/>
+        </div>
+        <div class="col-12 col-md-5">
+           
             <h1>Chào mừng bạn đến với IT Jobs</h1>
             <p>
                 Bằng việc đăng ký, bạn đồng ý với các Điều khoản dịch vụ
@@ -69,8 +74,33 @@
                     <a href="<%= request.getContextPath() %>/auth/login" class="text-primary">Đăng nhập ngay</a>
                 </p>
             </form>
+            <h2>
+                Đăng nhập để truy cập ngay vào hàng ngàn đánh giá và dữ
+                liệu lương thị trường IT
+            </h2>
+            <ul>
+                <li>
+                    <i class="bi bi-check2-square"></i>
+                    Xem trước mức lương để có lợi thế khi thoả thuận lương
+                </li>
+                <li>
+                    <i class="bi bi-check2-square"></i>
+                    Tìm hiểu về phúc lợi, con người, văn hóa công ty qua
+                    các đánh giá chân thật
+                </li>
+                <li>
+                    <i class="bi bi-check2-square"></i>
+                    Dễ dàng ứng tuyển chỉ với một thao tác
+                </li>
+                <li>
+                    <i class="bi bi-check2-square"></i>
+                    Quản lý hồ sơ và quyền riêng tư của bạn
+                </li>
+            </ul>
         </div>
+
     </div>
+
 </div>
 <%@ include file="/WEB-INF/layouts/footer.jsp" %>
 </body>

@@ -4,15 +4,18 @@ import exception.BadRequestException;
 import models.bean.Certificate;
 import models.dao.CertificateDAO;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 public class CertificateBO {
     private final CertificateDAO certificateDAO;
 
-    public CertificateBO(Connection connection) {
-        this.certificateDAO = new CertificateDAO(connection);
+    public CertificateBO() {
+        this.certificateDAO = new CertificateDAO();
+    }
+
+    public Certificate mockData() {
+        return new Certificate(1, "Java", "Oracle", java.sql.Timestamp.valueOf("2021-01-01 00:00:00"), "Java", "https://www.oracle.com/java", 1);
     }
 
     public List<Certificate> getCertificatesByUserId(int userId) {
