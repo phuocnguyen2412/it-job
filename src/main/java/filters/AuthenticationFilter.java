@@ -30,16 +30,16 @@ public class AuthenticationFilter implements Filter {
 
         HttpSession session = httpRequest.getSession(false);
         Object _account = session.getAttribute("account");
-        Account account = (Account) session.getAttribute("account");
-        System.out.println(_account == account);
 
-        if (session == null || session.getAttribute("userId") == null || !(Boolean) session.getAttribute("isSignedIn")) {
-            throw new UnauthorizedException("Bạn phải đăng nhập!");
+        if (_account == null) {
+            chain.doFilter(request, response);
+            return;
         }
 
+        Account account = (Account) _account;
+        System.out.println(account.getRoleName());
         if (account.getRoleName().equals("Company")) {
             CompanyBO companyBO = new CompanyBO();
-
             Company company = companyBO.getCompanyByAccountId(account.getId());
             if (company == null) {
                 throw new UnauthorizedException("Tài khoản không tồni");
