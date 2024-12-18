@@ -3,7 +3,6 @@ package models.bo;
 import models.bean.Company;
 import models.bean.CompanyAddress;
 import models.bean.Recruitment;
-import models.dao.CompanyDAO;
 import models.dao.RecruitmentDAO;
 
 import java.sql.SQLException;
@@ -14,8 +13,10 @@ public class RecruitmentBO {
     CompanyBO companyBO = new CompanyBO();
     RecruitmentAddressBO recruitmentAddressBO = new RecruitmentAddressBO();
 
-    public int handleCreateRecruitment(Recruitment recruitment) throws SQLException {
-        return recruitmentDAO.handleCreateRecruitment(recruitment);
+
+    public void handleCreateRecruitment(Recruitment recruitment) {
+
+        recruitmentDAO.handleCreateRecruitment(recruitment);
     }
 
     public int handleEditRecruitment(Recruitment recruitment) throws SQLException {
@@ -39,8 +40,9 @@ public class RecruitmentBO {
         return recruitmentDAO.getRecruitmentBySearch(country, searchBy, searchInput);
     }
 
-    public ArrayList<Recruitment> getRecruitment(){
-        return recruitmentDAO.getRecruitment();
+
+    public ArrayList<Recruitment> getRecruitment(String country, String searchBy, String searchInput) {
+        return recruitmentDAO.getRecruitment(country, searchBy, searchInput);
     }
 
     public Recruitment mockRecruitment() {

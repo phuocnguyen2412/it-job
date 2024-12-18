@@ -17,8 +17,8 @@ public class AdminServlet extends BaseController {
             case "/create-account":
                 render(req, resp, "/admin/account/create", "template");
                 break;
-            case "/users":
-                render(req, resp, "/admin/users");
+            case "/list-accounts":
+                render(req, resp, "/admin/account/list", "template");
                 break;
             default:
                 throw new NotFoundException();
@@ -28,6 +28,20 @@ public class AdminServlet extends BaseController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        String path = req.getPathInfo() == null ? "/" : req.getPathInfo();
+        switch (path) {
+            case "/create-account" -> {
+                String companyName = req.getParameter("companyName");
+                String email = req.getParameter("email");
+                String password = req.getParameter("password");
+                String companyLogo = req.getParameter("companyLogo");
+                // tạo account cho company ....
+            }
+
+            default -> {
+                throw new NotFoundException();
+            }
+
+        }
     }
 }
