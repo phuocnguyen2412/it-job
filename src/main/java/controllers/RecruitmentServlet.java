@@ -24,7 +24,7 @@ public class RecruitmentServlet extends BaseController {
         switch (path) {
             case "/detail" -> {
                 int id = Integer.parseInt(req.getParameter("id"));
-                Recruitment recruitment = recruimentBO.mockRecruitment();
+                Recruitment recruitment = recruimentBO.getRecruitmentById(id);
                 req.setAttribute("recruitment", recruitment);
                 render(req, resp, "/recruitment/detail");
 

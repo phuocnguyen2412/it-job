@@ -34,7 +34,7 @@ public class ErrorServlet extends BaseController {
         }
 
         req.setAttribute("errorMessage", errorMessage);
-        render(req, resp, "/WEB-INF/pages/error.jsp");
+        render(req, resp, "/error");
     }
 
     @Override

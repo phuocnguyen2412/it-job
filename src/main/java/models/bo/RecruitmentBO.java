@@ -50,24 +50,4 @@ public class RecruitmentBO {
         return recruitmentDAO.getRecruitment();
     }
 
-    public Recruitment mockRecruitment() {
-        Recruitment recruitment = new Recruitment();
-        recruitment.setCreatedAt(new java.sql.Timestamp(System.currentTimeMillis()));
-        recruitment.setPosition("Java Developer");
-        recruitment.setJobDescription("Develop software applications using Java programming language");
-        recruitment.setRequirement("At least 1 year of experience in Java programming");
-        recruitment.setRangeOfSalaryFrom(1000);
-        recruitment.setRangeOfSalaryTo(2000);
-        recruitment.setSkills("java,c++,c#,python,javascript");
-        recruitment.setBenefit("13th month salary, health insurance, annual leave");
-        recruitment.setCompany(new CompanyBO().mockCompany());
-        recruitment.setAddresses(new ArrayList<CompanyAddress>() {
-            {
-                add(new CompanyAddressBO().mockAdress());
-                add(new CompanyAddressBO().mockAdress());
-                add(new CompanyAddressBO().mockAdress());
-            }
-        });
-        return recruitment;
-    }
 }

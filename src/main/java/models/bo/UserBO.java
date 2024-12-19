@@ -15,34 +15,6 @@ public class UserBO {
     PersonalProjectBO personalProjectBO = new PersonalProjectBO();
     EducationBO educationBO = new EducationBO();
 
-    public User mockData() {
-        User user = new User();
-        user.setId(1);
-        user.setName("Nguyen Van A");
-        user.setEmail("abc@gmail.com");
-        user.setCity("Da nang");
-        user.setPhoneNumber("0123456789");
-        user.setBirthday(java.sql.Date.valueOf("1999-01-01"));
-        user.setIntroduce("Hello");
-        user.setAccountId(1);
-        user.setCertificates(new ArrayList<Certificate>() {
-            {
-                add(new CertificateBO().mockData());
-                add(new CertificateBO().mockData());
-                add(new CertificateBO().mockData());
-            }
-        });
-        user.setEducations(new ArrayList<Education>() {
-            {
-                add(new EducationBO().mockData());
-                add(new EducationBO().mockData());
-                add(new EducationBO().mockData());
-            }
-        });
-        return user;
-
-
-    }
 
     public List<User> getAllUsers() throws SQLException {
         return userDAO.getAllUsers();

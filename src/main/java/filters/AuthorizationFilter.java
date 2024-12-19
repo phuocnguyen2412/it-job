@@ -32,17 +32,17 @@ public class AuthorizationFilter implements Filter {
         // Phân quyền dựa trên URL và role
         if (path.startsWith(request.getContextPath() + "/admin/")) { // URL dành cho Admin
             if (role == null || !role.equals("Admin")) {
-                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied: Chỉ Admin mới được sử dụng chức năng này!");
+                response.sendRedirect("http://localhost:8080/demo_jsp_war_exploded/handle-error?error=Forbident");
             }
         }
         if (path.startsWith(request.getContextPath() + "/company/")) { // URL dành cho Company
             if (role == null || !role.equals("Company")) {
-                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied: Chỉ Company mới được sử dụng chức năng này!");
+                response.sendRedirect("http://localhost:8080/demo_jsp_war_exploded/handle-error?error=Forbident");
             }
         }
         if (path.startsWith(request.getContextPath() + "/user/")) { // URL dành cho Employee
             if (role == null || !role.equals("User")) {
-                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied: Chỉ Employee mới được sử dụng chức năng này!");
+                response.sendRedirect("http://localhost:8080/demo_jsp_war_exploded/handle-error?error=Forbident");
             }
         }
 

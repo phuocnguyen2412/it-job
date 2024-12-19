@@ -11,17 +11,6 @@ import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
 public class ApplicationBO {
-    public Application mockApplication() {
-        Application application = new Application();
-        application.setId(1);
-        application.setCv("download");
-        application.setStatus("PENDING");
-        application.setRecruitmentId(1);
-        application.setUserId(1);
-        application.setUser(new UserBO().mockData());
-        application.setRecruitment(new RecruitmentBO().mockRecruitment());
-        return application;
-    }
     ApplicationDAO applicationDAO = new ApplicationDAO();
     UserBO userBO = new UserBO();
     CertificateBO certificateBO = new CertificateBO();

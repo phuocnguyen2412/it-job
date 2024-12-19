@@ -1,5 +1,6 @@
 package models.bo;
 
+import exception.BadRequestException;
 import models.bean.PersonalProject;
 import models.dao.PersonalProjectDAO;
 
@@ -26,18 +27,18 @@ public class PersonalProjectBO {
         return personalProjectDAO.deleteProject(projectId);
     }
 
-//    private void validateProject(PersonalProject project) {
-//        if (project.getName() == null || project.getName().isEmpty()) {
-//            throw new BadRequestException("Tên dự án không được để trống!");
-//        }
-//        if (project.getDateStart() == null) {
-//            throw new BadRequestException("Ngày bắt đầu không được để trống!");
-//        }
-//        if (project.getDateEnd() != null && project.getDateStart().after(project.getDateEnd())) {
-//            throw new BadRequestException("Ngày bắt đầu không được sau ngày kết thúc!");
-//        }
-//        if (project.getUserId() <= 0) {
-//            throw new BadRequestException("User ID không hợp lệ!");
-//        }
-//    }
+    private void validateProject(PersonalProject project) {
+        if (project.getName() == null || project.getName().isEmpty()) {
+            throw new BadRequestException("Tên dự án không được để trống!");
+        }
+        if (project.getDateStart() == null) {
+            throw new BadRequestException("Ngày bắt đầu không được để trống!");
+        }
+        if (project.getDateEnd() != null && project.getDateStart().after(project.getDateEnd())) {
+            throw new BadRequestException("Ngày bắt đầu không được sau ngày kết thúc!");
+        }
+        if (project.getUserId() <= 0) {
+            throw new BadRequestException("User ID không hợp lệ!");
+        }
+    }
 }

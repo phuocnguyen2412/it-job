@@ -24,7 +24,5 @@ public class CompanyAddressBO {
         return companyAddressDAO.getCompanyAddress(companyId);
     }
 
-    public CompanyAddress mockAdress() {
-        return new CompanyAddress(1, 1, "Ha Noi", "FPT Software Building");
-    }
+    
 }
