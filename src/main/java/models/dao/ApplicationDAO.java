@@ -76,7 +76,7 @@ public class ApplicationDAO {
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, userId);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 Application application = new Application();
                 application.setId(rs.getInt("Id"));
                 application.setUserId(rs.getInt("UserId"));
@@ -98,7 +98,7 @@ public class ApplicationDAO {
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, recruitmentId);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 Application application = new Application();
                 application.setId(rs.getInt("Id"));
                 application.setUserId(rs.getInt("UserId"));

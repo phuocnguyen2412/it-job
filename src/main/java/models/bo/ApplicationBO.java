@@ -57,6 +57,13 @@ public class ApplicationBO {
         applicationDAO.apply(application);
     }
     public ArrayList<Application> getApplicationsByRecruimentId(int recruitmentId){
-        return applicationDAO.getApplicationByRecruitmentId(recruitmentId);
+        ArrayList<Application> applications = applicationDAO.getApplicationByRecruitmentId(recruitmentId);
+        System.out.println(applications);
+        for(Application application : applications){
+
+            User user = userBO.getUserById(application.getUserId());
+            application.setUser(user);
+        }
+        return applications;
     }
 }

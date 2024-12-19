@@ -94,9 +94,9 @@ public class RecruitmentDAO {
         return result;
     }
 
-    public Recruitment  getRecruitmentByCompanyId(int companyId) {
+    public ArrayList<Recruitment>  getRecruitmentByCompanyId(int companyId) {
         String query = "SELECT * FROM Recruitment WHERE companyId = ?";
-        Recruitment result = new Recruitment();
+        ArrayList<Recruitment> result = new ArrayList<>();
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -104,7 +104,8 @@ public class RecruitmentDAO {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while(rs.next()){
-                    result = resultSetToRecruitment(rs);
+                    Recruitment recruitment = resultSetToRecruitment(rs);
+                    result.add(recruitment);
                 }
             }
         } catch (SQLException e) {

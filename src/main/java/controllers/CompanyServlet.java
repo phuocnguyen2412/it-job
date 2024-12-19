@@ -83,24 +83,21 @@ public class CompanyServlet extends BaseController {
 
     private void get_list_application(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int recruitmentId = Integer.parseInt(req.getParameter("recruitment_id"));
-        List<Application> applications = applicationBO.getApplicationsByRecruimentId(recruitmentId);
+        ArrayList<Application> applications = applicationBO.getApplicationsByRecruimentId(recruitmentId);
+        System.out.println(applications);
         req.setAttribute("applications", applications);
         render(req, resp, "/company/recruitment/list-application", "template");
     }
 
     private void get_list_recruitment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Recruitment> recruitments = recruitmentBO.getRecruitmentsByCompanyId((int) req.getSession().getAttribute("companyId"));
+        ArrayList<Recruitment> recruitments = recruitmentBO.getRecruitmentsByCompanyId((int) req.getSession().getAttribute("companyId"));
         req.setAttribute("recruitments", recruitments);
         render(req, resp, "/company/recruitment/list", "template");
     }
 
     private void get_create_recruitment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<CompanyAddress> addresses = new ArrayList<>() {
-            {
-                add(new CompanyAddress(1, 1, "Ha Noi", "FPT Software Building"));
-                add(new CompanyAddress(1, 1, "Ha Noi", "FPT Software Building"));
-            }
-        };
+        ArrayList<CompanyAddress> addresses = companyAddressBO.getCompanyAddress((int) req.getSession().getAttribute("companyId"));
+        System.out.println(addresses);
         req.setAttribute("addresses", addresses);
         render(req, resp, "/company/recruitment/create", "template");
     }
@@ -121,13 +118,7 @@ public class CompanyServlet extends BaseController {
         System.out.println(req.getParameter("recruitment_id"));
         int recruitmentId = Integer.parseInt(req.getParameter("recruitment_id"));
         Recruitment recruitment = recruitmentBO.getRecruitmentById(recruitmentId);
-        List<CompanyAddress> companyAddresses = new ArrayList<CompanyAddress>() {
-            {
-                add(companyAddressBO.mockAdress());
-                add(companyAddressBO.mockAdress());
-                add(companyAddressBO.mockAdress());
-            }
-        };
+        List<CompanyAddress> companyAddresses = companyAddressBO.getCompanyAddress((int) req.getSession().getAttribute("companyId"));
         req.setAttribute("companyAddresses", companyAddresses);
         req.setAttribute("recruitment", recruitment);
         render(req, resp, "/company/recruitment/edit", "template");

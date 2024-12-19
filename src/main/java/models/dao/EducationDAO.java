@@ -80,7 +80,7 @@ public class EducationDAO {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, userId);
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
+                while (rs.next()) {
                     Education education = new Education();
                     education.setId(rs.getInt("id"));
                     education.setUserId(rs.getInt("userId"));

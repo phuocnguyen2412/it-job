@@ -42,7 +42,7 @@ public class RecruitmentBO {
         return recruitmentDAO.getRecruitmentBySearch(country, searchBy, searchInput);
     }
 
-    public Recruitment getRecruitmentByCompanyId(int companyId){
+    public ArrayList<Recruitment> getRecruitmentsByCompanyId(int companyId){
         return recruitmentDAO.getRecruitmentByCompanyId(companyId);
     }
 
